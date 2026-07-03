@@ -3,7 +3,7 @@
 **Author:** Koyar Afrasyab, M.D. — *corresponding author.*
 **Affiliation:** Independent researcher; Founder, Kinvectum AB.
 **Funding:** Kinvectum AB.
-**Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [to complete before submission].
+**Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [0009-0009-3530-4606](https://orcid.org/0009-0009-3530-4606).
 **Article type:** Brief report / methodological reconciliation.
 **Preprint + code:** see *Data and code availability*.
 
