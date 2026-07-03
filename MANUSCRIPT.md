@@ -1,8 +1,9 @@
 # The instrument makes the winner: reconciling two contradictory 2026 head-to-head evaluations of clinical AI
 
 **Author:** Koyar Afrasyab, M.D. — *corresponding author.*
-**Affiliation:** Independent researcher; Founder, Kinvectum.
-**Correspondence:** Koyar Afrasyab (Kinvectum). ORCID: [to complete before submission].
+**Affiliation:** Independent researcher; Founder, Kinvectum AB.
+**Funding:** Kinvectum AB.
+**Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [to complete before submission].
 **Article type:** Brief report / methodological reconciliation.
 **Preprint + code:** see *Data and code availability*.
 
@@ -460,11 +461,16 @@ data. (vii) **LLM judges are not bit-deterministic**; we quantify rather than as
 ## 9. Ethics, conflicts, funding
 
 No human subjects or PHI were used; all human ratings are de-identified public data (CC BY 4.0). No
-Nature-copyrighted data were redistributed (CC BY-NC-ND). **Conflicts:** [author to declare;
-Kinvectum AB affiliation]. We note the source studies' own conflicts: Real-POCQi's data collection was
-run by OpenEvidence; the Nature senior author reports industry equity/consulting including Google.
-**Funding / compute:** LLM-judge API costs [to complete]. **Author contributions / acknowledgements:**
-[to complete].
+Nature-copyrighted data were redistributed (CC BY-NC-ND). **Conflicts of interest:** The author is
+the founder of Kinvectum AB, an independent medical-AI research venture. The author declares no
+financial interest in, and no commercial or consulting relationship with, any of the evaluated
+systems or their providers (OpenEvidence, OpenAI, Anthropic, xAI, Google, or Wolters Kluwer/UpToDate).
+For transparency we note the source studies' own disclosed conflicts: Real-POCQi's data collection was
+run by OpenEvidence (the platform under study), and the Nature Medicine senior author reports industry
+equity/consulting including Google. **Funding:** This work was funded by Kinvectum AB, which covered
+the LLM-judge API costs; the funder had no role in study design, analysis, or the decision to publish.
+**Author contributions:** K.A. designed the study, wrote the analysis and judging code, performed all
+analyses, and wrote the manuscript (sole author).
 
 ## 10. Data and code availability
 

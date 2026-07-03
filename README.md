@@ -1,74 +1,151 @@
-# Reconciling two contradictory 2026 clinical-AI benchmarks — reproducibility package
+# The Instrument Makes the Winner: Reconciling Two Contradictory 2026 Head-to-Head Evaluations of Clinical AI
 
-This repository contains everything needed to reproduce the analyses in `MANUSCRIPT.md`, which
-reconciles two mirror-image 2026 studies:
+**Two 2026 studies compared the same class of systems and reached opposite conclusions. This repository shows the disagreement is not about the models — it is about the *measuring instrument*.** Holding the queries *and* the systems' answers fixed and changing **only** the evaluation instrument (blinded human pairwise preference → LLM-judge absolute rubric) erases or reverses the specialist system's advantage on every quality axis. A formal 2×2 {instrument} × {rater} decomposition attributes ~83% of the accuracy swing to the instrument, not the rater.
 
-- **Real-POCQi** (arXiv:2606.28960) — OpenEvidence (OE) beats frontier LLMs on blinded human
-  **pairwise preference**.
-- **Nature Medicine** (s41591-026-04431-5) — frontier LLMs beat OE + UpToDate under **absolute
-  1–4 rubric** scoring.
+Author: **Koyar Afrasyab, M.D.** — *corresponding author*
+Affiliation: **Independent researcher; Founder, Kinvectum AB**
+Funding: **Kinvectum AB**
 
-The headline result (`FINDINGS.md` §5) is an **instrument existence proof**: holding the Real-POCQi
-queries *and* the four systems' answers fixed and changing **only the evaluation instrument** (human
-pairwise → LLM-judge absolute rubric) erases or reverses OE's advantage on every axis. See also
-`CRITIQUES.md` for the comparator-set and reasoning-effort critiques of both source studies.
+This repository contains the manuscript (Markdown + self-contained PDF), the judging/analysis pipeline, figures, judge-panel votes, bootstrap CIs, and the public rating data needed to reproduce a reconciliation of two mirror-image 2026 clinical-AI evaluations:
 
-## Repository layout
+- **Real-POCQi** (arXiv:2606.28960) — OpenEvidence (OE) **beats** frontier general-purpose LLMs on blinded physician **pairwise preference** across 620 real point-of-care queries.
+- **Nature Medicine** (s41591-026-04431-5) — frontier LLMs **beat** OE and UpToDate Expert AI under an **absolute 1–4 rubric**.
 
-```
-reconciliation/
-├── MANUSCRIPT.md            # the paper
-├── FINDINGS.md              # detailed results (public-data analyses + existence proof §5)
-├── CRITIQUES.md             # comparator + reasoning-setting critiques of both source studies
-├── reconciliation_protocol.md   # pre-registration for the full 2x2x2 study
-├── requirements.txt
-├── run_all.sh               # end-to-end reproduction
-├── fetch_data.py            # download Real-POCQi parquet files from HF (CC BY 4.0)
-├── data/                    # questions.parquet, answers.parquet, ratings.parquet (vendored + fetchable)
-├── analysis/
-│   └── analyze.py           # metric reproduction, citation-halo, power sim (NO API keys)
-├── judge/
-│   ├── providers.py         # unified 4-provider judge interface (stdlib only; keys at runtime)
-│   ├── grade.py             # blinded absolute 1–4 rubric grader (resumable)
-│   ├── analyze_grades.py    # human-pairwise vs LLM-judge win-diff, self-preference, agreement
-│   ├── bootstrap_grades.py  # cluster-bootstrap CIs + leave-one-judge-out
-│   ├── pairwise.py          # blinded forced-choice LLM pairwise grader — the {pairwise,LLM} cell (resumable)
-│   ├── analyze_pairwise.py  # 2x2 decomposition: rater-modality vs instrument-format effects
-│   ├── length_analysis.py   # length-matched sub-study on the rubric cell (no new API calls)
-│   ├── make_figure.py       # Figure 1 (existence proof)
-│   ├── make_figure2.py      # Figure 2 (2x2 decomposition)
-│   ├── verify_thinking.py   # proves each judge ran with reasoning ON (token readout)
-│   └── out/                 # grades.jsonl + all judge-analysis outputs + figures
-└── out/                     # public-data outputs (results.json, citation_halo.png)
-```
+Both studies additionally sourced their "real-world" queries from the platform that went on to win (home-field provenance) and used different model versions — but the decomposition here isolates the **instrument** (pairwise vs rubric) as the dominant driver of the contradiction.
 
-## Quick start
+## Quick Links
+
+- [Manuscript (Markdown)](MANUSCRIPT.md) · [Manuscript (PDF)](MANUSCRIPT.pdf)
+- [Detailed findings — public-data analyses + existence proof](FINDINGS.md)
+- [Critiques of both source studies](CRITIQUES.md)
+- [Pre-registration for the full 2×2×2 study](reconciliation_protocol.md)
+- [Figure 1 — instrument existence proof](judge/out/existence_proof.png)
+- [Figure 2 — 2×2 rater-vs-instrument decomposition](judge/out/decomposition.png)
+- [Real-POCQi data (Hugging Face, CC BY 4.0)](https://huggingface.co/datasets/jjfenglab/Real-POCQi)
+
+## Study Question
+
+Two blinded, physician-facing evaluations of the *same* specialist-vs-frontier match-up reached opposite verdicts. This study asks:
+
+> When you hold the clinical queries and the systems' verbatim answers fixed and change **only** the evaluation instrument — from forced-choice human pairwise preference to an absolute 1–4 rubric — does the winner change? And if it does, is that swing driven by the *rater* (physicians vs LLMs) or by the *instrument format* (pairwise vs rubric)?
+
+## Design — filling the missing cell of a 2×2
+
+The two source studies differ on two things at once, confounding any direct comparison: the **rater population** (physicians → LLMs) *and* the **instrument format** (pairwise → rubric). We break the confound by running the same blinded, high-reasoning four-judge LLM panel on the **same 150 queries and answers** under *both* instruments, yielding three of four cells:
+
+| | Pairwise instrument | Rubric instrument |
+|---|---|---|
+| **Human rater** | **A** — Real-POCQi (OE wins) | *D* — not run (pre-registered, §7) |
+| **LLM rater** | **B** — new here (OE mostly wins) | **C** — new here (OE reverses) |
+
+The A→C swing (the published contradiction) is then split into a **rater component (B−A)** and an **instrument component (C−B)**.
+
+## Model / Judge Panel
+
+Four judges, all at **high reasoning effort**, blinded to system identity. Reasoning was verified per judge on a real (long) clinical answer.
+
+| Judge label | Configured identifier | High-effort mechanism | Verified reasoning tokens |
+|---|---|---|---:|
+| gpt-5.5 | `gpt-5.5` | `reasoning_effort=high` | 3,071 |
+| opus-4.8 | `claude-opus-4-8` | `thinking.type=adaptive` + `output_config.effort=high` | 443 (thinking) |
+| grok-4.3 | `grok-4.3` | `reasoning_effort=high` | 1,880 |
+| gemini-3.5-flash | `gemini-3.5-flash` | `thinkingConfig.thinkingBudget` | 922 (thoughts) |
+
+The four graded systems (answers held fixed from Real-POCQi): **OpenEvidence**, plus frontier general-purpose LLMs.
+
+## Main Results
+
+### 1. The instrument flips the winner (n = 150, same queries + answers, 2,000-replicate cluster bootstrap)
+
+OE-vs-rest win-difference (percentage points; positive = OE preferred) under each instrument on the **identical** 150-query sample:
+
+| Axis | Human pairwise [95% CI] | LLM-judge rubric [95% CI] | Verdict |
+|---|---:|---:|---|
+| Accuracy | +10.4 [−1.8, +22.2] | **−29.1 [−38.0, −19.8]** | sign flips to significantly negative |
+| Clinical utility | +14.4 [−1.6, +31.4] | −12.2 [−20.9, −3.6] | sign flips to significantly negative |
+| Source quality | +23.2 [+7.6, +38.0] | +12.0 [+1.6, +22.9] | OE edge survives, ~3× smaller |
+| Completeness | +13.6 [−2.5, +28.7] | −3.6 [−12.4, +6.0] | collapses to null |
+| Verifiability | +14.4 [+2.2, +27.6] | +0.7 [−10.0, +11.1] | collapses to null |
+
+On the full Real-POCQi text-only bank the human accuracy edge is +24.4 pp (reproduces the published +24.7 to <1 pp); on this 150-query subsample it is +10.4 pp (same sign, underpowered). On the **same answers**, the LLM rubric scores OE **−29.1 pp**. Under no axis does OE retain its large human-pairwise advantage.
+
+### 2. It is the instrument, not the rater (2×2 decomposition)
+
+Splitting the human-pairwise→LLM-rubric swing into rater (B−A) and instrument (C−B) components:
+
+| Axis | A: pairwise/human | B: pairwise/LLM | C: rubric/LLM | Rater (B−A) | **Instrument (C−B)** |
+|---|---:|---:|---:|---:|---:|
+| Accuracy | +10.4 | +3.6 | −29.1 | −6.8 | **−32.7** |
+| Clinical utility | +14.4 | +18.2 | −12.2 | +3.8 | **−30.4** |
+| Source quality | +23.2 | +48.8 | +12.0 | +25.6 | **−36.8** |
+| Completeness | +13.6 | +37.0 | −3.6 | +23.4 | **−40.6** |
+| Verifiability | +14.4 | +45.1 | +0.7 | +30.7 | **−44.4** |
+
+**LLM judges administering the *pairwise* instrument reproduce the human pairwise verdict** — OE wins on four of five axes. The instrument component (C−B) is large, negative, and consistent (−30.4 to −44.4 pp) and dominates the rater component on every axis. On accuracy — the one axis where both push negative — the instrument still does **~83% of the swing (−32.7 pp instrument vs −6.8 pp rater)**.
+
+### 3. Not merely a self-scoring artifact
+
+Contestant-family judges self-preferred (GPT-5.5 **+0.481**, Opus **+0.121**, Gemini **+0.004** points, own family minus others), but the accuracy reversal **survives dropping any single judge**, including GPT-5.5 (−12.3 pp without it). Under the *pairwise* instrument the family-neutral judge (Grok) prefers OE on **all five axes** and GPT-5.5 is the *least* OE-favorable judge — the opposite of a blanket pro-frontier prejudice. The pro-frontier tilt is **specific to the rubric instrument**.
+
+### 4. Not a length artifact
+
+OpenEvidence produces the **longest** answers (median 3,600 chars vs GPT-5.5 2,232) yet *loses* the accuracy rubric, so a "longer wins" mechanism runs backwards against the finding. Length-adjusted gaps are indistinguishable from raw (accuracy −0.12 adjusted vs −0.127 raw), and OE loses accuracy whether it is the longer (−34.3) or shorter (−19.9) answer.
+
+## Key Conclusions
+
+- **The measuring instrument, not the model, is the first-order driver of the contradiction.** Pairwise and rubric instruments order the same fixed answers differently; ~83% of the accuracy swing is instrument-attributable.
+- **LLMs are not the problem — the rubric is.** Given the *same* forced-choice instrument, LLM judges agree with physicians (OE preferred on 4/5 axes). The reversal appears only under absolute rubric scoring.
+- **Self-preference exists but does not create the effect.** The accuracy reversal survives leave-one-judge-out, and the family-neutral judge favors OE under pairwise.
+- **This is an existence proof of instrument sensitivity, not an adjudication of clinical truth.** We show the instruments *disagree* on identical content — not which one is *correct*. The missing human-rubric cell (D) is pre-registered as the decisive control.
+
+## Limitations
+
+- **No adjudicated ground truth.** We demonstrate instruments disagree, not which verdict is clinically correct.
+- **Existence-proof scale (n = 150).** The human accuracy estimate on the subsample is not itself significant; the clean claim is a sign reversal to a significantly-negative rubric verdict on identical content, corroborated by the full-data human sign.
+- **Shared LLM house effect.** Leave-one-judge-out removes *family-specific* bias but not a bias all four LLM judges might *share*; no LLM judge is a clean control for a common stylistic prior. Human-administered rubric scoring (cell D) is the remaining control.
+- **Noisy instrument.** Inter-judge Spearman agreement is modest (0.19–0.47), mirroring the low human-rater agreement the Nature study reports (α ≈ 0.10–0.20).
+- **Provenance confound in the sources.** Each source study drew queries from the platform that won; we hold answers fixed but cannot remove provenance from the original datasets.
+
+## Repository Contents
+
+| Path | Contents |
+|---|---|
+| `MANUSCRIPT.md` / `MANUSCRIPT.pdf` | Full manuscript (abstract → methods → results → discussion → limitations → references), self-contained PDF with embedded figures |
+| `FINDINGS.md` | Detailed results: public-data analyses + the instrument existence proof |
+| `CRITIQUES.md` | Comparator-set and reasoning-effort critiques of both source studies |
+| `reconciliation_protocol.md` | Pre-registration for the full 2×2×2 study (incl. missing human-rubric cell) |
+| `run_all.sh` | End-to-end reproduction (`SKIP_JUDGES=1` for the no-API-key public-data subset) |
+| `fetch_data.py`, `data/` | Real-POCQi parquet fetch + vendored copies (CC BY 4.0) |
+| `analysis/analyze.py` | Metric reproduction, citation-halo, power simulation (no API keys) |
+| `judge/providers.py` | Unified 4-provider judge interface (stdlib only; keys loaded at runtime, never persisted) |
+| `judge/grade.py`, `judge/pairwise.py` | Blinded rubric grader (cell C) and blinded pairwise grader (cell B); both resumable |
+| `judge/analyze_*.py`, `judge/bootstrap_grades.py`, `judge/length_analysis.py` | Win-diffs, 2×2 decomposition, self-preference, bootstrap CIs, length sub-study |
+| `judge/make_figure*.py`, `judge/verify_thinking.py` | Figure generation and per-judge reasoning-token verification |
+| `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
+
+## Reproducing the Study
 
 ```bash
+python3 -m pip install -r requirements.txt
+
 # Public-data analyses only (no API keys, no cost):
 SKIP_JUDGES=1 ./run_all.sh
 
-# Full pipeline including LLM-judge grading (requires API keys, spends credits ~1-2 hr):
+# Full pipeline including LLM-judge grading (requires API keys, spends credits, ~1–2 hr):
 ./run_all.sh
 ```
 
-## Environment
-- Python ≥ 3.9 (developed/tested on CPython 3.9.6). `python3 -m pip install -r requirements.txt`.
-- Judge calls use only the Python standard library (`urllib`) — no provider SDKs.
+- Python ≥ 3.9 (developed on CPython 3.9.6). Judge calls use only the standard library (`urllib`) — no provider SDKs.
+- Determinism: question sampling `random_state=62`; bootstrap `numpy default_rng(62)`, 2,000 replicates clustered on `question_id`. LLM judges are not bit-deterministic (reasoning traces sampled); variance is quantified via inter-judge agreement and bootstrap CIs rather than asserted away.
 
-## Data
-- Source: Hugging Face `jjfenglab/Real-POCQi`, **CC BY 4.0** (redistribution permitted with
-  attribution; the three parquet files are also vendored in `data/`).
-- `questions.parquet` (620 real point-of-care queries, 30 specialties), `answers.parquet`
-  (2,480 = 620 × 4 systems, verbatim markdown), `ratings.parquet` (5,780 blinded human pairwise
-  ratings; **no rater_id** — physicians are unlinkable; `render_mode` ∈ {qa_text_only,
-  qa_text_citations}).
-- Nature Medicine is **CC BY-NC-ND 4.0** (no derivatives): we cite its published numbers but
-  redistribute none of its data. Its RCQ corpus is not public (IRB i23-00510 / DUA).
+## Data & Licensing
 
-## API keys (judge steps only)
-`judge/providers.py` reads keys at runtime from the path in its `KEYS_PATH` constant and **never
-prints or persists key values** (only key names). Point `KEYS_PATH` at a local file containing:
+- **Real-POCQi** — Hugging Face `jjfenglab/Real-POCQi`, **CC BY 4.0**: 620 point-of-care queries (30 specialties), 2,480 verbatim answers (620 × 4 systems), 5,780 blinded human pairwise ratings (no `rater_id` — physicians unlinkable). Redistribution permitted with attribution; the three parquet files are vendored in `data/`.
+- **Nature Medicine** — **CC BY-NC-ND 4.0** (no derivatives): we cite its published numbers only and redistribute none of its data. Its RCQ corpus is not public (IRB i23-00510 / DUA).
+
+## API Keys (judge steps only)
+
+`judge/providers.py` reads keys at runtime from a **git-ignored local file** and **never prints or persists key values** (only key names). The path defaults to `API_KEYS.local.md` at the repo root and can be overridden with the `MEDROBUST_KEYS_PATH` environment variable. Create a local file (kept out of version control) containing:
 
 ```
 OPENAI_API_KEY=...
@@ -77,43 +154,8 @@ XAI_API_KEY=...
 GOOGLE_API_KEY=...
 ```
 
-Keep that file out of version control. **Rotate any key that has ever been shared.**
+**Rotate any key that has ever been shared.** No secret values are committed to this repository.
 
-## Judge configuration (fixed, and verified)
-Four judges, all at **high reasoning effort**, blinded to system identity:
+## Citation
 
-| Judge label | Model | High-effort mechanism | Verified reasoning tokens (real task) |
-|---|---|---|---|
-| gpt-5.5 | gpt-5.5 | `reasoning_effort=high` | 3,071 |
-| opus-4.8 | claude-opus-4-8 | `thinking.type=adaptive` + `output_config.effort=high` | 443 (thinking_tokens) |
-| grok-4.3 | grok-4.3 | `reasoning_effort=high` | 1,880 |
-| gemini-3.5-flash | gemini-3.5-flash | `thinkingConfig.thinkingBudget` | 922 (thoughts) |
-
-Reproduce this table: `cd judge && python3 verify_thinking.py` → `out/thinking_evidence.json`.
-Note Anthropic's only accepted high mode for this model is `adaptive`; it emits ~0 thinking on
-trivial items, so verification uses a real (long) clinical answer.
-
-## Determinism & seeds
-- Question sampling: `random_state=62` (grade.py) — matches Nature's seed for the shared-benchmark
-  spirit; changing `--n` changes the sampled set.
-- Bootstrap: `numpy default_rng(62)`, 2,000 replicates, cluster on `question_id`.
-- LLM judges are **not** bit-deterministic (reasoning traces sampled); we quantify this via
-  inter-judge agreement (Spearman 0.19–0.47) and bootstrap CIs rather than claiming determinism.
-
-## Expected key outputs
-- `judge/out/grades.jsonl` — one row per (question, system, judge); resumable.
-- `judge/out/grade_results.json` — win-diffs, per-judge breakdown, self-preference, agreement.
-- `judge/out/bootstrap_results.json` — 95% CIs + leave-one-judge-out.
-- `judge/out/pairwise.jsonl` — one row per (question, opponent, judge) blinded pairwise verdict; resumable.
-- `judge/out/pairwise_results.json` — 2x2 decomposition (rater-modality vs instrument-format effects).
-- `judge/out/length_results.json` — length-matched sub-study (per-system lengths, length-adjusted intercept/slope, length-stratified win-diffs).
-- `judge/out/existence_proof.png` — Figure 1 (instrument existence proof).
-- `judge/out/decomposition.png` — Figure 2 (2×2 rater-vs-instrument decomposition).
-- `judge/out/thinking_evidence.json` — reasoning-token proof.
-- `out/results.json`, `out/citation_halo.png` — public-data reproduction + citation-halo analysis.
-
-## Known limitations (see MANUSCRIPT §Limitations)
-No adjudicated ground truth (we show instruments *disagree*, not which is *correct*); length not
-normalized; contestant-family judges self-prefer (quantified and controlled via leave-one-judge-out);
-LLM rubric scores are noisy (modest inter-judge agreement). ~0.5% of judge calls failed
-(transient timeouts + a few Gemini truncations), balanced across systems.
+> Afrasyab K. *The instrument makes the winner: reconciling two contradictory 2026 head-to-head evaluations of clinical AI.* Independent researcher / Kinvectum AB, 2026. https://github.com/KAVentures/clinical-ai-reconciliation
