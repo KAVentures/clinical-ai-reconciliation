@@ -1,0 +1,9 @@
+# Python >= 3.9 (developed/tested on CPython 3.9.6). Pin as needed for exact reproduction.
+pandas>=2.0
+numpy>=1.24
+pyarrow>=14.0
+scipy>=1.10
+statsmodels>=0.14
+matplotlib>=3.7
+huggingface_hub>=0.23
+# No provider SDKs required: judge/providers.py calls each API via the stdlib (urllib).

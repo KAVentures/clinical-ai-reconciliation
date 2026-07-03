@@ -1,0 +1,35 @@
+{
+  "gpt-5.5": {
+    "model": "gpt-5.5",
+    "reasoning_field": "reasoning_tokens",
+    "reasoning_value": 3071,
+    "reasoning_on": true,
+    "latency_s": 50.6,
+    "ok": true
+  },
+  "opus-4.8": {
+    "model": "claude-opus-4-8",
+    "reasoning_field": "thinking_tokens",
+    "reasoning_value": 443,
+    "reasoning_on": true,
+    "latency_s": 7.7,
+    "ok": true
+  },
+  "grok-4.3": {
+    "model": "grok-4.3",
+    "reasoning_field": "reasoning_tokens",
+    "reasoning_value": 1880,
+    "reasoning_on": true,
+    "latency_s": 13.7,
+    "ok": true
+  },
+  "gemini-3.5-flash": {
+    "model": "gemini-3.5-flash",
+    "reasoning_field": "thoughts_token_count",
+    "reasoning_value": 922,
+    "reasoning_on": true,
+    "latency_s": 5.9,
+    "ok": true
+  },
+  "_note": "Verified on a real Real-POCQi OE answer (question_id=002a4c98-2f31-4de0-8820-fb48ae471712, 4852 chars). All judges consumed reasoning tokens on the substantive task."
+}

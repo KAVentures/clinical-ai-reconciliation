@@ -1,0 +1,100 @@
+{
+  "n_questions": 150,
+  "n_questions_cellA": 119,
+  "nboot": 2000,
+  "cellA_pairwise_human": {
+    "accuracy": 10.4,
+    "clinical_utility": 14.4,
+    "source_quality": 23.2,
+    "completeness": 13.6,
+    "verifiability": 14.4
+  },
+  "cellA_pairwise_human_fullbank": {
+    "accuracy": 24.4,
+    "clinical_utility": 29.5,
+    "source_quality": 38.1,
+    "completeness": 30.3,
+    "verifiability": 25.5
+  },
+  "cellB_pairwise_llm": {
+    "accuracy": {
+      "point": 3.6,
+      "lo": -2.5,
+      "hi": 9.6
+    },
+    "clinical_utility": {
+      "point": 18.2,
+      "lo": 10.4,
+      "hi": 25.9
+    },
+    "source_quality": {
+      "point": 48.8,
+      "lo": 42.1,
+      "hi": 55.4
+    },
+    "completeness": {
+      "point": 37.0,
+      "lo": 29.2,
+      "hi": 44.5
+    },
+    "verifiability": {
+      "point": 45.1,
+      "lo": 38.1,
+      "hi": 51.9
+    }
+  },
+  "cellC_rubric_llm": {
+    "accuracy": {
+      "point": -29.1,
+      "lo": -38.0,
+      "hi": -19.8
+    },
+    "clinical_utility": {
+      "point": -12.2,
+      "lo": -20.9,
+      "hi": -3.6
+    },
+    "source_quality": {
+      "point": 12.0,
+      "lo": 1.6,
+      "hi": 22.9
+    },
+    "completeness": {
+      "point": -3.6,
+      "lo": -12.4,
+      "hi": 6.0
+    },
+    "verifiability": {
+      "point": 0.7,
+      "lo": -10.0,
+      "hi": 11.1
+    }
+  },
+  "decomposition": {
+    "accuracy": {
+      "total": -39.5,
+      "rater": -6.8,
+      "instrument": -32.7
+    },
+    "clinical_utility": {
+      "total": -26.6,
+      "rater": 3.8,
+      "instrument": -30.4
+    },
+    "source_quality": {
+      "total": -11.2,
+      "rater": 25.6,
+      "instrument": -36.8
+    },
+    "completeness": {
+      "total": -17.2,
+      "rater": 23.4,
+      "instrument": -40.6
+    },
+    "verifiability": {
+      "total": -13.7,
+      "rater": 30.7,
+      "instrument": -44.4
+    }
+  }
+}

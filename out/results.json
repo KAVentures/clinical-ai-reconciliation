@@ -1,0 +1,935 @@
+{
+  "reproduction": {
+    "overall": {
+      "openevidence": {
+        "accuracy": {
+          "win_diff": 28.2,
+          "ci": [
+            23.4,
+            32.8
+          ],
+          "se": 2.5,
+          "n": 742
+        },
+        "clinical_utility": {
+          "win_diff": 34.9,
+          "ci": [
+            28.7,
+            41.3
+          ],
+          "se": 3.2,
+          "n": 742
+        },
+        "source_quality": {
+          "win_diff": 45.0,
+          "ci": [
+            39.0,
+            50.5
+          ],
+          "se": 2.9,
+          "n": 742
+        },
+        "completeness": {
+          "win_diff": 37.2,
+          "ci": [
+            30.8,
+            43.4
+          ],
+          "se": 3.3,
+          "n": 742
+        },
+        "verifiability": {
+          "win_diff": 36.7,
+          "ci": [
+            31.0,
+            41.8
+          ],
+          "se": 2.8,
+          "n": 742
+        }
+      },
+      "gpt-5.5": {
+        "accuracy": {
+          "win_diff": -21.9,
+          "ci": [
+            -28.5,
+            -15.9
+          ],
+          "se": 3.1,
+          "n": 508
+        },
+        "clinical_utility": {
+          "win_diff": -22.6,
+          "ci": [
+            -30.8,
+            -14.2
+          ],
+          "se": 4.3,
+          "n": 508
+        },
+        "source_quality": {
+          "win_diff": -27.8,
+          "ci": [
+            -35.4,
+            -19.8
+          ],
+          "se": 4.0,
+          "n": 508
+        },
+        "completeness": {
+          "win_diff": -33.3,
+          "ci": [
+            -40.6,
+            -25.7
+          ],
+          "se": 3.8,
+          "n": 508
+        },
+        "verifiability": {
+          "win_diff": -19.3,
+          "ci": [
+            -26.1,
+            -11.9
+          ],
+          "se": 3.6,
+          "n": 508
+        }
+      },
+      "claude-opus-4-8": {
+        "accuracy": {
+          "win_diff": -10.2,
+          "ci": [
+            -16.4,
+            -3.7
+          ],
+          "se": 3.2,
+          "n": 539
+        },
+        "clinical_utility": {
+          "win_diff": -22.3,
+          "ci": [
+            -30.1,
+            -14.2
+          ],
+          "se": 4.0,
+          "n": 539
+        },
+        "source_quality": {
+          "win_diff": -24.5,
+          "ci": [
+            -31.4,
+            -17.0
+          ],
+          "se": 3.8,
+          "n": 539
+        },
+        "completeness": {
+          "win_diff": -13.5,
+          "ci": [
+            -21.1,
+            -5.6
+          ],
+          "se": 4.0,
+          "n": 539
+        },
+        "verifiability": {
+          "win_diff": -21.3,
+          "ci": [
+            -28.3,
+            -14.4
+          ],
+          "se": 3.5,
+          "n": 539
+        }
+      },
+      "gemini-3.1-pro": {
+        "accuracy": {
+          "win_diff": -8.2,
+          "ci": [
+            -14.2,
+            -2.3
+          ],
+          "se": 3.0,
+          "n": 523
+        },
+        "clinical_utility": {
+          "win_diff": -4.6,
+          "ci": [
+            -13.3,
+            3.8
+          ],
+          "se": 4.3,
+          "n": 523
+        },
+        "source_quality": {
+          "win_diff": -11.7,
+          "ci": [
+            -19.0,
+            -3.8
+          ],
+          "se": 3.9,
+          "n": 523
+        },
+        "completeness": {
+          "win_diff": -6.5,
+          "ci": [
+            -14.5,
+            1.5
+          ],
+          "se": 4.1,
+          "n": 523
+        },
+        "verifiability": {
+          "win_diff": -11.3,
+          "ci": [
+            -17.6,
+            -4.9
+          ],
+          "se": 3.2,
+          "n": 523
+        }
+      }
+    },
+    "text_only": {
+      "openevidence": {
+        "accuracy": {
+          "win_diff": 24.4,
+          "ci": [
+            18.4,
+            30.4
+          ],
+          "se": 3.1,
+          "n": 499
+        },
+        "clinical_utility": {
+          "win_diff": 29.5,
+          "ci": [
+            21.9,
+            36.7
+          ],
+          "se": 3.9,
+          "n": 499
+        },
+        "source_quality": {
+          "win_diff": 38.1,
+          "ci": [
+            30.8,
+            45.0
+          ],
+          "se": 3.6,
+          "n": 499
+        },
+        "completeness": {
+          "win_diff": 30.3,
+          "ci": [
+            22.4,
+            38.1
+          ],
+          "se": 4.0,
+          "n": 499
+        },
+        "verifiability": {
+          "win_diff": 25.5,
+          "ci": [
+            18.8,
+            32.0
+          ],
+          "se": 3.4,
+          "n": 499
+        }
+      },
+      "gpt-5.5": {
+        "accuracy": {
+          "win_diff": -23.2,
+          "ci": [
+            -30.6,
+            -15.7
+          ],
+          "se": 3.8,
+          "n": 349
+        },
+        "clinical_utility": {
+          "win_diff": -23.5,
+          "ci": [
+            -33.9,
+            -13.0
+          ],
+          "se": 5.3,
+          "n": 349
+        },
+        "source_quality": {
+          "win_diff": -26.6,
+          "ci": [
+            -36.1,
+            -16.9
+          ],
+          "se": 5.0,
+          "n": 349
+        },
+        "completeness": {
+          "win_diff": -32.4,
+          "ci": [
+            -41.1,
+            -23.3
+          ],
+          "se": 4.5,
+          "n": 349
+        },
+        "verifiability": {
+          "win_diff": -21.5,
+          "ci": [
+            -29.4,
+            -13.2
+          ],
+          "se": 4.1,
+          "n": 349
+        }
+      },
+      "claude-opus-4-8": {
+        "accuracy": {
+          "win_diff": -7.7,
+          "ci": [
+            -15.0,
+            -0.6
+          ],
+          "se": 3.7,
+          "n": 366
+        },
+        "clinical_utility": {
+          "win_diff": -19.1,
+          "ci": [
+            -28.2,
+            -10.2
+          ],
+          "se": 4.6,
+          "n": 366
+        },
+        "source_quality": {
+          "win_diff": -18.9,
+          "ci": [
+            -27.4,
+            -10.4
+          ],
+          "se": 4.3,
+          "n": 366
+        },
+        "completeness": {
+          "win_diff": -9.0,
+          "ci": [
+            -18.3,
+            0.0
+          ],
+          "se": 4.6,
+          "n": 366
+        },
+        "verifiability": {
+          "win_diff": -12.3,
+          "ci": [
+            -19.6,
+            -5.0
+          ],
+          "se": 3.7,
+          "n": 366
+        }
+      },
+      "gemini-3.1-pro": {
+        "accuracy": {
+          "win_diff": -3.6,
+          "ci": [
+            -10.7,
+            3.8
+          ],
+          "se": 3.7,
+          "n": 364
+        },
+        "clinical_utility": {
+          "win_diff": 1.4,
+          "ci": [
+            -9.6,
+            11.7
+          ],
+          "se": 5.4,
+          "n": 364
+        },
+        "source_quality": {
+          "win_diff": -7.7,
+          "ci": [
+            -16.1,
+            1.6
+          ],
+          "se": 4.5,
+          "n": 364
+        },
+        "completeness": {
+          "win_diff": -1.4,
+          "ci": [
+            -10.2,
+            8.0
+          ],
+          "se": 4.7,
+          "n": 364
+        },
+        "verifiability": {
+          "win_diff": -1.9,
+          "ci": [
+            -9.2,
+            5.2
+          ],
+          "se": 3.7,
+          "n": 364
+        }
+      }
+    },
+    "citations": {
+      "openevidence": {
+        "accuracy": {
+          "win_diff": 35.8,
+          "ci": [
+            28.0,
+            43.0
+          ],
+          "se": 4.0,
+          "n": 243
+        },
+        "clinical_utility": {
+          "win_diff": 46.1,
+          "ci": [
+            35.6,
+            55.8
+          ],
+          "se": 5.1,
+          "n": 243
+        },
+        "source_quality": {
+          "win_diff": 59.3,
+          "ci": [
+            51.1,
+            67.3
+          ],
+          "se": 4.1,
+          "n": 243
+        },
+        "completeness": {
+          "win_diff": 51.4,
+          "ci": [
+            41.8,
+            60.7
+          ],
+          "se": 4.7,
+          "n": 243
+        },
+        "verifiability": {
+          "win_diff": 59.7,
+          "ci": [
+            51.1,
+            67.2
+          ],
+          "se": 4.2,
+          "n": 243
+        }
+      },
+      "gpt-5.5": {
+        "accuracy": {
+          "win_diff": -18.9,
+          "ci": [
+            -29.0,
+            -7.9
+          ],
+          "se": 5.4,
+          "n": 159
+        },
+        "clinical_utility": {
+          "win_diff": -20.8,
+          "ci": [
+            -35.1,
+            -6.5
+          ],
+          "se": 7.2,
+          "n": 159
+        },
+        "source_quality": {
+          "win_diff": -30.2,
+          "ci": [
+            -43.9,
+            -15.9
+          ],
+          "se": 6.9,
+          "n": 159
+        },
+        "completeness": {
+          "win_diff": -35.2,
+          "ci": [
+            -48.2,
+            -21.6
+          ],
+          "se": 6.8,
+          "n": 159
+        },
+        "verifiability": {
+          "win_diff": -14.5,
+          "ci": [
+            -27.2,
+            -1.2
+          ],
+          "se": 6.9,
+          "n": 159
+        }
+      },
+      "claude-opus-4-8": {
+        "accuracy": {
+          "win_diff": -15.6,
+          "ci": [
+            -26.5,
+            -4.6
+          ],
+          "se": 5.6,
+          "n": 173
+        },
+        "clinical_utility": {
+          "win_diff": -28.9,
+          "ci": [
+            -42.8,
+            -15.1
+          ],
+          "se": 6.9,
+          "n": 173
+        },
+        "source_quality": {
+          "win_diff": -36.4,
+          "ci": [
+            -47.4,
+            -24.8
+          ],
+          "se": 5.9,
+          "n": 173
+        },
+        "completeness": {
+          "win_diff": -23.1,
+          "ci": [
+            -36.3,
+            -9.7
+          ],
+          "se": 6.8,
+          "n": 173
+        },
+        "verifiability": {
+          "win_diff": -40.5,
+          "ci": [
+            -52.0,
+            -28.0
+          ],
+          "se": 6.1,
+          "n": 173
+        }
+      },
+      "gemini-3.1-pro": {
+        "accuracy": {
+          "win_diff": -18.9,
+          "ci": [
+            -29.7,
+            -7.6
+          ],
+          "se": 5.6,
+          "n": 159
+        },
+        "clinical_utility": {
+          "win_diff": -18.2,
+          "ci": [
+            -32.7,
+            -4.3
+          ],
+          "se": 7.3,
+          "n": 159
+        },
+        "source_quality": {
+          "win_diff": -20.8,
+          "ci": [
+            -33.3,
+            -7.0
+          ],
+          "se": 6.6,
+          "n": 159
+        },
+        "completeness": {
+          "win_diff": -18.2,
+          "ci": [
+            -32.1,
+            -4.3
+          ],
+          "se": 7.1,
+          "n": 159
+        },
+        "verifiability": {
+          "win_diff": -32.7,
+          "ci": [
+            -45.0,
+            -20.8
+          ],
+          "se": 6.3,
+          "n": 159
+        }
+      }
+    }
+  },
+  "citation_halo": {
+    "openevidence": [
+      {
+        "axis": "accuracy",
+        "wd_text_only": 24.4,
+        "wd_citations": 35.8,
+        "halo_diff": 11.4,
+        "ci": [
+          1.4,
+          21.0
+        ],
+        "p_boot": 0.022,
+        "n_to": 499,
+        "n_tc": 243
+      },
+      {
+        "axis": "clinical_utility",
+        "wd_text_only": 29.5,
+        "wd_citations": 46.1,
+        "halo_diff": 16.6,
+        "ci": [
+          3.9,
+          29.2
+        ],
+        "p_boot": 0.0125,
+        "n_to": 499,
+        "n_tc": 243
+      },
+      {
+        "axis": "source_quality",
+        "wd_text_only": 38.1,
+        "wd_citations": 59.3,
+        "halo_diff": 21.2,
+        "ci": [
+          10.1,
+          31.5
+        ],
+        "p_boot": 0.0,
+        "n_to": 499,
+        "n_tc": 243
+      },
+      {
+        "axis": "completeness",
+        "wd_text_only": 30.3,
+        "wd_citations": 51.4,
+        "halo_diff": 21.2,
+        "ci": [
+          8.7,
+          33.4
+        ],
+        "p_boot": 0.001,
+        "n_to": 499,
+        "n_tc": 243
+      },
+      {
+        "axis": "verifiability",
+        "wd_text_only": 25.5,
+        "wd_citations": 59.7,
+        "halo_diff": 34.2,
+        "ci": [
+          23.9,
+          44.3
+        ],
+        "p_boot": 0.0,
+        "n_to": 499,
+        "n_tc": 243
+      }
+    ],
+    "gpt-5.5": [
+      {
+        "axis": "accuracy",
+        "wd_text_only": -23.2,
+        "wd_citations": -18.9,
+        "halo_diff": 4.3,
+        "ci": [
+          -7.9,
+          17.6
+        ],
+        "p_boot": 0.5005,
+        "n_to": 349,
+        "n_tc": 159
+      },
+      {
+        "axis": "clinical_utility",
+        "wd_text_only": -23.5,
+        "wd_citations": -20.8,
+        "halo_diff": 2.7,
+        "ci": [
+          -15.3,
+          21.1
+        ],
+        "p_boot": 0.784,
+        "n_to": 349,
+        "n_tc": 159
+      },
+      {
+        "axis": "source_quality",
+        "wd_text_only": -26.6,
+        "wd_citations": -30.2,
+        "halo_diff": -3.5,
+        "ci": [
+          -19.2,
+          11.9
+        ],
+        "p_boot": 0.653,
+        "n_to": 349,
+        "n_tc": 159
+      },
+      {
+        "axis": "completeness",
+        "wd_text_only": -32.4,
+        "wd_citations": -35.2,
+        "halo_diff": -2.8,
+        "ci": [
+          -18.6,
+          12.9
+        ],
+        "p_boot": 0.6975,
+        "n_to": 349,
+        "n_tc": 159
+      },
+      {
+        "axis": "verifiability",
+        "wd_text_only": -21.5,
+        "wd_citations": -14.5,
+        "halo_diff": 7.0,
+        "ci": [
+          -8.7,
+          22.1
+        ],
+        "p_boot": 0.3825,
+        "n_to": 349,
+        "n_tc": 159
+      }
+    ],
+    "claude-opus-4-8": [
+      {
+        "axis": "accuracy",
+        "wd_text_only": -7.7,
+        "wd_citations": -15.6,
+        "halo_diff": -8.0,
+        "ci": [
+          -21.3,
+          5.0
+        ],
+        "p_boot": 0.2395,
+        "n_to": 366,
+        "n_tc": 173
+      },
+      {
+        "axis": "clinical_utility",
+        "wd_text_only": -19.1,
+        "wd_citations": -28.9,
+        "halo_diff": -9.8,
+        "ci": [
+          -26.0,
+          6.6
+        ],
+        "p_boot": 0.247,
+        "n_to": 366,
+        "n_tc": 173
+      },
+      {
+        "axis": "source_quality",
+        "wd_text_only": -18.9,
+        "wd_citations": -36.4,
+        "halo_diff": -17.6,
+        "ci": [
+          -32.1,
+          -1.9
+        ],
+        "p_boot": 0.03,
+        "n_to": 366,
+        "n_tc": 173
+      },
+      {
+        "axis": "completeness",
+        "wd_text_only": -9.0,
+        "wd_citations": -23.1,
+        "halo_diff": -14.1,
+        "ci": [
+          -29.7,
+          2.1
+        ],
+        "p_boot": 0.082,
+        "n_to": 366,
+        "n_tc": 173
+      },
+      {
+        "axis": "verifiability",
+        "wd_text_only": -12.3,
+        "wd_citations": -40.5,
+        "halo_diff": -28.2,
+        "ci": [
+          -42.9,
+          -13.9
+        ],
+        "p_boot": 0.0,
+        "n_to": 366,
+        "n_tc": 173
+      }
+    ],
+    "gemini-3.1-pro": [
+      {
+        "axis": "accuracy",
+        "wd_text_only": -3.6,
+        "wd_citations": -18.9,
+        "halo_diff": -15.3,
+        "ci": [
+          -28.2,
+          -2.4
+        ],
+        "p_boot": 0.0175,
+        "n_to": 364,
+        "n_tc": 159
+      },
+      {
+        "axis": "clinical_utility",
+        "wd_text_only": 1.4,
+        "wd_citations": -18.2,
+        "halo_diff": -19.6,
+        "ci": [
+          -37.6,
+          -1.4
+        ],
+        "p_boot": 0.034,
+        "n_to": 364,
+        "n_tc": 159
+      },
+      {
+        "axis": "source_quality",
+        "wd_text_only": -7.7,
+        "wd_citations": -20.8,
+        "halo_diff": -13.1,
+        "ci": [
+          -29.1,
+          2.7
+        ],
+        "p_boot": 0.1045,
+        "n_to": 364,
+        "n_tc": 159
+      },
+      {
+        "axis": "completeness",
+        "wd_text_only": -1.4,
+        "wd_citations": -18.2,
+        "halo_diff": -16.9,
+        "ci": [
+          -33.2,
+          -0.1
+        ],
+        "p_boot": 0.0485,
+        "n_to": 364,
+        "n_tc": 159
+      },
+      {
+        "axis": "verifiability",
+        "wd_text_only": -1.9,
+        "wd_citations": -32.7,
+        "halo_diff": -30.8,
+        "ci": [
+          -45.1,
+          -16.2
+        ],
+        "p_boot": 0.0,
+        "n_to": 364,
+        "n_tc": 159
+      }
+    ]
+  },
+  "power": {
+    "sd_question_level": 0.598,
+    "n_questions_now": 429,
+    "se_winDiff_at": {
+      "100": 5.98,
+      "200": 4.23,
+      "400": 2.99,
+      "620": 2.4,
+      "1000": 1.89
+    },
+    "n_questions_for_single_winDiff_CIhalfwidth": {
+      "5pp": 550,
+      "8pp": 215
+    },
+    "n_questions_per_group_for_interaction_80pct": {
+      "10pp": 561,
+      "12pp": 390,
+      "15pp": 250,
+      "20pp": 141
+    }
+  },
+  "citation_halo_within_subset_nqueries": 120,
+  "citation_halo_within": {
+    "openevidence": [
+      {
+        "axis": "accuracy",
+        "wd_text_only": 32.3,
+        "wd_citations": 33.8,
+        "halo_diff": 1.5,
+        "ci": [
+          -13.0,
+          16.0
+        ],
+        "p_boot": 0.831,
+        "n_to": 167,
+        "n_tc": 142
+      },
+      {
+        "axis": "clinical_utility",
+        "wd_text_only": 33.5,
+        "wd_citations": 45.8,
+        "halo_diff": 12.2,
+        "ci": [
+          -5.2,
+          31.6
+        ],
+        "p_boot": 0.184,
+        "n_to": 167,
+        "n_tc": 142
+      },
+      {
+        "axis": "source_quality",
+        "wd_text_only": 47.9,
+        "wd_citations": 70.4,
+        "halo_diff": 22.5,
+        "ci": [
+          8.4,
+          36.0
+        ],
+        "p_boot": 0.002,
+        "n_to": 167,
+        "n_tc": 142
+      },
+      {
+        "axis": "completeness",
+        "wd_text_only": 32.9,
+        "wd_citations": 54.2,
+        "halo_diff": 21.3,
+        "ci": [
+          3.9,
+          39.6
+        ],
+        "p_boot": 0.017,
+        "n_to": 167,
+        "n_tc": 142
+      },
+      {
+        "axis": "verifiability",
+        "wd_text_only": 29.9,
+        "wd_citations": 59.2,
+        "halo_diff": 29.2,
+        "ci": [
+          14.2,
+          44.8
+        ],
+        "p_boot": 0.0,
+        "n_to": 167,
+        "n_tc": 142
+      }
+    ]
+  }
+}

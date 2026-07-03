@@ -1,0 +1,193 @@
+{
+  "nboot": 2000,
+  "length_median": {
+    "claude-opus-4-8": 3294.0,
+    "gemini-3.1-pro": 3586.0,
+    "gpt-5.5": 2232.0,
+    "openevidence": 3600.0
+  },
+  "length_mean": {
+    "claude-opus-4-8": 3827.0,
+    "gemini-3.1-pro": 3617.0,
+    "gpt-5.5": 2604.0,
+    "openevidence": 3705.0
+  },
+  "oe_is_longest": true,
+  "per_axis": {
+    "accuracy": {
+      "n": 450,
+      "n_longer": 283,
+      "n_shorter": 166,
+      "raw_mean_dscore": -0.127,
+      "raw_ci": [
+        -0.174,
+        -0.081
+      ],
+      "adj_intercept": -0.122,
+      "adj_intercept_ci": [
+        -0.167,
+        -0.078
+      ],
+      "slope_per_1k": -0.015,
+      "slope_ci": [
+        -0.043,
+        0.02
+      ],
+      "windiff_all": -29.1,
+      "windiff_ci": [
+        -38.0,
+        -19.778
+      ],
+      "windiff_OElonger": -34.3,
+      "windiff_OElonger_ci": [
+        -44.981,
+        -22.775
+      ],
+      "windiff_OEshorter": -19.9,
+      "windiff_OEshorter_ci": [
+        -33.333,
+        -6.962
+      ]
+    },
+    "clinical_utility": {
+      "n": 450,
+      "n_longer": 283,
+      "n_shorter": 166,
+      "raw_mean_dscore": -0.021,
+      "raw_ci": [
+        -0.059,
+        0.017
+      ],
+      "adj_intercept": -0.027,
+      "adj_intercept_ci": [
+        -0.062,
+        0.007
+      ],
+      "slope_per_1k": 0.016,
+      "slope_ci": [
+        -0.018,
+        0.057
+      ],
+      "windiff_all": -12.2,
+      "windiff_ci": [
+        -20.889,
+        -3.556
+      ],
+      "windiff_OElonger": -14.1,
+      "windiff_OElonger_ci": [
+        -24.914,
+        -3.358
+      ],
+      "windiff_OEshorter": -8.4,
+      "windiff_OEshorter_ci": [
+        -21.054,
+        3.911
+      ]
+    },
+    "source_quality": {
+      "n": 450,
+      "n_longer": 283,
+      "n_shorter": 166,
+      "raw_mean_dscore": 0.103,
+      "raw_ci": [
+        0.041,
+        0.169
+      ],
+      "adj_intercept": 0.088,
+      "adj_intercept_ci": [
+        0.026,
+        0.152
+      ],
+      "slope_per_1k": 0.042,
+      "slope_ci": [
+        0.006,
+        0.081
+      ],
+      "windiff_all": 12.0,
+      "windiff_ci": [
+        1.556,
+        22.889
+      ],
+      "windiff_OElonger": 15.9,
+      "windiff_OElonger_ci": [
+        3.213,
+        28.526
+      ],
+      "windiff_OEshorter": 6.0,
+      "windiff_OEshorter_ci": [
+        -8.446,
+        21.216
+      ]
+    },
+    "completeness": {
+      "n": 450,
+      "n_longer": 283,
+      "n_shorter": 166,
+      "raw_mean_dscore": 0.004,
+      "raw_ci": [
+        -0.041,
+        0.049
+      ],
+      "adj_intercept": -0.011,
+      "adj_intercept_ci": [
+        -0.054,
+        0.032
+      ],
+      "slope_per_1k": 0.039,
+      "slope_ci": [
+        0.004,
+        0.082
+      ],
+      "windiff_all": -3.6,
+      "windiff_ci": [
+        -12.444,
+        6.0
+      ],
+      "windiff_OElonger": 0.7,
+      "windiff_OElonger_ci": [
+        -10.49,
+        12.102
+      ],
+      "windiff_OEshorter": -10.8,
+      "windiff_OEshorter_ci": [
+        -24.685,
+        2.667
+      ]
+    },
+    "verifiability": {
+      "n": 450,
+      "n_longer": 283,
+      "n_shorter": 166,
+      "raw_mean_dscore": 0.003,
+      "raw_ci": [
+        -0.051,
+        0.055
+      ],
+      "adj_intercept": -0.006,
+      "adj_intercept_ci": [
+        -0.06,
+        0.046
+      ],
+      "slope_per_1k": 0.025,
+      "slope_ci": [
+        -0.006,
+        0.054
+      ],
+      "windiff_all": 0.7,
+      "windiff_ci": [
+        -10.006,
+        11.111
+      ],
+      "windiff_OElonger": 1.4,
+      "windiff_OElonger_ci": [
+        -10.848,
+        13.312
+      ],
+      "windiff_OEshorter": 0.0,
+      "windiff_OEshorter_ci": [
+        -15.644,
+        16.051
+      ]
+    }
+  }
+}

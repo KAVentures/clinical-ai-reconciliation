@@ -1,0 +1,105 @@
+{
+  "n_questions": 150,
+  "human_pairwise": {
+    "accuracy": 10.4,
+    "clinical_utility": 14.4,
+    "source_quality": 23.2,
+    "completeness": 13.6,
+    "verifiability": 14.4
+  },
+  "human_pairwise_fullbank": {
+    "accuracy": 24.4,
+    "clinical_utility": 29.5,
+    "source_quality": 38.1,
+    "completeness": 30.3,
+    "verifiability": 25.5
+  },
+  "judge_panel_windiff": {
+    "accuracy": -29.1,
+    "clinical_utility": -12.2,
+    "source_quality": 12.0,
+    "completeness": -3.6,
+    "verifiability": 0.7
+  },
+  "judge_windiff_by_judge": {
+    "opus-4.8": {
+      "accuracy": -8.1,
+      "clinical_utility": 7.0,
+      "source_quality": 11.2,
+      "completeness": 8.7,
+      "verifiability": -2.2
+    },
+    "gemini-3.5-flash": {
+      "accuracy": -7.5,
+      "clinical_utility": -3.8,
+      "source_quality": -7.2,
+      "completeness": -2.7,
+      "verifiability": -8.4
+    },
+    "grok-4.3": {
+      "accuracy": -6.0,
+      "clinical_utility": 0.9,
+      "source_quality": 26.6,
+      "completeness": 3.6,
+      "verifiability": 7.8
+    },
+    "gpt-5.5": {
+      "accuracy": -30.2,
+      "clinical_utility": -14.4,
+      "source_quality": 3.3,
+      "completeness": -10.2,
+      "verifiability": 1.3
+    }
+  },
+  "mean_scores": [
+    {
+      "provider_key": "claude-opus-4-8",
+      "accuracy": 3.76,
+      "clinical_utility": 3.83,
+      "completeness": 3.77,
+      "source_quality": 2.96,
+      "verifiability": 2.96
+    },
+    {
+      "provider_key": "gemini-3.1-pro",
+      "accuracy": 3.55,
+      "clinical_utility": 3.67,
+      "completeness": 3.65,
+      "source_quality": 2.8,
+      "verifiability": 2.85
+    },
+    {
+      "provider_key": "gpt-5.5",
+      "accuracy": 3.88,
+      "clinical_utility": 3.91,
+      "completeness": 3.83,
+      "source_quality": 3.1,
+      "verifiability": 3.13
+    },
+    {
+      "provider_key": "openevidence",
+      "accuracy": 3.6,
+      "clinical_utility": 3.79,
+      "completeness": 3.76,
+      "source_quality": 3.05,
+      "verifiability": 2.98
+    }
+  ],
+  "self_preference": {
+    "gpt-5.5": {
+      "family": "gpt-5.5",
+      "delta_own_minus_others": 0.481,
+      "n": 750
+    },
+    "opus-4.8": {
+      "family": "claude-opus-4-8",
+      "delta_own_minus_others": 0.121,
+      "n": 750
+    },
+    "gemini-3.5-flash": {
+      "family": "gemini-3.1-pro",
+      "delta_own_minus_others": 0.004,
+      "n": 745
+    }
+  }
+}
