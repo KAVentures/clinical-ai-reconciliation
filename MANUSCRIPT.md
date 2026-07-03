@@ -379,9 +379,18 @@ from the raw model endpoint.
 **(b) Reasoning effort is unreported or uncontrolled.** Nature reports temperature 0.0 and a seed but
 **never states reasoning effort** (its cost table confirms reasoning tokens were spent, at an
 unspecified level); Real-POCQi reports only that "thinking was automatically determined by the LLM."
-Reasoning effort is the largest controllable performance lever for these models and can reorder
-leaderboards, so neither head-to-head is reproducible on this axis. Our study pins high effort and
-verifies token consumption (§3.2).
+These are two *distinct* undisclosed knobs — whether extended thinking is **on at all**, and if so at
+what **level (high/medium/low or an explicit token budget)** — and reasoning effort is the largest
+controllable performance lever for these models, able to swing double digits on exactly the benchmarks
+in play. Two consequences follow. *Across studies*, neither head-to-head is reproducible on this axis,
+and their absolute numbers are not comparable. *Within* a study, "automatic" or unstated effort is worse
+than merely non-reproducible: if a study's thinking setting is auto-determined per query or per model, it
+may **not be held constant across the very systems it is comparing** — so even that study's internal
+ranking may reflect an uncontrolled effort difference rather than a capability difference. (Note, too,
+that temperature 0.0 is largely inert for reasoning models, which sample the reasoning trace regardless;
+reporting it can create a false impression of determinism.) Our study instead pins effort = high for all
+four judges and **verifies** token consumption on the real task (§3.2), so the instrument comparison here
+is not vulnerable to this confound.
 
 A corroborating confound: Real-POCQi tested **newer** frontier weights (GPT-5.5, Opus 4.8) than Nature
 (GPT-5.2, Opus 4.6) and still found them losing on human pairwise — a pattern more consistent with an
