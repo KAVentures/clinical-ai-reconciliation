@@ -1,0 +1,199 @@
+{
+  "nboot": 2000,
+  "n_questions": 150,
+  "judges": [
+    "gemini-3.5-flash",
+    "gpt-5.5",
+    "grok-4.3",
+    "opus-4.8"
+  ],
+  "point": {
+    "accuracy": {
+      "A": 10.4,
+      "B": 3.6,
+      "C": -29.1,
+      "rater": -6.8,
+      "instrument": -32.7
+    },
+    "clinical_utility": {
+      "A": 14.4,
+      "B": 18.2,
+      "C": -12.2,
+      "rater": 3.8,
+      "instrument": -30.5
+    },
+    "source_quality": {
+      "A": 23.2,
+      "B": 48.8,
+      "C": 12.0,
+      "rater": 25.6,
+      "instrument": -36.8
+    },
+    "completeness": {
+      "A": 13.6,
+      "B": 37.0,
+      "C": -3.6,
+      "rater": 23.4,
+      "instrument": -40.5
+    },
+    "verifiability": {
+      "A": 14.4,
+      "B": 45.1,
+      "C": 0.7,
+      "rater": 30.7,
+      "instrument": -44.4
+    }
+  },
+  "cellC": {
+    "accuracy": {
+      "point": -29.1,
+      "q_only_ci": [
+        -37.8,
+        -20.0
+      ],
+      "j_only_ci": [
+        -33.3,
+        -8.5
+      ],
+      "crossed_ci": [
+        -37.8,
+        -4.3
+      ],
+      "crossed_excl0": true
+    },
+    "clinical_utility": {
+      "point": -12.2,
+      "q_only_ci": [
+        -21.1,
+        -3.3
+      ],
+      "j_only_ci": [
+        -17.6,
+        6.0
+      ],
+      "crossed_ci": [
+        -22.4,
+        8.3
+      ],
+      "crossed_excl0": false
+    },
+    "source_quality": {
+      "point": 12.0,
+      "q_only_ci": [
+        1.3,
+        22.0
+      ],
+      "j_only_ci": [
+        -3.6,
+        27.1
+      ],
+      "crossed_ci": [
+        -8.2,
+        29.5
+      ],
+      "crossed_excl0": false
+    },
+    "completeness": {
+      "point": -3.6,
+      "q_only_ci": [
+        -12.7,
+        5.8
+      ],
+      "j_only_ci": [
+        -10.7,
+        9.8
+      ],
+      "crossed_ci": [
+        -14.4,
+        12.7
+      ],
+      "crossed_excl0": false
+    },
+    "verifiability": {
+      "point": 0.7,
+      "q_only_ci": [
+        -9.6,
+        11.1
+      ],
+      "j_only_ci": [
+        -8.9,
+        8.2
+      ],
+      "crossed_ci": [
+        -13.6,
+        13.8
+      ],
+      "crossed_excl0": false
+    }
+  },
+  "decomposition": {
+    "accuracy": {
+      "rater": -6.8,
+      "rater_ci": [
+        -27.5,
+        14.3
+      ],
+      "instrument": -32.7,
+      "instrument_ci": [
+        -42.8,
+        -8.8
+      ]
+    },
+    "clinical_utility": {
+      "rater": 3.8,
+      "rater_ci": [
+        -22.3,
+        31.9
+      ],
+      "instrument": -30.5,
+      "instrument_ci": [
+        -42.6,
+        -9.0
+      ]
+    },
+    "source_quality": {
+      "rater": 25.6,
+      "rater_ci": [
+        -3.4,
+        54.8
+      ],
+      "instrument": -36.8,
+      "instrument_ci": [
+        -56.9,
+        -22.4
+      ]
+    },
+    "completeness": {
+      "rater": 23.4,
+      "rater_ci": [
+        2.2,
+        45.4
+      ],
+      "instrument": -40.5,
+      "instrument_ci": [
+        -53.6,
+        -22.0
+      ]
+    },
+    "verifiability": {
+      "rater": 30.7,
+      "rater_ci": [
+        7.9,
+        53.6
+      ],
+      "instrument": -44.4,
+      "instrument_ci": [
+        -62.0,
+        -29.1
+      ]
+    }
+  },
+  "accuracy_instrument_fraction": {
+    "point": 82.7,
+    "ci": [
+      35.1,
+      206.1
+    ],
+    "median": 80.9
+  }
+}

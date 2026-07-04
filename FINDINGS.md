@@ -85,10 +85,24 @@ is underpowered.
 | completeness | +13.6 [−2.5, +28.7] | +30.3 | −3.6 [−12.4, +6.0] | Collapses to null (CI spans 0) |
 | verifiability | +14.4 [+2.2, +27.6] | +25.5 | +0.7 [−10.0, +11.1] | Collapses to null (CI spans 0) |
 
-**Reading.** Swapping only the instrument **eliminates OE's advantage on every axis, though not
-uniformly.** Two axes flip sign into significantly-negative territory (accuracy, clinical_utility);
-source_quality keeps a significantly-positive but ~3× smaller OE edge (CI excludes 0, so NOT erased);
-completeness and verifiability collapse to a statistical null.
+> **Update — crossed question×judge bootstrap is now the primary inference (`judge/bootstrap_panel.py`
+> → `out/panel_bootstrap.json`).** The table above uses the *question-only* cluster bootstrap, which
+> treats the 4 judges as fixed. Because 3 of 4 judges are contestant families and GPT-5.5 self-prefers
+> +0.481, the honest CI must also resample **judges** as a random factor. Re-running with judges resampled
+> per replicate widens every CI, and **two per-axis claims above do not survive** and are retracted:
+> clinical_utility crossed CI **[−22.4, +8.3]** (crosses 0 — *not* a significant reversal), source_quality
+> crossed CI **[−8.2, +29.5]** (crosses 0 — the residual OE edge is *not* significant). The headline
+> **accuracy reversal survives: crossed CI [−37.8, −4.3]** (still strictly negative). Corrected per-axis
+> verdict: **accuracy is the one axis carrying a significant instrument-driven reversal**; the other four
+> are individually indistinguishable from null once judges are a random factor. The stronger, judge-robust
+> result is at the *decomposition* level (§6), not per-axis.
+
+**Reading.** Swapping only the instrument **eliminates OE's advantage on every axis.** Under the primary
+crossed question×judge bootstrap, only **accuracy** carries an individually-significant sign reversal
+(crossed CI [−37.8, −4.3]); clinical_utility, source_quality, completeness, and verifiability all move
+toward or past null but their crossed CIs include 0. (Under the narrower question-only bootstrap,
+accuracy and clinical_utility both read as significantly negative and source_quality keeps a shrunken
+positive edge — but those are not judge-robust and we do not rely on them.)
 The headline, stated honestly: on the same answers physicians prefer OE on accuracy (+24.4 pp full data;
 +10.4 pp, CI −1.8 to +22.2, same-signed but underpowered in this 150-question subsample), the **LLM
 rubric scores OE −29.1 pp [−38.0, −19.8] — significantly negative.** So the instrument swap flips the
@@ -135,14 +149,33 @@ questions) — *not* the full text-only bank — so B−A does not absorb a samp
 taken on the full text-only bank instead, the accuracy rater term inflates to −20.8 — an artifact of
 comparing against a different question sample; we use the same-sample value −6.8.)
 
+**Propagated crossed question×judge CIs on the two components (`judge/bootstrap_panel.py`).** The
+components are bootstrapped *jointly* (questions and judges resampled together across cells A/B/C), so
+B−A and C−B carry real CIs, not point-estimate arithmetic:
+
+| Axis | Rater (B−A) [crossed CI] | **Instrument (C−B) [crossed CI]** |
+|---|---:|---:|
+| accuracy | −6.8 [−27.5, +14.3] | **−32.7 [−42.8, −8.8]** |
+| clinical_utility | +3.8 [−22.3, +31.9] | **−30.5 [−42.6, −9.0]** |
+| source_quality | +25.6 [−3.4, +54.8] | **−36.8 [−56.9, −22.4]** |
+| completeness | +23.4 [+2.2, +45.4] | **−40.5 [−53.6, −22.0]** |
+| verifiability | +30.7 [+7.9, +53.6] | **−44.4 [−62.0, −29.1]** |
+
+The **instrument component (C−B) is negative with a crossed CI excluding zero on all five axes**; the
+**rater component (B−A) is indistinguishable from zero on accuracy** (and on clinical_utility and source
+quality). This is the judge-robust core.
+
 **Result.** (1) **LLM judges doing *pairwise* reproduce the human verdict**: OE wins on 4 of 5 axes
 (source_quality +48.8, verifiability +45.1, completeness +37.0, clinical_utility +18.2; accuracy
 attenuates to a null +3.6). The "LLMs just disagree with physicians" story is false for 4/5 axes given
 the *same* instrument. (2) **The instrument-format component (C−B) is large, negative, and consistent on
 every axis (−30.4 to −44.4 pp) and dominates the rater-modality component (B−A, small on accuracy,
 positive on three axes).** → The disagreement is driven by the **pairwise→rubric instrument change, not
-human→LLM raters.** Accuracy is the one axis where both components push negative, but even there the
-instrument does ~83% of the work (instrument −32.7 vs rater −6.8) — dominant, not exclusive.
+human→LLM raters.** Accuracy is the one axis where both components push negative; the instrument point
+estimate is ~83% of the swing (−32.7 vs −6.8), **but that ratio is a quotient of two noisy differences —
+its joint crossed bootstrap 95% CI is [35%, 206%]**, so we do **not** quote a precise fraction. The
+judge-robust statement is the one the CIs support: **the instrument component is significantly negative on
+all five axes; the rater component is not distinguishable from zero on accuracy.**
 
 **Scope caveat (the missing fourth cell).** This decomposition is identified *within LLM raters*: we have
 A = {pairwise, human}, B = {pairwise, LLM}, C = {rubric, LLM}, but **not** D = {rubric, human}.
