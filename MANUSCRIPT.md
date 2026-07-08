@@ -1,10 +1,10 @@
-# The instrument makes the winner: reconciling two contradictory 2026 head-to-head evaluations of clinical AI
+# Evaluation instrument choice can flip the apparent winner: a secondary analysis reconciling two contradictory 2026 head-to-head evaluations of clinical AI
 
 **Author:** Koyar Afrasyab, M.D. — *corresponding author.*
 **Affiliation:** Independent researcher; Founder, Kinvectum AB.
 **Funding:** Kinvectum AB.
 **Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [0009-0009-3530-4606](https://orcid.org/0009-0009-3530-4606).
-**Article type:** Brief report / methodological reconciliation.
+**Article type:** Methodological reconciliation and secondary analysis (with critical appraisal and a pre-registered extension).
 **Preprint + code:** see *Data and code availability*.
 
 ---
@@ -86,8 +86,8 @@ susceptibility to distraction,[^distracted] conflict between an LLM's internal p
 evidence,[^clasheval] data-poisoning attacks,[^poison] and the need for clinically safe generation.[^noharm]
 These benchmarks increasingly characterize their query distributions with topic models.[^bertopic]
 Deployment is already at health-system scale.[^jamia] In 2026 two such studies reached **opposite**
-conclusions using overlapping systems,[^poc]<sup>,</sup>[^nat] which is the strongest possible signal that at least one
-conclusion is an artifact of method rather than of the systems compared.
+conclusions using overlapping systems,[^poc]<sup>,</sup>[^nat] which strongly suggests that at least one
+conclusion reflects the evaluation method rather than the systems compared.
 
 Both studies contain a symmetric structural feature — each sourced its "real-world" query set from the
 platform that ultimately won (Real-POCQi from OpenEvidence traffic; the Nature study's real-clinical-
@@ -631,7 +631,7 @@ quality/verifiability/completeness and merely dominant — not exclusive — for
 
 **We are not the first to suspect the instrument — Real-POCQi says so itself.** Real-POCQi explicitly
 hypothesizes that its divergence from rubric-style benchmarks is *instrument-driven*, and cites
-JudgmentBench[^judgmentbench] — which reports that in high-expertise domains **head-to-head preference
+JudgmentBench[^judgmentbench] — which reports that in a high-expertise professional (legal) domain **head-to-head preference
 recovers expert judgment more faithfully than absolute rubric scoring** — to argue that its own pairwise
 design is the more valid one. We credit this: our contribution is not the *idea* that the instrument
 matters but an **executed, controlled demonstration** of it (queries and answers held fixed) plus a
@@ -658,7 +658,7 @@ pairwise — including the family-neutral judge. Benchmarks that do not
 report the instrument as an experimental factor — and that do not control reasoning effort, comparator
 product-vs-endpoint status, and length — are under-specified for procurement decisions.
 
-## 7. Pre-registered extension
+## 7. Pre-registered extension (proposed design, not an executed result)
 
 The executed existence proof identifies the instrument; a full **2×2×2 provenance × instrument ×
 citations** factorial (protocol in `reconciliation_protocol.md`) estimates each factor's causal
@@ -730,8 +730,8 @@ documented in `README.md`. Nature Medicine numbers are cited from the published 
 ## References
 
 Citations appear as numbered footnotes at the point of use and are collected in full below. Numbering
-follows order of first appearance (Vancouver style). Full author lists and target-journal formatting to
-be finalized before submission.
+follows order of first appearance (Vancouver style); author lists of six or more are abbreviated with
+*et al.* per Vancouver convention.
 
 [^poc]: Feng, J. J., Patel, V., Heagerty, P., Mai, Y., Sivaraman, V., Vossler, P., Ouyang, J. & Jena, A. B. *Expert evaluation of clinical AI tools on real point-of-care clinical queries (Real-POCQi).* arXiv:2606.28960 (2026). Dataset: huggingface.co/datasets/jjfenglab/Real-POCQi (CC BY 4.0).
 
@@ -749,7 +749,7 @@ be finalized before submission.
 
 [^selfpref]: Panickssery, A., Bowman, S. R. & Feng, S. *LLM evaluators recognize and favor their own generations.* Advances in Neural Information Processing Systems 37 (2024). Preprint arXiv:2404.13076.
 
-[^judgmentbench]: JudgmentBench (benchmark comparing absolute-rubric vs head-to-head preference for recovering expert judgment; reports head-to-head is more faithful in high-expertise domains). Cited here as reference 8 of Real-POCQi[^poc]; full bibliographic details to be reconciled with the Real-POCQi reference list before submission.
+[^judgmentbench]: Yang, R., Chen, R., Kelaita, P., Ranjan, R., Ma, S., Dickens, C., Guillod, M., Ma, M. & Nyarko, J. *JudgmentBench: comparing rubric and preference evaluation for quality assessment.* Preprint at https://doi.org/10.48550/arXiv.2605.25240 (2026). (In a high-expertise legal domain with practicing-attorney annotations, pairwise comparative judgments recovered the intended quality ordering far better than absolute rubric scoring: mean Spearman ρ ≈ 0.91 vs ≈ 0.15.)
 
 [^winratio]: Pocock, S. J., Ariti, C. A., Collier, T. J. & Wang, D. *The win ratio: a new approach to the analysis of composite endpoints in clinical trials based on clinical priorities.* European Heart Journal 33, 176–182 (2012).
 

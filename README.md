@@ -158,4 +158,4 @@ GOOGLE_API_KEY=...
 
 ## Citation
 
-> Afrasyab K. *The instrument makes the winner: reconciling two contradictory 2026 head-to-head evaluations of clinical AI.* Independent researcher / Kinvectum AB, 2026. https://github.com/KAVentures/clinical-ai-reconciliation
+> Afrasyab K. *Evaluation instrument choice can flip the apparent winner: a secondary analysis reconciling two contradictory 2026 head-to-head evaluations of clinical AI.* Independent researcher / Kinvectum AB, 2026. https://github.com/KAVentures/clinical-ai-reconciliation
