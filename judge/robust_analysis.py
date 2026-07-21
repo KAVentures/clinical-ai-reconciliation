@@ -356,30 +356,45 @@ def common_support_abc(R, P, H, rng):
             res[ax] = {'n_qopp': 0}
             continue
         A, B, Ci, Cp = [], [], [], []
+        keymeans = []   # per (q,opp) key: for the equal-key sensitivity
         for (q, opp) in keys:
             for o in H[ax][(q, opp)]:
                 A.append({'qid': q, 'v': o})
-            oe_m, op_m = [], []
+            oe_m, op_m, bvot, cvot = [], [], [], []
             for j in JUDGES:
                 B.append({'qid': q, 'v': P[ax][(q, opp, j)]})
-                Ci.append({'qid': q, 'v': threshold(R[ax][(q, OE, j)] - R[ax][(q, opp, j)])})
+                cv = threshold(R[ax][(q, OE, j)] - R[ax][(q, opp, j)])
+                Ci.append({'qid': q, 'v': cv})
                 oe_m.append(R[ax][(q, OE, j)]); op_m.append(R[ax][(q, opp, j)])
+                bvot.append(P[ax][(q, opp, j)]); cvot.append(cv)
             Cp.append({'qid': q, 'v': threshold(float(np.mean(oe_m)) - float(np.mean(op_m)))})
+            keymeans.append({'qid': q, 'a': float(np.mean(H[ax][(q, opp)])),
+                             'b': float(np.mean(bvot)), 'c': float(np.mean(cvot))})
         cluster_qids = sorted({k[0] for k in keys})
 
         def wds(w):
-            a = windiff_units(A, 'v', w); b = windiff_units(B, 'v', w)
-            ci_ = windiff_units(Ci, 'v', w); cp = windiff_units(Cp, 'v', w)
-            return a, b, ci_, cp
-        a0, b0, ci0, cp0 = wds({q: 1.0 for q in cluster_qids})
-        bA = bB = None
+            return (windiff_units(A, 'v', w), windiff_units(B, 'v', w),
+                    windiff_units(Ci, 'v', w), windiff_units(Cp, 'v', w))
+
+        def wmean(field, w):
+            num = sum(w.get(u['qid'], 1.0) * u[field] for u in keymeans)
+            den = sum(w.get(u['qid'], 1.0) for u in keymeans)
+            return 100 * num / den if den else np.nan
+
+        ones = {q: 1.0 for q in cluster_qids}
+        a0, b0, ci0, cp0 = wds(ones)
+        # EQUAL-KEY: average votes within each (q,opp) key, then give every key equal weight
+        aE, bE, cE = wmean('a', ones), wmean('b', ones), wmean('c', ones)
         bootR, bootI = [], []
         bootA, bootB, bootCi = [], [], []
+        bootRE, bootIE = [], []
         for _ in range(NBOOT):
             w = boot_weights(cluster_qids, rng)
             a, b, ci_, cp = wds(w)
             bootA.append(a); bootB.append(b); bootCi.append(ci_)
             bootR.append(b - a); bootI.append(ci_ - b)
+            ae, be, ce = wmean('a', w), wmean('b', w), wmean('c', w)
+            bootRE.append(be - ae); bootIE.append(ce - be)
         res[ax] = {
             'n_qopp': len(keys), 'n_cluster_questions': len(cluster_qids),
             'n_human_votes': len(A), 'n_llm_pairwise_votes': len(B),
@@ -388,9 +403,16 @@ def common_support_abc(R, P, H, rng):
             'C_individual': round(ci0, 1), 'C_individual_ci': ci(bootCi),
             'C_panel_threshold': round(cp0, 1),
             'rater_B_minus_A': round(b0 - a0, 1), 'rater_ci': ci(bootR),
-            'rater_p': round(two_sided_p(bootR), 4),
+            'rater_p_boot_tail': round(two_sided_p(bootR), 4),
             'instrument_Cind_minus_B': round(ci0 - b0, 1), 'instrument_ci': ci(bootI),
-            'instrument_p': round(two_sided_p(bootI), 4),
+            'instrument_p_boot_tail': round(two_sided_p(bootI), 4),
+            # equal-key sensitivity (each q×opp weighted once; votes averaged within key)
+            'equal_key': {
+                'A_human': round(aE, 1), 'B_llm_pairwise': round(bE, 1), 'C_individual': round(cE, 1),
+                'rater_B_minus_A': round(bE - aE, 1), 'rater_ci': ci(bootRE),
+                'rater_p_boot_tail': round(two_sided_p(bootRE), 4),
+                'instrument_Cind_minus_B': round(cE - bE, 1), 'instrument_ci': ci(bootIE),
+            },
         }
     return res
 
@@ -405,14 +427,19 @@ def main():
         p = P[ax]; ref = out.get('panel_threshold_reference', {}).get(ax, float('nan'))
         print(f"{ax:16s}{p['instrument_mean']:>+7.1f}{str(p['instrument_ci_fixed']):>16s}"
               f"{str(p['instrument_p_holm']):>8s}{str(p['sign_consistent_all_judges']):>6s}{ref:>+13.1f}")
-    print("\n=== EXACT common-support A -> B -> C (human ∩ 4pw ∩ 4rubric) ===")
+    print("\n=== EXACT common-support A -> B -> C (human ∩ 4pw ∩ 4rubric); p = bootstrap tail prob ===")
     for ax in AXES:
         c = out['common_support_abc'][ax]
         if c.get('n_qopp'):
+            e = c['equal_key']
             print(f"{ax:16s} n(q×opp)={c['n_qopp']:3d}  A={c['A_human']:+6.1f}{str(c['A_ci']):>15s}"
                   f"  B={c['B_llm_pairwise']:+6.1f}  Cind={c['C_individual']:+6.1f}"
-                  f"  rater={c['rater_B_minus_A']:+6.1f}{str(c['rater_ci']):>15s} p={c['rater_p']}"
+                  f"  rater={c['rater_B_minus_A']:+6.1f}{str(c['rater_ci']):>15s} p={c['rater_p_boot_tail']}"
                   f"  instr={c['instrument_Cind_minus_B']:+6.1f}{str(c['instrument_ci']):>15s}")
+            print(f"{'  └ equal-key':16s}          A={e['A_human']:+6.1f}{'':>15s}"
+                  f"  B={e['B_llm_pairwise']:+6.1f}  Cind={e['C_individual']:+6.1f}"
+                  f"  rater={e['rater_B_minus_A']:+6.1f}{str(e['rater_ci']):>15s} p={e['rater_p_boot_tail']}"
+                  f"  instr={e['instrument_Cind_minus_B']:+6.1f}{str(e['instrument_ci']):>15s}")
     print("\n=== tie-margin (accuracy): cell C and format effect C-B per dead-zone ===")
     for k, v in out['tie_margin_sensitivity']['accuracy'].items():
         print(f"  {k:24s} {v}")

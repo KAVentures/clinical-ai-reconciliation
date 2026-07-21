@@ -82,21 +82,18 @@ def test_boot_weights_universe_is_only_matched_clusters():
 
 
 def test_individual_vs_panel_aggregation_differ():
-    # THE central artifact: two judges split, panel-mean-then-threshold amplifies vs individual mean.
-    # judge A: OE 2 vs opp 4 -> -1 ; judge B: OE 3.9 vs opp 4 -> -1 (tiny gap still a loss)
-    # individual votes: [-1, -1] each judge one unit -> both windiff -100 ; mean -100
-    # panel mean gap = ((2-4)+(3.9-4))/2 = -1.05 -> threshold -1 as well here; construct a real split:
-    # judge A: OE 4 vs opp 2 (+1) ; judge B: OE 2 vs opp 4 (-1) -> individual mean of windiffs = 0
-    # panel mean gap = ((4-2)+(2-4))/2 = 0 -> tie. Both agree = 0 here (sanity boundary).
-    jA = windiff([threshold(4 - 2)])   # +100
-    jB = windiff([threshold(2 - 4)])   # -100
-    assert (jA + jB) / 2 == 0.0
-    panel = windiff([threshold((4 + 2) / 2 - (2 + 4) / 2)])  # threshold(0) -> 0
-    assert panel == 0.0
-    # now the amplifying case: 3 judges mildly negative, panel crosses threshold consistently
-    gaps = [-0.2, -0.2, -0.2]                      # each a small loss
-    indiv = sum(windiff([threshold(g)]) for g in gaps) / 3   # -100 (all count as full losses individually too)
-    assert indiv == -100.0
+    # THE central artifact, demonstrated with a case where the two aggregations DISAGREE.
+    # One judge gives a large positive gap, another a small negative gap:
+    #   judge A: OE 4 vs opp 1 -> gap +3 -> vote +1
+    #   judge B: OE 3 vs opp 4 -> gap -1 -> vote -1
+    # INDIVIDUAL: signed votes [+1, -1] cancel -> win-difference 0.
+    individual_votes = [threshold(4 - 1), threshold(3 - 4)]
+    assert windiff(individual_votes) == 0.0
+    # PANEL-MEAN-THEN-THRESHOLD: mean gap = ((4-1)+(3-4))/2 = +1.0 -> vote +1 -> win-difference +100.
+    panel_gap = ((4 - 1) + (3 - 4)) / 2
+    assert windiff([threshold(panel_gap)]) == 100.0
+    # Same inputs, opposite conclusions: this is why the paper reports the aggregation-matched
+    # (individual) statistic as primary rather than panel-mean-then-threshold.
 
 
 def test_holm_monotone_and_capped():

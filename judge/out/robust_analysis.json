@@ -441,13 +441,29 @@
         -23.5,
         7.1
       ],
-      "rater_p": 0.299,
+      "rater_p_boot_tail": 0.299,
       "instrument_Cind_minus_B": -17.8,
       "instrument_ci": [
         -27.0,
         -8.4
       ],
-      "instrument_p": 0.001
+      "instrument_p_boot_tail": 0.001,
+      "equal_key": {
+        "A_human": 6.9,
+        "B_llm_pairwise": 1.2,
+        "C_individual": -16.7,
+        "rater_B_minus_A": -5.8,
+        "rater_ci": [
+          -21.2,
+          9.0
+        ],
+        "rater_p_boot_tail": 0.443,
+        "instrument_Cind_minus_B": -17.8,
+        "instrument_ci": [
+          -27.0,
+          -8.4
+        ]
+      }
     },
     "clinical_utility": {
       "n_qopp": 108,
@@ -475,13 +491,29 @@
         -17.5,
         21.4
       ],
-      "rater_p": 0.818,
+      "rater_p_boot_tail": 0.818,
       "instrument_Cind_minus_B": -20.4,
       "instrument_ci": [
         -31.6,
         -8.8
       ],
-      "instrument_p": 0.002
+      "instrument_p_boot_tail": 0.002,
+      "equal_key": {
+        "A_human": 13.9,
+        "B_llm_pairwise": 15.3,
+        "C_individual": -5.1,
+        "rater_B_minus_A": 1.4,
+        "rater_ci": [
+          -18.8,
+          21.4
+        ],
+        "rater_p_boot_tail": 0.915,
+        "instrument_Cind_minus_B": -20.4,
+        "instrument_ci": [
+          -31.6,
+          -8.8
+        ]
+      }
     },
     "source_quality": {
       "n_qopp": 108,
@@ -509,13 +541,29 @@
         6.9,
         43.0
       ],
-      "rater_p": 0.006,
+      "rater_p_boot_tail": 0.006,
       "instrument_Cind_minus_B": -40.0,
       "instrument_ci": [
         -48.8,
         -31.3
       ],
-      "instrument_p": 0.0005
+      "instrument_p_boot_tail": 0.0005,
+      "equal_key": {
+        "A_human": 18.5,
+        "B_llm_pairwise": 47.2,
+        "C_individual": 7.2,
+        "rater_B_minus_A": 28.7,
+        "rater_ci": [
+          10.4,
+          47.1
+        ],
+        "rater_p_boot_tail": 0.002,
+        "instrument_Cind_minus_B": -40.0,
+        "instrument_ci": [
+          -48.8,
+          -31.3
+        ]
+      }
     },
     "completeness": {
       "n_qopp": 108,
@@ -543,13 +591,29 @@
         1.8,
         33.6
       ],
-      "rater_p": 0.034,
+      "rater_p_boot_tail": 0.034,
       "instrument_Cind_minus_B": -32.6,
       "instrument_ci": [
         -44.6,
         -20.9
       ],
-      "instrument_p": 0.0005
+      "instrument_p_boot_tail": 0.0005,
+      "equal_key": {
+        "A_human": 11.1,
+        "B_llm_pairwise": 29.9,
+        "C_individual": -2.8,
+        "rater_B_minus_A": 18.8,
+        "rater_ci": [
+          3.6,
+          34.0
+        ],
+        "rater_p_boot_tail": 0.017,
+        "instrument_Cind_minus_B": -32.6,
+        "instrument_ci": [
+          -44.6,
+          -20.9
+        ]
+      }
     },
     "verifiability": {
       "n_qopp": 108,
@@ -577,13 +641,29 @@
         12.9,
         46.2
       ],
-      "rater_p": 0.003,
+      "rater_p_boot_tail": 0.003,
       "instrument_Cind_minus_B": -43.1,
       "instrument_ci": [
         -52.2,
         -33.1
       ],
-      "instrument_p": 0.0005
+      "instrument_p_boot_tail": 0.0005,
+      "equal_key": {
+        "A_human": 14.5,
+        "B_llm_pairwise": 44.0,
+        "C_individual": 0.9,
+        "rater_B_minus_A": 29.5,
+        "rater_ci": [
+          11.9,
+          45.8
+        ],
+        "rater_p_boot_tail": 0.003,
+        "instrument_Cind_minus_B": -43.1,
+        "instrument_ci": [
+          -52.2,
+          -33.1
+        ]
+      }
     }
   },
   "rendering_note": "A used qa_text_only; B/C judged answer_markdown (OE carries citations in ~29% of answers). A-vs-B/C is NOT presentation-matched; the citation-free subset RESTRICTS to OE answers with no detected citation markers (it does not strip citations and does not equate the human/LLM renderings).",

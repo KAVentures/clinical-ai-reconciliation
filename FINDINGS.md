@@ -174,13 +174,16 @@ transparency but is **superseded** on two points by the aggregation-matched and 
    1–4 gap only −0.125). Accuracy is the **weakest** axis, not the headline.
 2. **Exact common-support decomposition (identical keys A/B/C; 108 q×opp/axis).** The format component
    (C−B) is negative on all five axes (accuracy −17.8, CU −20.4, SQ −40.0, comp −32.6, verif −43.1; CIs
-   exclude zero). The human→LLM rater term (B−A) is **null on accuracy (−7.9 pp [−23.5, +7.1], p=0.30)** and
-   clinical utility, but significantly **positive** on source_quality (+25.1), completeness (+17.6),
-   verifiability (+30.0). So we do **not** claim "instrument, not the rater" (rater is a real contributor on
-   3 axes) nor that the rater is large/negative on accuracy. **NOTE — corrects a prior-revision error:** an
-   earlier pass reported the accuracy rater term as −24.0 pp by comparing the *full-bank* human edge (+24.4)
-   against the *matched* LLM value (a vacuous support filter). Properly matched, it is −7.9 pp (NS). The
-   "~83% instrument share" is withdrawn as ill-posed.
+   exclude zero). The human→LLM **protocol contrast (B−A)** — which changes rater population *and* answer
+   rendering (physicians saw `qa_text_only`; LLM judges saw citation-bearing `answer_markdown`, ~29% of OE
+   answers cited) — is **null on accuracy (−7.9 pp [−23.5, +7.1], tail p=0.30)** and clinical utility, but
+   significantly **positive** on source_quality (+25.1), completeness (+17.6), verifiability (+30.0). These
+   are the axes most sensitive to citation presence → B−A is rater+rendering, not rater population alone.
+   Robust to **equal-key weighting** (accuracy −5.8 NS; SQ +28.7, comp +18.8, verif +29.5 all sig; format
+   C−B unchanged). So we do **not** claim "instrument, not the rater" nor that B−A is large/negative on
+   accuracy. **NOTE — corrects a prior-revision error:** an earlier pass reported accuracy B−A as −24.0 pp by
+   comparing the *full-bank* human edge (+24.4) against the *matched* LLM value (a vacuous support filter);
+   properly matched it is −7.9 pp (NS). "~83% instrument share" withdrawn.
 
 **Result (corrected).** The robust, assumption-light claim is **format-with-rater-fixed**: the same LLM
 judge, switched pairwise→rubric, moves OE-vs-frontier negative on all five axes. Both format and rater
