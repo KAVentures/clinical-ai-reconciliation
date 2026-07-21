@@ -20,7 +20,8 @@ echo "== 2c. no-API robust analyses on committed judge outputs (crossed bootstra
 echo "        aggregation-matched same-judge = PRIMARY; supplementary; per-item export) =="
 if [ -f judge/out/grades.jsonl ] && [ -f judge/out/pairwise.jsonl ]; then
   ( cd judge && python3 bootstrap_panel.py && python3 robust_analysis.py \
-        && python3 robust_supplementary.py && python3 export_disagreement.py )
+        && python3 robust_supplementary.py && python3 export_disagreement.py \
+        && python3 judge_subsets.py && python3 flip_predictors.py )
 else
   echo "   (judge/out/grades.jsonl or pairwise.jsonl absent — will be produced by judge steps below)"
 fi
@@ -56,6 +57,7 @@ echo "== 9. length-matched sub-study on the rubric cell (no new API calls; uses 
 echo "== 10. regenerate robust analyses on freshly graded outputs (crossed bootstrap, aggregation-matched"
 echo "         same-judge PRIMARY, supplementary, per-item export) =="
 ( cd judge && python3 bootstrap_panel.py && python3 robust_analysis.py \
-      && python3 robust_supplementary.py && python3 export_disagreement.py )
+      && python3 robust_supplementary.py && python3 export_disagreement.py \
+      && python3 judge_subsets.py && python3 flip_predictors.py )
 
 echo "== DONE. Outputs in out/ and judge/out/. =="

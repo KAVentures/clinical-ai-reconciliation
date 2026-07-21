@@ -1,0 +1,90 @@
+{
+  "n_decisive_items": 1318,
+  "n_questions": 149,
+  "overall_flip_rate": 0.256,
+  "note": "observational associations, NOT causal; query provenance unavailable in vendored data",
+  "gee_logistic": {
+    "terms": {
+      "Intercept": {
+        "log_odds": 1.616,
+        "p": 0.0013
+      },
+      "C(axis)[T.clinical_utility]": {
+        "log_odds": 0.23,
+        "p": 0.3039
+      },
+      "C(axis)[T.completeness]": {
+        "log_odds": 0.784,
+        "p": 0.0019
+      },
+      "C(axis)[T.source_quality]": {
+        "log_odds": 0.978,
+        "p": 0.0013
+      },
+      "C(axis)[T.verifiability]": {
+        "log_odds": 0.97,
+        "p": 0.002
+      },
+      "C(opponent)[T.gemini-3.1-pro]": {
+        "log_odds": -0.265,
+        "p": 0.1382
+      },
+      "C(opponent)[T.gpt-5.5]": {
+        "log_odds": -0.073,
+        "p": 0.6751
+      },
+      "abs_margin": {
+        "log_odds": -2.73,
+        "p": 0.0
+      },
+      "agreement": {
+        "log_odds": -2.781,
+        "p": 0.0
+      },
+      "dispersion": {
+        "log_odds": -0.633,
+        "p": 0.334
+      },
+      "ceiling": {
+        "log_odds": 0.217,
+        "p": 0.4265
+      },
+      "oe_cited": {
+        "log_odds": -0.069,
+        "p": 0.761
+      },
+      "abs_len_diff_k": {
+        "log_odds": 0.163,
+        "p": 0.0771
+      }
+    },
+    "family": "Binomial",
+    "cov": "exchangeable, clustered by question_id"
+  },
+  "flip_rate_by_margin_x_agreement": {
+    "small|high_agree": {
+      "flip_rate": 0.304,
+      "n": 549
+    },
+    "small|low_agree": {
+      "flip_rate": 0.435,
+      "n": 184
+    },
+    "mid|high_agree": {
+      "flip_rate": 0.139,
+      "n": 267
+    },
+    "mid|low_agree": {
+      "flip_rate": 0.329,
+      "n": 85
+    },
+    "large|high_agree": {
+      "flip_rate": 0.082,
+      "n": 196
+    },
+    "large|low_agree": {
+      "flip_rate": 0.27,
+      "n": 37
+    }
+  }
+}

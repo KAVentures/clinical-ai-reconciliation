@@ -126,6 +126,8 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 | `judge/analyze_*.py`, `judge/bootstrap_grades.py`, `judge/length_analysis.py` | Win-diffs, 2×2 decomposition, self-preference, bootstrap CIs, length sub-study |
 | `judge/bootstrap_panel.py` | Crossed question × judge bootstrap (primary inference); writes `judge/out/panel_bootstrap.json` |
 | `judge/export_disagreement.py` (+ `test_export_disagreement.py`) | Per-item instrument-disagreement audit export → `judge/out/instrument_disagreement.csv` + `_by_axis.json`; deterministic test pins the flip definition (issue #1) |
+| `judge/judge_subsets.py` | Finite-panel sensitivity: format effect over all 15 non-empty judge subsets → `judge/out/judge_subsets.json` (every subset negative on every axis) |
+| `judge/flip_predictors.py` | Question-clustered GEE logistic for what predicts a per-item instrument flip → `judge/out/flip_predictors.json` (flips concentrate at small margin / low agreement) |
 | `judge/make_figure*.py`, `judge/verify_thinking.py` | Figure generation and per-judge reasoning-token verification |
 | `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
 

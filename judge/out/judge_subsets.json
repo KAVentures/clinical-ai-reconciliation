@@ -1,0 +1,236 @@
+{
+  "n_subsets": 15,
+  "judges": [
+    "gpt-5.5",
+    "opus-4.8",
+    "grok-4.3",
+    "gemini-3.5-flash"
+  ],
+  "by_axis": {
+    "accuracy": {
+      "full_panel": -16.9,
+      "min": -34.1,
+      "max": -3.2,
+      "median": -16.9,
+      "n_subsets_negative": 15,
+      "n_subsets": 15,
+      "sign_preserved_frac": 1.0,
+      "per_single_judge": {
+        "gpt-5.5": -12.7,
+        "opus-4.8": -34.1,
+        "grok-4.3": -17.7,
+        "gemini-3.5-flash": -3.2
+      },
+      "by_panel_size": {
+        "1": {
+          "min": -34.1,
+          "max": -3.2,
+          "median": -15.2,
+          "n_negative": 4,
+          "n": 4
+        },
+        "2": {
+          "min": -25.9,
+          "max": -7.9,
+          "median": -16.9,
+          "n_negative": 6,
+          "n": 6
+        },
+        "3": {
+          "min": -21.5,
+          "max": -11.2,
+          "median": -17.5,
+          "n_negative": 4,
+          "n": 4
+        },
+        "4": {
+          "min": -16.9,
+          "max": -16.9,
+          "median": -16.9,
+          "n_negative": 1,
+          "n": 1
+        }
+      }
+    },
+    "clinical_utility": {
+      "full_panel": -21.3,
+      "min": -38.1,
+      "max": -6.8,
+      "median": -21.3,
+      "n_subsets_negative": 15,
+      "n_subsets": 15,
+      "sign_preserved_frac": 1.0,
+      "per_single_judge": {
+        "gpt-5.5": -8.2,
+        "opus-4.8": -38.1,
+        "grok-4.3": -32.2,
+        "gemini-3.5-flash": -6.8
+      },
+      "by_panel_size": {
+        "1": {
+          "min": -38.1,
+          "max": -6.8,
+          "median": -20.2,
+          "n_negative": 4,
+          "n": 4
+        },
+        "2": {
+          "min": -35.2,
+          "max": -7.5,
+          "median": -21.3,
+          "n_negative": 6,
+          "n": 6
+        },
+        "3": {
+          "min": -26.2,
+          "max": -15.8,
+          "median": -21.7,
+          "n_negative": 4,
+          "n": 4
+        },
+        "4": {
+          "min": -21.3,
+          "max": -21.3,
+          "median": -21.3,
+          "n_negative": 1,
+          "n": 1
+        }
+      }
+    },
+    "source_quality": {
+      "full_panel": -40.6,
+      "min": -65.5,
+      "max": -26.1,
+      "median": -40.6,
+      "n_subsets_negative": 15,
+      "n_subsets": 15,
+      "sign_preserved_frac": 1.0,
+      "per_single_judge": {
+        "gpt-5.5": -32.0,
+        "opus-4.8": -65.5,
+        "grok-4.3": -38.9,
+        "gemini-3.5-flash": -26.1
+      },
+      "by_panel_size": {
+        "1": {
+          "min": -65.5,
+          "max": -26.1,
+          "median": -35.5,
+          "n_negative": 4,
+          "n": 4
+        },
+        "2": {
+          "min": -52.2,
+          "max": -29.1,
+          "median": -40.6,
+          "n_negative": 6,
+          "n": 6
+        },
+        "3": {
+          "min": -45.5,
+          "max": -32.4,
+          "median": -42.4,
+          "n_negative": 4,
+          "n": 4
+        },
+        "4": {
+          "min": -40.6,
+          "max": -40.6,
+          "median": -40.6,
+          "n_negative": 1,
+          "n": 1
+        }
+      }
+    },
+    "completeness": {
+      "full_panel": -37.4,
+      "min": -46.6,
+      "max": -22.5,
+      "median": -37.4,
+      "n_subsets_negative": 15,
+      "n_subsets": 15,
+      "sign_preserved_frac": 1.0,
+      "per_single_judge": {
+        "gpt-5.5": -38.2,
+        "opus-4.8": -46.6,
+        "grok-4.3": -42.1,
+        "gemini-3.5-flash": -22.5
+      },
+      "by_panel_size": {
+        "1": {
+          "min": -46.6,
+          "max": -22.5,
+          "median": -40.1,
+          "n_negative": 4,
+          "n": 4
+        },
+        "2": {
+          "min": -44.3,
+          "max": -30.4,
+          "median": -37.4,
+          "n_negative": 6,
+          "n": 6
+        },
+        "3": {
+          "min": -42.3,
+          "max": -34.3,
+          "median": -36.4,
+          "n_negative": 4,
+          "n": 4
+        },
+        "4": {
+          "min": -37.4,
+          "max": -37.4,
+          "median": -37.4,
+          "n_negative": 1,
+          "n": 1
+        }
+      }
+    },
+    "verifiability": {
+      "full_panel": -45.8,
+      "min": -67.7,
+      "max": -25.2,
+      "median": -45.8,
+      "n_subsets_negative": 15,
+      "n_subsets": 15,
+      "sign_preserved_frac": 1.0,
+      "per_single_judge": {
+        "gpt-5.5": -42.2,
+        "opus-4.8": -67.7,
+        "grok-4.3": -47.9,
+        "gemini-3.5-flash": -25.2
+      },
+      "by_panel_size": {
+        "1": {
+          "min": -67.7,
+          "max": -25.2,
+          "median": -45.0,
+          "n_negative": 4,
+          "n": 4
+        },
+        "2": {
+          "min": -57.8,
+          "max": -33.7,
+          "median": -45.8,
+          "n_negative": 6,
+          "n": 6
+        },
+        "3": {
+          "min": -52.6,
+          "max": -38.4,
+          "median": -46.0,
+          "n_negative": 4,
+          "n": 4
+        },
+        "4": {
+          "min": -45.8,
+          "max": -45.8,
+          "median": -45.8,
+          "n_negative": 1,
+          "n": 1
+        }
+      }
+    }
+  }
+}

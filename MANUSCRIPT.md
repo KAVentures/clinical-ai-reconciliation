@@ -589,6 +589,30 @@ Google API account exhausted its credit quota mid-run; after credits were restor
 to 448/450, and the point estimates shifted <3 pp from the partial-coverage run — i.e., the conclusion
 never depended on the missing data.)
 
+#### 4.5e Finite-panel stability and what predicts a per-item flip (supplementary)
+
+**Finite-panel stability.** With only four purposive judges we make no random-judge generalization claim,
+but we can bound how the format effect behaves across the panel: enumerating **all 15 non-empty judge
+subsets** (`judge/judge_subsets.py`), the aggregation-matched format effect is **negative on every axis for
+every subset** — including each judge *alone* (accuracy range across subsets −34.1 to −3.2; source
+quality −65.5 to −26.1). No subset, and no single judge, reverses the sign. We label this a finite-panel
+sensitivity, not population inference.
+
+**What predicts a per-item flip.** We fit a prespecified question-clustered GEE logistic (cluster-robust
+by question; `judge/flip_predictors.py`) for whether an item's rubric and LLM-pairwise winners disagree, on
+1,318 decidable (question, axis, opponent) items (overall flip rate 25.6%). Flips are strongly concentrated
+at **small rubric margin** (log-odds −2.73, *p*<0.001) and **low pairwise agreement** (−2.78, *p*<0.001):
+the flip rate falls from 43.5% (small margin, split judges) to **8.2%** (large margin, unanimous judges).
+Part of the margin association is mechanical — a winner reversal is likelier when the rubric margin is near
+zero — so most per-item disagreement is **decision-boundary resolution/instability**, not a deep construct
+conflict. But flips do **not** vanish at large margin and unanimous agreement (they persist at ~8%), a
+residual consistent with genuinely different evaluation constructs; and axis matters (source quality,
+verifiability, completeness carry higher flip odds than accuracy, *p*<0.01), mirroring where the aggregate
+format effect is largest. These are **observational** associations, not causal, and query provenance could
+not be entered because the vendored corpus is entirely OE-originated (§8). Importantly, this per-item
+picture qualifies only the *item-level disagreement*; the aggregate directional format effect is systematic,
+not boundary noise (it is negative across all judges and all 15 subsets above).
+
 ### 4.6 The rubric reversal is not a length artifact (Table 3)
 
 Answer length is the most-cited confound in both source studies. A precise word on how it is handled:
@@ -897,8 +921,10 @@ specific effects, rendering verification) are in `judge/robust_analysis.py` → 
 with `judge/test_robust_analysis.py` pinning the estimand definitions; **exploratory supplementary**
 analyses (rubric reliability/resolution, self-preference difference-in-differences, axis factor structure,
 length with opponent fixed effects, paired citation-halo) are in `judge/robust_supplementary.py` →
-`judge/out/robust_supplementary.json`. Nature Medicine numbers are cited from the published article
-(s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
+`judge/out/robust_supplementary.json`; the **finite-panel judge-subset sensitivity** (§4.5e) is in
+`judge/judge_subsets.py` → `judge/out/judge_subsets.json`, and the **per-item flip-predictor GEE logistic**
+(§4.5e) in `judge/flip_predictors.py` → `judge/out/flip_predictors.json`. Nature Medicine numbers are cited
+from the published article (s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
 
 ## References
 
