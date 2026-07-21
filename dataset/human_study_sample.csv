@@ -1,0 +1,91 @@
+question_id,specialty,axis,opponent,flip,margin_bin,dispersion_bin,rubric_margin,rubric_winner,pw_llm_winner,pw_llm_agreement
+b1099d8e-8795-40a7-ac53-cfea4cba2eb7,Allergy & Immunology,source_quality,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,0.75
+ac51f7e3-f29a-4058-8065-e8e0e555d655,Psychiatry,clinical_utility,claude-opus-4-8,True,weak,high_disp,-0.25,claude-opus-4-8,openevidence,0.75
+1a664586-4682-499d-90ee-7b675638251c,Allergy & Immunology,accuracy,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,0.5
+10875205-ddb7-4494-8de8-a908bdc3c4b1,Endocrinology,clinical_utility,claude-opus-4-8,True,weak,high_disp,-0.25,claude-opus-4-8,openevidence,0.75
+d10dc8d4-b911-4085-8da6-0baaf85be9f8,Nephrology,source_quality,gemini-3.1-pro,True,weak,high_disp,-0.25,gemini-3.1-pro,openevidence,0.75
+8e7913d6-d335-4e68-a5c5-37fe0d15dde8,Allergy & Immunology,accuracy,gemini-3.1-pro,True,weak,high_disp,0.25,openevidence,gemini-3.1-pro,0.75
+5aac9b27-26a0-43c1-a79f-d3dd9326f96f,Allergy & Immunology,clinical_utility,claude-opus-4-8,True,weak,low_disp,0.0833,openevidence,claude-opus-4-8,0.5
+d10dc8d4-b911-4085-8da6-0baaf85be9f8,Nephrology,source_quality,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,0.5
+29799072-170b-46a5-817c-f5ffb9433286,Internal Medicine,verifiability,claude-opus-4-8,True,weak,high_disp,-0.25,claude-opus-4-8,openevidence,0.75
+1a664586-4682-499d-90ee-7b675638251c,Allergy & Immunology,accuracy,claude-opus-4-8,True,weak,high_disp,-0.25,claude-opus-4-8,openevidence,0.75
+890aa5dc-8c0b-49d0-8b71-235b7952c466,Rheumatology,verifiability,gemini-3.1-pro,True,weak,high_disp,0.25,openevidence,gemini-3.1-pro,0.5
+ba5ee80f-e041-45fc-ad96-062c55f1be58,Oncology / Hematology,source_quality,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,1.0
+8b83a841-253a-4d25-98ee-109ae07f5141,Cardiology,completeness,gemini-3.1-pro,True,weak,high_disp,-0.25,gemini-3.1-pro,openevidence,1.0
+beac65ee-72dd-4271-b9a0-62f8eeb465ca,Endocrinology,source_quality,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,0.75
+8081744d-7dab-4ce1-b7ae-6988e7556e50,Infectious Disease,clinical_utility,gpt-5.5,True,weak,high_disp,-0.25,gpt-5.5,openevidence,0.75
+c9408057-7857-4467-b84c-886415cc707c,Hospital-Based Medicine,verifiability,gpt-5.5,True,mid,high_disp,-0.5,gpt-5.5,openevidence,0.75
+79cfe10c-b7bf-4ca3-b165-fa4e3642795c,Cardiology,clinical_utility,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,0.5
+a8af8cf1-9aa3-4d34-b394-81c56de4f34f,Dermatology,completeness,gpt-5.5,True,mid,high_disp,-0.4167,gpt-5.5,openevidence,0.5
+96d8a8cc-2e16-44df-a30a-24d358dc5af3,Family Medicine,completeness,gpt-5.5,True,mid,high_disp,-0.5,gpt-5.5,openevidence,0.5
+786b5335-a700-413a-bb8d-da6bc778f04f,Endocrinology,source_quality,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,1.0
+34d58159-a7be-4979-85be-99e135f9b4f9,Endocrinology,completeness,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,0.5
+5aac9b27-26a0-43c1-a79f-d3dd9326f96f,Allergy & Immunology,completeness,gpt-5.5,True,mid,high_disp,-0.5,gpt-5.5,openevidence,0.75
+36009db6-fa13-4300-8ec3-cfb1c3be5ecd,OB / GYN,completeness,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,0.75
+5676841c-e084-45dd-a0f0-9bc018bf97ad,Oncology / Hematology,completeness,gemini-3.1-pro,True,mid,low_disp,-0.3333,gemini-3.1-pro,openevidence,0.5
+b8e77a45-ea26-4c57-b156-b33a28d93878,Surgery,accuracy,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,0.75
+953c79e2-48c9-47cc-a6a6-8eb6236c46d5,Infectious Disease,verifiability,gpt-5.5,True,mid,high_disp,-0.5,gpt-5.5,openevidence,1.0
+0b6252d5-50d7-4cca-b962-4546fe1b056b,Pulmonology,completeness,gpt-5.5,True,mid,high_disp,-0.5,gpt-5.5,openevidence,1.0
+5676841c-e084-45dd-a0f0-9bc018bf97ad,Oncology / Hematology,completeness,gpt-5.5,True,mid,low_disp,-0.5,gpt-5.5,openevidence,0.75
+de9a9028-d1ae-4d49-8d62-4d75566539f1,Otolaryngology,source_quality,gpt-5.5,True,mid,high_disp,0.5,openevidence,gpt-5.5,0.5
+953c79e2-48c9-47cc-a6a6-8eb6236c46d5,Infectious Disease,accuracy,claude-opus-4-8,True,mid,high_disp,-0.5,claude-opus-4-8,openevidence,0.75
+5676841c-e084-45dd-a0f0-9bc018bf97ad,Oncology / Hematology,completeness,claude-opus-4-8,True,strong,low_disp,-0.75,claude-opus-4-8,openevidence,0.5
+5676841c-e084-45dd-a0f0-9bc018bf97ad,Oncology / Hematology,clinical_utility,claude-opus-4-8,True,strong,low_disp,-1.0,claude-opus-4-8,openevidence,0.75
+2cef781c-7e47-4355-ba0e-c22ccea92066,Endocrinology,verifiability,gpt-5.5,True,strong,low_disp,-1.0,gpt-5.5,openevidence,0.5
+c9f8bf8c-7960-4553-920c-696d7b88da0f,Psychiatry,source_quality,gemini-3.1-pro,True,strong,high_disp,-0.75,gemini-3.1-pro,openevidence,0.75
+0b6252d5-50d7-4cca-b962-4546fe1b056b,Pulmonology,completeness,gemini-3.1-pro,True,strong,low_disp,-1.0,gemini-3.1-pro,openevidence,0.5
+58a110a9-44d5-49c0-b073-522df3ec04d0,Radiology,verifiability,gemini-3.1-pro,True,strong,high_disp,-0.75,gemini-3.1-pro,openevidence,0.5
+2cef781c-7e47-4355-ba0e-c22ccea92066,Endocrinology,source_quality,claude-opus-4-8,True,strong,high_disp,-0.75,claude-opus-4-8,openevidence,0.5
+a686b2b7-449b-4051-903f-95f354b8ee75,Transplantation,verifiability,gpt-5.5,True,strong,low_disp,-1.0,gpt-5.5,openevidence,1.0
+2cef781c-7e47-4355-ba0e-c22ccea92066,Endocrinology,verifiability,claude-opus-4-8,True,strong,low_disp,-1.0,claude-opus-4-8,openevidence,0.5
+27d07305-fe4d-4151-8bd3-f4262b06c2b5,Surgery,verifiability,gemini-3.1-pro,True,strong,high_disp,0.75,openevidence,gemini-3.1-pro,0.5
+09eb1da3-5617-4828-91ea-e6b60124e4c6,Anesthesiology,verifiability,gpt-5.5,True,strong,high_disp,-0.75,gpt-5.5,openevidence,0.75
+ebc1f639-9d78-4952-a0cb-f524aae0a8db,Urology,clinical_utility,claude-opus-4-8,True,strong,high_disp,-0.75,claude-opus-4-8,openevidence,0.75
+a686b2b7-449b-4051-903f-95f354b8ee75,Transplantation,source_quality,gpt-5.5,True,strong,low_disp,-1.0,gpt-5.5,openevidence,1.0
+c9408057-7857-4467-b84c-886415cc707c,Hospital-Based Medicine,completeness,gemini-3.1-pro,True,strong,high_disp,-0.75,gemini-3.1-pro,openevidence,0.75
+2cef781c-7e47-4355-ba0e-c22ccea92066,Endocrinology,source_quality,gpt-5.5,True,strong,high_disp,-0.75,gpt-5.5,openevidence,0.75
+c86e6411-330d-4f51-84bf-6f9ff967b729,Cardiology,clinical_utility,gpt-5.5,False,weak,high_disp,-0.25,gpt-5.5,gpt-5.5,0.75
+dc3106bf-b213-40a4-bf94-53219b484539,Radiology,source_quality,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,1.0
+fe83b81a-c6ae-42bf-9409-856929a0fce9,Oncology / Hematology,completeness,claude-opus-4-8,False,weak,high_disp,0.25,openevidence,openevidence,1.0
+0f5b6ff2-0441-4f38-bdcc-97ffa20a2ac3,Dermatology,accuracy,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,0.5
+7cf6f25a-5121-44fb-8700-e7f258e8af98,Endocrinology,accuracy,gpt-5.5,False,weak,high_disp,-0.25,gpt-5.5,gpt-5.5,0.75
+730bc013-2f40-4090-9b88-257bed19b5fa,Neurology,completeness,claude-opus-4-8,False,weak,high_disp,-0.25,claude-opus-4-8,claude-opus-4-8,0.75
+7cf6f25a-5121-44fb-8700-e7f258e8af98,Endocrinology,clinical_utility,gpt-5.5,False,weak,high_disp,-0.25,gpt-5.5,gpt-5.5,0.5
+df0a6bd4-a78d-4a85-96f0-d16006495e55,Cardiology,accuracy,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,0.75
+79cfe10c-b7bf-4ca3-b165-fa4e3642795c,Cardiology,completeness,gemini-3.1-pro,False,weak,high_disp,-0.25,gemini-3.1-pro,gemini-3.1-pro,1.0
+6ce73442-794e-4a4b-832f-84ee05470941,Dermatology,verifiability,claude-opus-4-8,False,weak,high_disp,0.25,openevidence,openevidence,0.5
+f6b9965e-a534-47d6-91d5-f4bf6f6b4e87,Dermatology,completeness,gpt-5.5,False,weak,high_disp,-0.25,gpt-5.5,gpt-5.5,1.0
+4ab96e9f-3c17-4712-86b7-59ad06a81f8d,Pediatrics,source_quality,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,0.5
+39ebbd5a-2034-40fb-89ed-31ea0df9d132,Nephrology,verifiability,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,1.0
+5aac9b27-26a0-43c1-a79f-d3dd9326f96f,Allergy & Immunology,accuracy,claude-opus-4-8,False,weak,low_disp,0.0833,openevidence,openevidence,0.5
+c0be7071-1914-44b6-8119-39756aa1b222,Cardiology,verifiability,gemini-3.1-pro,False,weak,high_disp,0.25,openevidence,openevidence,1.0
+58a110a9-44d5-49c0-b073-522df3ec04d0,Radiology,accuracy,gpt-5.5,False,mid,high_disp,-0.5,gpt-5.5,gpt-5.5,0.75
+a8af8cf1-9aa3-4d34-b394-81c56de4f34f,Dermatology,clinical_utility,claude-opus-4-8,False,mid,high_disp,-0.5,claude-opus-4-8,claude-opus-4-8,0.5
+c5e12e23-3b27-4150-a97b-ac43840d293f,Neurology,verifiability,claude-opus-4-8,False,mid,high_disp,0.5,openevidence,openevidence,0.75
+78811f60-4f3d-46a5-883d-37e0d8de0350,Endocrinology,accuracy,claude-opus-4-8,False,mid,high_disp,-0.5,claude-opus-4-8,claude-opus-4-8,0.6667
+168b7031-80a8-48cd-8e23-046864ebcca6,Endocrinology,accuracy,gemini-3.1-pro,False,mid,high_disp,0.5,openevidence,openevidence,0.5
+8081744d-7dab-4ce1-b7ae-6988e7556e50,Infectious Disease,source_quality,claude-opus-4-8,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+c9f8bf8c-7960-4553-920c-696d7b88da0f,Psychiatry,source_quality,claude-opus-4-8,False,mid,high_disp,-0.5,claude-opus-4-8,claude-opus-4-8,0.75
+beef50e5-907f-4d64-80db-defd901eb932,Oncology / Hematology,source_quality,claude-opus-4-8,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+c1c5da1d-c36a-49da-b541-190aa546fbcf,Rheumatology,verifiability,gemini-3.1-pro,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+c5e12e23-3b27-4150-a97b-ac43840d293f,Neurology,completeness,gemini-3.1-pro,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+14b65d01-fb0a-4c60-96b0-4f53c4b636cf,Internal Medicine,source_quality,gemini-3.1-pro,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+4538103f-6bda-4be4-8e38-ee72351a88d4,Surgery,completeness,gemini-3.1-pro,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+1251ff09-f34d-4486-9d64-bf120aa53cca,Oncology / Hematology,verifiability,claude-opus-4-8,False,mid,high_disp,0.5,openevidence,openevidence,1.0
+d10dc8d4-b911-4085-8da6-0baaf85be9f8,Nephrology,accuracy,gemini-3.1-pro,False,mid,high_disp,-0.5,gemini-3.1-pro,gemini-3.1-pro,0.75
+18fd89e7-5a3a-41cf-b849-10701c0f258c,Radiology,source_quality,claude-opus-4-8,False,mid,high_disp,0.5,openevidence,openevidence,0.75
+647eb9c0-27d0-49dd-abad-4a36b045b19d,Rheumatology,source_quality,gemini-3.1-pro,False,strong,high_disp,1.25,openevidence,openevidence,1.0
+68edcc22-362b-46bd-bdb0-fd6078567592,Oncology / Hematology,verifiability,claude-opus-4-8,False,strong,high_disp,-0.75,claude-opus-4-8,claude-opus-4-8,1.0
+05d7fe92-7253-42f3-8875-3b1ff5f97f61,Pediatrics,verifiability,claude-opus-4-8,False,strong,high_disp,-0.75,claude-opus-4-8,claude-opus-4-8,0.75
+21b0cc35-cc89-4412-ae59-1f949a689671,Rheumatology,clinical_utility,gemini-3.1-pro,False,strong,high_disp,0.75,openevidence,openevidence,0.75
+18fd89e7-5a3a-41cf-b849-10701c0f258c,Radiology,clinical_utility,gemini-3.1-pro,False,strong,high_disp,0.75,openevidence,openevidence,0.75
+c5e12e23-3b27-4150-a97b-ac43840d293f,Neurology,accuracy,gpt-5.5,False,strong,high_disp,-1.0,gpt-5.5,gpt-5.5,0.75
+8e7913d6-d335-4e68-a5c5-37fe0d15dde8,Allergy & Immunology,verifiability,gemini-3.1-pro,False,strong,high_disp,0.75,openevidence,openevidence,1.0
+bd4bb448-0e7f-40a6-a90e-fc4134010942,Family Medicine,accuracy,gpt-5.5,False,strong,low_disp,-1.0,gpt-5.5,gpt-5.5,0.75
+4458569d-0a11-4196-9350-dc1de4e27565,Psychiatry,source_quality,gpt-5.5,False,strong,high_disp,1.0,openevidence,openevidence,1.0
+68edcc22-362b-46bd-bdb0-fd6078567592,Oncology / Hematology,completeness,claude-opus-4-8,False,strong,high_disp,-0.75,claude-opus-4-8,claude-opus-4-8,0.75
+2bb555d5-1921-4350-8007-38b18e9cddc6,Urology,source_quality,gpt-5.5,False,strong,high_disp,0.75,openevidence,openevidence,1.0
+2fc2559e-8a56-48ea-9b36-83a9a20ddcb1,Emergency Medicine,source_quality,claude-opus-4-8,False,strong,high_disp,-0.75,claude-opus-4-8,claude-opus-4-8,1.0
+5676841c-e084-45dd-a0f0-9bc018bf97ad,Oncology / Hematology,clinical_utility,gpt-5.5,False,strong,low_disp,-1.0,gpt-5.5,gpt-5.5,0.75
+ae46bee7-30c2-4bed-bbe5-007f54101465,Family Medicine,source_quality,gemini-3.1-pro,False,strong,high_disp,0.75,openevidence,openevidence,1.0
+4538103f-6bda-4be4-8e38-ee72351a88d4,Surgery,source_quality,gemini-3.1-pro,False,strong,high_disp,0.75,openevidence,openevidence,1.0

@@ -128,6 +128,9 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 | `judge/export_disagreement.py` (+ `test_export_disagreement.py`) | Per-item instrument-disagreement audit export → `judge/out/instrument_disagreement.csv` + `_by_axis.json`; deterministic test pins the flip definition (issue #1) |
 | `judge/judge_subsets.py` | Finite-panel sensitivity: format effect over all 15 non-empty judge subsets → `judge/out/judge_subsets.json` (every subset negative on every axis) |
 | `judge/flip_predictors.py` | Question-clustered GEE logistic for what predicts a per-item instrument flip → `judge/out/flip_predictors.json` (flips concentrate at small margin / low agreement) |
+| `judge/sample_human_study.py` | Stratified 90-item (question×opponent) sampling frame for the human study → `dataset/human_study_sample.csv` |
+| `HUMAN_STUDY_PROTOCOL.md` | Pre-registration draft: fill the missing {rubric, human} cell D + clinician adjudication (completes the 2×2 factorial; needs IRB + clinicians) |
+| `dataset/` | Reusable dual-instrument dataset: `build_dataset.py`, tidy `tables/`, `DATASET_CARD.md`, `quickstart.py` (benchmark task: predict instrument disagreement) |
 | `judge/make_figure*.py`, `judge/verify_thinking.py` | Figure generation and per-judge reasoning-token verification |
 | `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
 

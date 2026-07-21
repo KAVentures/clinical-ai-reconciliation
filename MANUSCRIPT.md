@@ -923,8 +923,12 @@ analyses (rubric reliability/resolution, self-preference difference-in-differenc
 length with opponent fixed effects, paired citation-halo) are in `judge/robust_supplementary.py` →
 `judge/out/robust_supplementary.json`; the **finite-panel judge-subset sensitivity** (§4.5e) is in
 `judge/judge_subsets.py` → `judge/out/judge_subsets.json`, and the **per-item flip-predictor GEE logistic**
-(§4.5e) in `judge/flip_predictors.py` → `judge/out/flip_predictors.json`. Nature Medicine numbers are cited
-from the published article (s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
+(§4.5e) in `judge/flip_predictors.py` → `judge/out/flip_predictors.json`. A pre-registration draft for the
+missing {rubric, human} cell D and a clinician-adjudicated reference standard is in `HUMAN_STUDY_PROTOCOL.md`
+(with a stratified 90-item sampling frame in `dataset/human_study_sample.csv`), and the data are packaged as
+a reusable **dual-instrument dataset** (`dataset/`, CC BY 4.0 inheriting from Real-POCQi) with a benchmark
+task for predicting instrument disagreement. Nature Medicine numbers are cited from the published article
+(s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
 
 ## References
 

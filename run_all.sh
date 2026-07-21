@@ -21,7 +21,8 @@ echo "        aggregation-matched same-judge = PRIMARY; supplementary; per-item 
 if [ -f judge/out/grades.jsonl ] && [ -f judge/out/pairwise.jsonl ]; then
   ( cd judge && python3 bootstrap_panel.py && python3 robust_analysis.py \
         && python3 robust_supplementary.py && python3 export_disagreement.py \
-        && python3 judge_subsets.py && python3 flip_predictors.py )
+        && python3 judge_subsets.py && python3 flip_predictors.py && python3 sample_human_study.py )
+  ( cd dataset && python3 build_dataset.py )
 else
   echo "   (judge/out/grades.jsonl or pairwise.jsonl absent — will be produced by judge steps below)"
 fi
