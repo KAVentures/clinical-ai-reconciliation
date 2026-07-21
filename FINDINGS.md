@@ -161,29 +161,36 @@ B−A and C−B carry real CIs, not point-estimate arithmetic:
 | completeness | +23.4 [+2.2, +45.4] | **−40.5 [−53.6, −22.0]** |
 | verifiability | +30.7 [+7.9, +53.6] | **−44.4 [−62.0, −29.1]** |
 
-The **instrument component (C−B) is negative with a crossed CI excluding zero on all five axes**; the
-**rater component (B−A) is indistinguishable from zero on accuracy** (and on clinical_utility and source
-quality). This is the judge-robust core.
+The instrument component (C−B) is negative with a crossed CI excluding zero on all five axes at the
+**panel level**. **⚠️ CORRECTION (this revision):** the panel-level table above is retained for
+transparency but is **superseded** on two points by the aggregation-matched and common-support analyses
+(`judge/robust_analysis.py`):
 
-**Result.** (1) **LLM judges doing *pairwise* reproduce the human verdict**: OE wins on 4 of 5 axes
-(source_quality +48.8, verifiability +45.1, completeness +37.0, clinical_utility +18.2; accuracy
-attenuates to a null +3.6). The "LLMs just disagree with physicians" story is false for 4/5 axes given
-the *same* instrument. (2) **The instrument-format component (C−B) is large, negative, and consistent on
-every axis (−30.4 to −44.4 pp) and dominates the rater-modality component (B−A, small on accuracy,
-positive on three axes).** → The disagreement is driven by the **pairwise→rubric instrument change, not
-human→LLM raters.** Accuracy is the one axis where both components push negative; the instrument point
-estimate is ~83% of the swing (−32.7 vs −6.8), **but that ratio is a quotient of two noisy differences —
-its joint crossed bootstrap 95% CI is [35%, 206%]**, so we do **not** quote a precise fraction. The
-judge-robust statement is the one the CIs support: **the instrument component is significantly negative on
-all five axes; the rater component is not distinguishable from zero on accuracy.**
+1. **Primary is now the aggregation-matched, same-judge format component** (each judge's own rubric
+   thresholded and pooled like its own pairwise votes): accuracy −16.9, clinical_utility −21.3,
+   source_quality −40.6, completeness −37.4, verifiability −45.8 pp — all Holm-significant, all
+   sign-consistent across four judges, simultaneous CIs exclude zero. The panel-level −29.1/−32.7 accuracy
+   figures were inflated by averaging judges **then** thresholding (a ±0.25 tie-band gives −13.8; native
+   1–4 gap only −0.125). Accuracy is the **weakest** axis, not the headline.
+2. **The rater term is NOT null — we retract "instrument, not the rater."** On **exact common support**
+   (matching every question×opponent×axis with a human rating), the accuracy rater term B−A is **−24.0 pp
+   [−35.7, −12.5]**: LLM pairwise judges reproduce only +0.5 pp of physicians' +24.4 pp OE accuracy edge on
+   the same questions. The panel-level "−6.8, null" was a support-mismatch artifact. **Both** the rater
+   change and the format change contribute; the "~83% instrument share" is withdrawn.
+
+**Result (corrected).** The robust, assumption-light claim is **format-with-rater-fixed**: the same LLM
+judge, switched pairwise→rubric, moves OE-vs-frontier negative on all five axes. It is a **three-cell path
+decomposition, not a factorial** — both components matter, and the bridge to the human-rated Nature rubric
+assumes a small (untested) rater×format interaction.
 
 **Scope caveat (the missing fourth cell).** This decomposition is identified *within LLM raters*: we have
 A = {pairwise, human}, B = {pairwise, LLM}, C = {rubric, LLM}, but **not** D = {rubric, human}.
 Generalizing the instrument effect (C−B) to explain the *human-rated* Nature rubric therefore assumes **no
 rater×instrument interaction** — that humans doing a rubric would show the same pairwise→rubric shift LLMs
 do. Untested, and plausibly the direction where interaction lives (humans may not share the frontier-prose
-prior an LLM rubric rewards). Proven claim = "instrument dominates rater *modality* among LLM raters";
-bridge to Nature = conditional on additivity. Filling cell D (even small-n human rubric) is the top
+prior an LLM rubric rewards). Proven claim = "with the rater held fixed, the evaluation format shifts the
+ranking on all five axes"; we do **not** claim the format acts instead of the rater (both matter, §above);
+bridge to Nature = conditional on a small rater×format interaction. Filling cell D (even small-n human rubric) is the top
 follow-up. Minor: B−A also absorbs protocol differences (tie handling, pair structure) between Real-POCQi's
 human pairwise and our LLM pairwise, so it is "rater modality + protocol," not pure rater.
 

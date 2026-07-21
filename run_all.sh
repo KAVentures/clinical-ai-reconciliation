@@ -13,10 +13,22 @@ python3 fetch_data.py
 echo "== 2. public-data analyses (metric reproduction, citation halo, power) -- no API keys =="
 python3 analysis/analyze.py
 
+echo "== 2b. deterministic unit tests (no API) =="
+( cd judge && python3 test_export_disagreement.py && python3 test_robust_analysis.py )
+
+echo "== 2c. no-API robust analyses on committed judge outputs (crossed bootstrap = PRIMARY-panel;"
+echo "        aggregation-matched same-judge = PRIMARY; supplementary; per-item export) =="
+if [ -f judge/out/grades.jsonl ] && [ -f judge/out/pairwise.jsonl ]; then
+  ( cd judge && python3 bootstrap_panel.py && python3 robust_analysis.py \
+        && python3 robust_supplementary.py && python3 export_disagreement.py )
+else
+  echo "   (judge/out/grades.jsonl or pairwise.jsonl absent — will be produced by judge steps below)"
+fi
+
 # ---- The steps below require judge/providers.py KEYS_PATH to point at a file with
 # ---- OPENAI_API_KEY / ANTHROPIC_API_KEY / XAI_API_KEY / GOOGLE_API_KEY. Skip with SKIP_JUDGES=1.
 if [ "${SKIP_JUDGES:-0}" = "1" ]; then
-  echo "== SKIP_JUDGES=1 set: skipping LLM-judge steps (3-6). =="
+  echo "== SKIP_JUDGES=1 set: skipping LLM-judge steps (3-9); robust analyses above used committed outputs. =="
   exit 0
 fi
 
@@ -40,5 +52,10 @@ echo "== 8. 2x2 decomposition (rater-modality vs instrument-format effects) + Fi
 
 echo "== 9. length-matched sub-study on the rubric cell (no new API calls; uses existing grades) =="
 ( cd judge && python3 length_analysis.py )
+
+echo "== 10. regenerate robust analyses on freshly graded outputs (crossed bootstrap, aggregation-matched"
+echo "         same-judge PRIMARY, supplementary, per-item export) =="
+( cd judge && python3 bootstrap_panel.py && python3 robust_analysis.py \
+      && python3 robust_supplementary.py && python3 export_disagreement.py )
 
 echo "== DONE. Outputs in out/ and judge/out/. =="

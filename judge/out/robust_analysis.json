@@ -1,0 +1,587 @@
+{
+  "nboot": 2000,
+  "seed": 62,
+  "n_questions": 391,
+  "judges": [
+    "gpt-5.5",
+    "opus-4.8",
+    "grok-4.3",
+    "gemini-3.5-flash"
+  ],
+  "estimand": "instrument = mean_j (C_j - B_j), aggregation-matched same-judge, rater fixed",
+  "primary_instrument": {
+    "accuracy": {
+      "per_judge_delta": {
+        "gpt-5.5": -12.7,
+        "opus-4.8": -34.1,
+        "grok-4.3": -17.7,
+        "gemini-3.5-flash": -3.2
+      },
+      "instrument_mean": -16.9,
+      "instrument_ci_fixed": [
+        -22.3,
+        -11.4
+      ],
+      "instrument_ci_crossed": [
+        -29.7,
+        -4.3
+      ],
+      "per_judge_delta_ci": {
+        "gpt-5.5": [
+          -21.4,
+          -3.7
+        ],
+        "opus-4.8": [
+          -43.4,
+          -24.6
+        ],
+        "grok-4.3": [
+          -26.0,
+          -9.1
+        ],
+        "gemini-3.5-flash": [
+          -11.4,
+          5.0
+        ]
+      },
+      "sign_consistent_all_judges": true,
+      "instrument_p_raw": 0.0005,
+      "instrument_p_holm": 0.0025,
+      "instrument_simultaneous_ci": [
+        -23.9,
+        -9.9
+      ]
+    },
+    "clinical_utility": {
+      "per_judge_delta": {
+        "gpt-5.5": -8.2,
+        "opus-4.8": -38.1,
+        "grok-4.3": -32.2,
+        "gemini-3.5-flash": -6.8
+      },
+      "instrument_mean": -21.3,
+      "instrument_ci_fixed": [
+        -28.1,
+        -14.3
+      ],
+      "instrument_ci_crossed": [
+        -36.5,
+        -5.3
+      ],
+      "per_judge_delta_ci": {
+        "gpt-5.5": [
+          -16.7,
+          0.6
+        ],
+        "opus-4.8": [
+          -49.1,
+          -27.1
+        ],
+        "grok-4.3": [
+          -41.6,
+          -21.7
+        ],
+        "gemini-3.5-flash": [
+          -17.9,
+          4.8
+        ]
+      },
+      "sign_consistent_all_judges": true,
+      "instrument_p_raw": 0.0005,
+      "instrument_p_holm": 0.0025,
+      "instrument_simultaneous_ci": [
+        -30.2,
+        -12.4
+      ]
+    },
+    "source_quality": {
+      "per_judge_delta": {
+        "gpt-5.5": -32.0,
+        "opus-4.8": -65.5,
+        "grok-4.3": -38.9,
+        "gemini-3.5-flash": -26.1
+      },
+      "instrument_mean": -40.6,
+      "instrument_ci_fixed": [
+        -45.8,
+        -34.9
+      ],
+      "instrument_ci_crossed": [
+        -57.0,
+        -26.1
+      ],
+      "per_judge_delta_ci": {
+        "gpt-5.5": [
+          -40.8,
+          -23.4
+        ],
+        "opus-4.8": [
+          -73.7,
+          -56.8
+        ],
+        "grok-4.3": [
+          -47.0,
+          -30.2
+        ],
+        "gemini-3.5-flash": [
+          -36.5,
+          -15.0
+        ]
+      },
+      "sign_consistent_all_judges": true,
+      "instrument_p_raw": 0.0005,
+      "instrument_p_holm": 0.0025,
+      "instrument_simultaneous_ci": [
+        -47.6,
+        -33.6
+      ]
+    },
+    "completeness": {
+      "per_judge_delta": {
+        "gpt-5.5": -38.2,
+        "opus-4.8": -46.6,
+        "grok-4.3": -42.1,
+        "gemini-3.5-flash": -22.5
+      },
+      "instrument_mean": -37.4,
+      "instrument_ci_fixed": [
+        -43.9,
+        -30.1
+      ],
+      "instrument_ci_crossed": [
+        -48.8,
+        -24.5
+      ],
+      "per_judge_delta_ci": {
+        "gpt-5.5": [
+          -48.1,
+          -27.9
+        ],
+        "opus-4.8": [
+          -56.3,
+          -36.3
+        ],
+        "grok-4.3": [
+          -52.7,
+          -31.8
+        ],
+        "gemini-3.5-flash": [
+          -31.9,
+          -12.2
+        ]
+      },
+      "sign_consistent_all_judges": true,
+      "instrument_p_raw": 0.0005,
+      "instrument_p_holm": 0.0025,
+      "instrument_simultaneous_ci": [
+        -46.2,
+        -28.6
+      ]
+    },
+    "verifiability": {
+      "per_judge_delta": {
+        "gpt-5.5": -42.2,
+        "opus-4.8": -67.7,
+        "grok-4.3": -47.9,
+        "gemini-3.5-flash": -25.2
+      },
+      "instrument_mean": -45.8,
+      "instrument_ci_fixed": [
+        -51.5,
+        -40.3
+      ],
+      "instrument_ci_crossed": [
+        -61.8,
+        -29.5
+      ],
+      "per_judge_delta_ci": {
+        "gpt-5.5": [
+          -50.8,
+          -33.8
+        ],
+        "opus-4.8": [
+          -76.4,
+          -59.4
+        ],
+        "grok-4.3": [
+          -57.2,
+          -38.6
+        ],
+        "gemini-3.5-flash": [
+          -35.1,
+          -14.9
+        ]
+      },
+      "sign_consistent_all_judges": true,
+      "instrument_p_raw": 0.0005,
+      "instrument_p_holm": 0.0025,
+      "instrument_simultaneous_ci": [
+        -53.1,
+        -38.5
+      ]
+    }
+  },
+  "native_score_gaps": {
+    "accuracy": {
+      "mean_gap_1to4": -0.125,
+      "gap_ci": [
+        -0.2,
+        -0.1
+      ],
+      "gap_p_raw": 0.0005
+    },
+    "clinical_utility": {
+      "mean_gap_1to4": -0.017,
+      "gap_ci": [
+        -0.1,
+        0.0
+      ],
+      "gap_p_raw": 0.368
+    },
+    "source_quality": {
+      "mean_gap_1to4": 0.103,
+      "gap_ci": [
+        0.0,
+        0.2
+      ],
+      "gap_p_raw": 0.004
+    },
+    "completeness": {
+      "mean_gap_1to4": 0.006,
+      "gap_ci": [
+        -0.0,
+        0.1
+      ],
+      "gap_p_raw": 0.81
+    },
+    "verifiability": {
+      "mean_gap_1to4": 0.002,
+      "gap_ci": [
+        -0.1,
+        0.1
+      ],
+      "gap_p_raw": 0.967
+    }
+  },
+  "tie_margin_sensitivity": {
+    "accuracy": {
+      "panel_thresh_delta_0.0": -29.1,
+      "panel_thresh_delta_0.125": -29.1,
+      "panel_thresh_delta_0.25": -13.8,
+      "panel_thresh_delta_0.5": -6.7,
+      "panel_MEDIAN_thresh": -14.7,
+      "individual_mean_delta_note": -16.9
+    },
+    "clinical_utility": {
+      "panel_thresh_delta_0.0": -12.2,
+      "panel_thresh_delta_0.125": -12.2,
+      "panel_thresh_delta_0.25": -1.1,
+      "panel_thresh_delta_0.5": 0.7,
+      "panel_MEDIAN_thresh": 0.7,
+      "individual_mean_delta_note": -21.3
+    },
+    "source_quality": {
+      "panel_thresh_delta_0.0": 11.8,
+      "panel_thresh_delta_0.125": 11.8,
+      "panel_thresh_delta_0.25": 13.8,
+      "panel_thresh_delta_0.5": 6.4,
+      "panel_MEDIAN_thresh": 14.9,
+      "individual_mean_delta_note": -40.6
+    },
+    "completeness": {
+      "panel_thresh_delta_0.0": -3.1,
+      "panel_thresh_delta_0.125": -3.1,
+      "panel_thresh_delta_0.25": -0.4,
+      "panel_thresh_delta_0.5": 0.2,
+      "panel_MEDIAN_thresh": 0.7,
+      "individual_mean_delta_note": -37.4
+    },
+    "verifiability": {
+      "panel_thresh_delta_0.0": 0.0,
+      "panel_thresh_delta_0.125": 0.0,
+      "panel_thresh_delta_0.25": 0.0,
+      "panel_thresh_delta_0.5": -1.6,
+      "panel_MEDIAN_thresh": 1.1,
+      "individual_mean_delta_note": -45.8
+    }
+  },
+  "opponent_specific": {
+    "accuracy": {
+      "gpt-5.5": {
+        "instrument_mean": -7.9,
+        "C_indiv": -27.0,
+        "B": -19.0
+      },
+      "claude-opus-4-8": {
+        "instrument_mean": -21.5,
+        "C_indiv": -16.1,
+        "B": 5.4
+      },
+      "gemini-3.1-pro": {
+        "instrument_mean": -21.3,
+        "C_indiv": 4.2,
+        "B": 25.4
+      }
+    },
+    "clinical_utility": {
+      "gpt-5.5": {
+        "instrument_mean": -9.5,
+        "C_indiv": -12.5,
+        "B": -3.0
+      },
+      "claude-opus-4-8": {
+        "instrument_mean": -34.0,
+        "C_indiv": -5.2,
+        "B": 28.8
+      },
+      "gemini-3.1-pro": {
+        "instrument_mean": -20.6,
+        "C_indiv": 9.9,
+        "B": 30.5
+      }
+    },
+    "source_quality": {
+      "gpt-5.5": {
+        "instrument_mean": -38.1,
+        "C_indiv": -4.8,
+        "B": 33.2
+      },
+      "claude-opus-4-8": {
+        "instrument_mean": -42.0,
+        "C_indiv": 7.5,
+        "B": 49.4
+      },
+      "gemini-3.1-pro": {
+        "instrument_mean": -41.9,
+        "C_indiv": 22.8,
+        "B": 64.7
+      }
+    },
+    "completeness": {
+      "gpt-5.5": {
+        "instrument_mean": -40.7,
+        "C_indiv": -7.3,
+        "B": 33.4
+      },
+      "claude-opus-4-8": {
+        "instrument_mean": -39.4,
+        "C_indiv": -2.2,
+        "B": 37.2
+      },
+      "gemini-3.1-pro": {
+        "instrument_mean": -32.0,
+        "C_indiv": 9.0,
+        "B": 41.0
+      }
+    },
+    "verifiability": {
+      "gpt-5.5": {
+        "instrument_mean": -39.8,
+        "C_indiv": -14.9,
+        "B": 24.9
+      },
+      "claude-opus-4-8": {
+        "instrument_mean": -49.6,
+        "C_indiv": 1.3,
+        "B": 50.9
+      },
+      "gemini-3.1-pro": {
+        "instrument_mean": -47.8,
+        "C_indiv": 12.5,
+        "B": 60.3
+      }
+    }
+  },
+  "common_support_abc": {
+    "accuracy": {
+      "n_support_qopp": 434,
+      "n_human_votes": 499,
+      "A_human": 24.4,
+      "A_ci": [
+        18.2,
+        30.7
+      ],
+      "B_llm_pairwise": 0.5,
+      "B_ci": [
+        -9.7,
+        10.4
+      ],
+      "C_individual": -16.9,
+      "C_individual_ci": [
+        -23.7,
+        -11.1
+      ],
+      "C_panel_threshold": -34.2,
+      "C_panel_ci": [
+        -48.5,
+        -20.0
+      ],
+      "rater_B_minus_A": -24.0,
+      "rater_ci": [
+        -35.7,
+        -12.5
+      ],
+      "instrument_Cind_minus_B": -17.4,
+      "instrument_ci": [
+        -26.6,
+        -8.0
+      ]
+    },
+    "clinical_utility": {
+      "n_support_qopp": 434,
+      "n_human_votes": 499,
+      "A_human": 29.5,
+      "A_ci": [
+        21.5,
+        37.2
+      ],
+      "B_llm_pairwise": 14.6,
+      "B_ci": [
+        1.5,
+        27.3
+      ],
+      "C_individual": -5.5,
+      "C_individual_ci": [
+        -10.1,
+        -0.7
+      ],
+      "C_panel_threshold": -18.9,
+      "C_panel_ci": [
+        -32.8,
+        -4.6
+      ],
+      "rater_B_minus_A": -14.8,
+      "rater_ci": [
+        -29.4,
+        -0.8
+      ],
+      "instrument_Cind_minus_B": -20.1,
+      "instrument_ci": [
+        -31.5,
+        -8.3
+      ]
+    },
+    "source_quality": {
+      "n_support_qopp": 434,
+      "n_human_votes": 499,
+      "A_human": 38.1,
+      "A_ci": [
+        31.0,
+        45.2
+      ],
+      "B_llm_pairwise": 47.1,
+      "B_ci": [
+        35.8,
+        57.6
+      ],
+      "C_individual": 7.1,
+      "C_individual_ci": [
+        -1.5,
+        15.7
+      ],
+      "C_panel_threshold": 9.0,
+      "C_panel_ci": [
+        -7.6,
+        25.6
+      ],
+      "rater_B_minus_A": 9.0,
+      "rater_ci": [
+        -4.1,
+        21.7
+      ],
+      "instrument_Cind_minus_B": -40.0,
+      "instrument_ci": [
+        -48.5,
+        -31.2
+      ]
+    },
+    "completeness": {
+      "n_support_qopp": 434,
+      "n_human_votes": 499,
+      "A_human": 30.3,
+      "A_ci": [
+        22.1,
+        38.0
+      ],
+      "B_llm_pairwise": 30.0,
+      "B_ci": [
+        18.3,
+        41.6
+      ],
+      "C_individual": -3.0,
+      "C_individual_ci": [
+        -9.0,
+        2.7
+      ],
+      "C_panel_threshold": -9.0,
+      "C_panel_ci": [
+        -23.1,
+        5.1
+      ],
+      "rater_B_minus_A": -0.3,
+      "rater_ci": [
+        -12.7,
+        12.6
+      ],
+      "instrument_Cind_minus_B": -32.9,
+      "instrument_ci": [
+        -44.1,
+        -21.2
+      ]
+    },
+    "verifiability": {
+      "n_support_qopp": 434,
+      "n_human_votes": 499,
+      "A_human": 25.5,
+      "A_ci": [
+        19.2,
+        31.9
+      ],
+      "B_llm_pairwise": 43.9,
+      "B_ci": [
+        32.6,
+        54.4
+      ],
+      "C_individual": 0.5,
+      "C_individual_ci": [
+        -6.1,
+        7.0
+      ],
+      "C_panel_threshold": 5.4,
+      "C_panel_ci": [
+        -9.3,
+        21.1
+      ],
+      "rater_B_minus_A": 18.5,
+      "rater_ci": [
+        5.5,
+        31.2
+      ],
+      "instrument_Cind_minus_B": -43.5,
+      "instrument_ci": [
+        -52.9,
+        -33.3
+      ]
+    }
+  },
+  "rendering": {
+    "oe_answers_with_citations_frac": 0.29,
+    "human_render_mode": "qa_text_only",
+    "llm_render": "answer_markdown (raw, may include citations)",
+    "note": "A used qa_text_only; B/C judged answer_markdown -> A vs B/C not presentation-matched.",
+    "instrument_citationfree_subset": {
+      "accuracy": -17.8,
+      "clinical_utility": -18.7,
+      "source_quality": -41.0,
+      "completeness": -32.1,
+      "verifiability": -44.4
+    }
+  },
+  "panel_threshold_reference": {
+    "accuracy": -32.7,
+    "clinical_utility": -30.5,
+    "source_quality": -36.8,
+    "completeness": -40.5,
+    "verifiability": -44.4
+  }
+}

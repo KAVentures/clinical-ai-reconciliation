@@ -38,38 +38,46 @@ design and decomposing the swing into rater-modality (B−A) and instrument-form
 propagated CIs. A restricted version of this pairwise-LLM cell already exists inside Real-POCQi, so we
 frame it as replication-and-extension.
 
-**Results.** Swapping only the instrument **eliminated OE's advantage on every axis**. On accuracy — the
-marquee axis — the LLM-rubric panel scored OE **−29.1 pp**, and this stayed significantly negative under
-the crossed question × judge bootstrap **(95% CI −37.8 to −4.3): a judge-robust, OE-negative verdict on
-the very answers human raters preferred OE on** (+24.4 pp on the full Real-POCQi data; +10.4 pp on the
-identical 150-question subsample). The negative sign also survived dropping any single judge, including
-the self-preferring GPT-5.5. Once judges are treated as a random factor, the other four per-axis reversals
-are **not individually significant** — including a small residual source-quality OE edge (+12.0 pp, crossed
-CI −8.2 to +29.5) and the clinical-utility reversal, both of which we explicitly retract from the earlier
-draft — so accuracy is the one axis carrying a significant per-axis instrument reversal. GPT-5.5
-self-preferred (+0.481 points to own family; Opus +0.121; Gemini-flash +0.004, though flash may simply be
-a weak discriminator), amplifying but not creating the reversal. **The stronger, judge-robust result is at
-the decomposition level: the instrument-format component (C−B) is negative with a crossed CI excluding
-zero on *all five* axes (−30.5 to −44.4 pp), while the rater-modality component (B−A) is indistinguishable
-from zero on accuracy (−6.8 pp, CI −27.5 to +14.3).** We therefore downgrade the earlier "instrument does
-~83% of the accuracy swing" claim (that ratio's 95% CI is a wide [35%, 206%]) to the CI-supported
-statement that the instrument dominates and the rater term is null on accuracy. The reversal is also **not
-a length artifact**: OE produces among the *longest* answers yet loses on accuracy, and length-adjusting
-the rubric gap leaves it unchanged within CI.
+**Results.** Our **primary estimand holds the rater fixed and varies only the format**: for each of the
+four judges we threshold that judge's own rubric scores into win/tie/loss and pool them exactly as its
+pairwise votes, then average the per-judge pairwise→rubric change (an aggregation-matched, same-judge
+format component). This component is **negative on all five axes** — accuracy −16.9, clinical utility
+−21.3, source quality −40.6, completeness −37.4, verifiability −45.8 pp — **sign-consistent across all four
+judges**, Holm-significant, with simultaneous max‑|T| confidence intervals excluding zero, and robust both
+to resampling the judge panel and to stripping OE's citations. Changing only the evaluation format — same
+answers, same rater — thus moves and often reverses the OE-vs-frontier ranking. The effect is **largest and
+most robust on the evidence-presentation axes** (source quality, verifiability) and **smallest, and
+aggregation-sensitive, on accuracy**: the earlier −29.1 pp accuracy figure came from averaging the four
+judges and *then* thresholding, which more than doubles a small native gap (individual-matched −13.0 pp; a
+quarter-point tie-band on the panel measure gives −13.8 pp; the native OE−frontier accuracy gap is only
+−0.125 on the 1–4 scale). We therefore demote accuracy from marquee axis to the **weakest** instance of the
+effect. Correcting the earlier draft, on the **exact common support** where a human rating exists the
+human→LLM *rater* change under the pairwise format is itself large and significant on accuracy (B−A = −24.0
+pp, 95% CI −35.7 to −12.5), so **both the rater change and the format change contribute**; the previous
+"rater is null on accuracy" result was an artifact of unmatched support and low precision, and we retract
+it. GPT-5.5 self-preference survives as a difference-in-differences (+0.42 beyond panel consensus for its
+own family), and length does not drive the gap (OE is the *longest* provider yet loses accuracy).
 
-**Conclusions.** The two studies' disagreement is driven substantially by the **evaluation
-instrument** (pairwise preference vs absolute rubric) rather than by whether humans or LLMs do the
-rating, independently of query provenance, model version, and answer content. This conclusion is
-established *within LLM raters* (cells B and C); bridging it to the human-rated Nature rubric requires
-assuming no rater×instrument interaction — i.e. that human raters would show the same pairwise→rubric
-shift LLMs do. We could **not** fill the fourth {human, rubric} cell, so we flag this additivity
-assumption as the central untested step and the primary target for follow-up (even a small human-rubric
-sample would test it). Subject to that caveat, "which clinical AI is best" is not instrument-invariant;
-leaderboards must report the instrument as a first-class experimental factor. We additionally document
-two under-reported flaws common to both source studies — omission of the actual product clinicians use
-(the ChatGPT product), and unreported/uncontrolled reasoning effort — and pre-register a full
-provenance × instrument × citation factorial (including the missing human-rubric cell) to estimate each
-factor's causal contribution.
+**Conclusions.** The disagreement between the two studies reflects **both** the evaluation format
+(pairwise preference vs absolute rubric) **and** the rater population (physicians vs LLMs); neither is
+negligible, and we no longer claim the format acts "rather than" the rater. The robust, assumption-light
+result is narrower and holds the rater fixed: **with the same LLM judge, changing only the format
+significantly shifts and often reverses the OE-vs-frontier ranking on all five axes.** This is a
+**three-cell path decomposition** ({pairwise, rubric} × {human, LLM} with the human-rubric cell missing),
+not a completed factorial: we identify the human→LLM change under pairwise and the pairwise→rubric change
+within LLMs, but neither the format effect among humans nor the rater×format interaction — and the missing
+cell is exactly where an interaction is most plausible. Bridging the within-LLM format effect to the
+human-rated Nature rubric therefore assumes that interaction is small, which we flag as the central
+untested step (even a small human-rubric sample would test it). A mechanism is visible in the data: the
+absolute rubric is ceiling-bound on content axes (72–82% top score) but discriminating on evidence axes,
+where a forced pairwise choice rewards the citations and clinician-tuned framing that rubric scoring
+compresses. Subject to these limits, "which clinical AI is best" is not format-invariant; leaderboards
+should report the evaluation format as a first-class experimental factor. We do **not** reproduce Nature's
+exact RCQ rubric (we score the five Real-POCQi axes with an LLM panel), so this is a general
+absolute-vs-comparative contrast, not a transport of the Nature instrument. We additionally document two
+under-reported flaws common to both source studies — omission of the actual ChatGPT product clinicians
+use, and unreported/uncontrolled reasoning effort — and pre-register a full provenance × instrument ×
+citation factorial (including the missing human-rubric cell).
 
 ---
 
@@ -98,12 +106,14 @@ everything else constant, and then situates that result within a fuller critique
 factorial design.
 
 Our contributions:
-1. **An instrument existence proof plus a rater/instrument decomposition** (executed, on public data):
-   with queries and answers held fixed, changing the instrument reverses, nullifies, or sharply
-   attenuates OE's advantage on every axis (§4.1); and by filling three cells of a {pairwise, rubric} ×
-   {human, LLM} design we show the swing is
-   driven by the **instrument format**, not by the human-vs-LLM rater change — LLMs given the pairwise
-   instrument agree with physicians on four of five axes (§4.5).
+1. **A format effect with the rater held fixed, plus a three-cell path decomposition** (executed, on
+   public data): holding queries, answers, **and the rater** fixed, changing only the evaluation format
+   shifts or reverses OE's advantage on all five axes — the aggregation-matched, same-judge format
+   component is negative and sign-consistent across all four judges (§4.1, §4.5a). Filling three cells of a
+   {pairwise, rubric} × {human, LLM} design then shows that on matched support **both** the human→LLM rater
+   change and the pairwise→rubric format change are material (§4.5). We do **not** claim the format acts
+   *instead of* the rater; the earlier "instrument, not the rater" statement was an artifact of unmatched
+   support and we retract it.
 2. **Two methodological critiques** of both source studies: the comparator set omits the ChatGPT
    product clinicians actually use, and reasoning effort is unreported or uncontrolled (§5).
 3. **A pre-registered 2×2×2** provenance × instrument × citation design (§7) that would estimate each
@@ -181,8 +191,15 @@ replicates resamples questions with replacement (cluster on `question_id`) **and
 judges with replacement, recomputes the panel mean from the resampled judge multiset, and recomputes the
 win-difference (`judge/bootstrap_panel.py`). Judges are resampled once per replicate and applied
 consistently to the pairwise and rubric cells (they are the same four judges under both instruments). We
-report **both** the question-only CI (comparable to prior work) and this wider **crossed** CI, and treat
-the crossed CI as primary. Robustness: **leave-one-judge-out** (recompute dropping each judge). Bias:
+report **both** the question-only CI (comparable to prior work) and this wider **crossed** CI. **Primary
+inference, however, is the aggregation-matched, same-judge format component** (`judge/robust_analysis.py`,
+§4.5a): because four purposive judges are a *fixed panel* rather than a random sample, we use fixed-judge
+question-cluster bootstrap CIs as primary and treat the crossed judge-resampling CI as panel-composition
+*sensitivity*. We also report the format component on the **native 1–4 scale**, under **tie-band** dead-zones
+(±0.125/0.25/0.5) and panel-median aggregation, with **Holm-adjusted** bootstrap *p*-values and simultaneous
+**max-|T|** intervals across the five axes, and on **exact common support** (matching every
+question×opponent×axis for which a human rating exists) so the rater term B−A is not confounded by
+support (§4.5b–d). Robustness: **leave-one-judge-out** (recompute dropping each judge). Bias:
 **self-preference** = mean own-family minus mean others, paired within (question, axis). **Inter-judge
 agreement** = Spearman correlation of per-(question, system) mean scores. Human comparison uses the
 `qa_text_only` render mode (matching the citation-free OE answers in the dataset).
@@ -342,24 +359,66 @@ weight we might otherwise have placed on verifiability.
 
 ### 4.4 Public-data reproductions (pipeline validation)
 Our one-vs-rest win-difference on the human text-only data reproduces Real-POCQi to <1 pp on every axis
-(e.g., accuracy +24.4 vs 24.7 published). A separately reported citation-halo analysis
-(`analysis/analyze.py`) finds OE's between-groups accuracy "halo" (+11.4 pp) **collapses to +1.5 pp
-(NS)** within questions rated in both render modes — i.e., largely a selection artifact, not a causal
-citation effect — motivating the randomized citation arm in §7. Measured question-level SD = 0.598
-grounds the power analysis.
+(e.g., accuracy +24.4 vs 24.7 published). A **proper within-question paired** citation-halo analysis
+(`judge/robust_supplementary.py`; the earlier `analysis/analyze.py` version compared two independent groups
+restricted to a common question set, which is not a paired test — reviewer-flagged and corrected) uses the
+80 questions rated in **both** render modes and computes the within-question difference in OE preference
+(with-citations minus text-only): **+0.14 on the −1…+1 preference scale (44 of 76 decisive questions
+positive)**. So showing citations does raise OE's preference within the *same* question — a **modest but
+genuine halo**, not the near-zero "selection artifact" the earlier draft reported — which is consistent
+with citations being one channel of OE's pairwise advantage and motivates the randomized citation arm in
+§7. Measured question-level SD = 0.598 grounds the power analysis.
 
-### 4.5 Decomposing the swing: it is the instrument, not the rater (Figure 2, Table 2)
+### 4.5 Decomposing the swing: a three-cell path decomposition (Figure 2, Tables 2, 2a)
 
 A natural objection to §4.1 is that swapping {human pairwise} → {LLM rubric} changes **two** things at
-once — the *rater population* (physicians → LLMs) and the *instrument format* (forced-choice preference
-→ absolute rubric) — so the reversal could be a human-vs-LLM effect rather than an instrument effect.
-The two source studies share exactly this confound. We break it by filling the missing cell of the
-2×2 {pairwise, rubric} × {human, LLM} design: we ran the **same four-judge LLM panel, blinded, at high
-reasoning effort, on the same 150 queries and answers**, but administered the **pairwise** instrument
-(forced A/B/tie per axis, slot order deterministically randomized and de-blinded at scoring;
-`judge/pairwise.py`). This gives three of four cells — A = {pairwise, human} (Real-POCQi), B = {pairwise,
-LLM} (new), C = {rubric, LLM} (§4.1) — and lets us attribute the A→C swing to a **rater-modality
-component (B−A)** and an **instrument-format component (C−B)**.
+once — the *rater population* (physicians → LLMs) and the *evaluation format* (forced-choice preference
+→ absolute rubric) — so the reversal could be a human-vs-LLM effect rather than a format effect.
+The two source studies share exactly this confound. We address it in two steps. First (§4.5a, our
+**primary** analysis) we isolate the format effect by holding the *rater* fixed: the **same** LLM judge
+scores the same answers under both formats. Second (§4.5b) we fill three cells of the 2×2 {pairwise,
+rubric} × {human, LLM} design — A = {pairwise, human} (Real-POCQi), B = {pairwise, LLM} (new; the same
+four-judge panel, blinded, high reasoning effort, `judge/pairwise.py`), C = {rubric, LLM} (§4.1) — and
+decompose the human-pairwise→LLM-rubric swing into a **rater component (B−A)** and a **format component
+(C−B)**. This is a **three-cell *path* decomposition, not a completed factorial**: the fourth cell
+{human, rubric} is missing, so we do not identify the format effect among humans or the rater×format
+interaction (§8).
+
+#### 4.5a Primary: the format effect with the rater held fixed (aggregation-matched)
+
+The assumption-light test of "does the format alone move the ranking" holds the rater fixed. For each of
+the four judges we convert **that judge's own** rubric scores into an OE-vs-frontier win/tie/loss
+(thresholding its score gap) and pool them exactly as **that same judge's** pairwise votes are pooled,
+then average the per-judge format change \(C_j - B_j\) (`judge/robust_analysis.py`). This also removes an
+aggregation mismatch that inflates the panel-level numbers in §4.5b — there, cell C averages four judges'
+scores **and then** thresholds, whereas cell B pools individual votes; the averaging-then-thresholding step
+alone more than doubles the accuracy reversal (panel −29.1 pp vs individual-matched −13.0 pp; §4.5c).
+
+**Table 2a.** Aggregation-matched, same-judge **format component** = mean\(_j\)(\(C_j-B_j\)), OE-vs-frontier,
+on matched (question, opponent) support (n = 391 question×opponent units). Question-cluster bootstrap CIs
+(fixed-judge primary — four purposive judges are a fixed panel, not a random sample); Holm-adjusted
+two-sided *p* across the five axes; simultaneous max-|T| CIs. Every axis is sign-consistent across **all
+four** judges individually.
+
+| Axis | Format effect (pp) | 95% CI (fixed-judge) | Simultaneous CI | Holm *p* | Sign-consistent (4/4 judges) |
+|---|---:|---:|---:|---:|:--:|
+| Accuracy | −16.9 | [−22.3, −11.4] | [−23.9, −9.9] | 0.003 | ✓ |
+| Clinical utility | −21.3 | [−28.1, −14.3] | [−30.2, −12.4] | 0.003 | ✓ |
+| Source quality | −40.6 | [−45.8, −34.9] | [−47.6, −33.6] | 0.003 | ✓ |
+| Completeness | −37.4 | [−43.9, −30.1] | [−46.2, −28.6] | 0.003 | ✓ |
+| Verifiability | −45.8 | [−51.5, −40.3] | [−53.1, −38.5] | 0.003 | ✓ |
+
+**This is the paper's robust core.** With the rater held fixed, switching from pairwise preference to
+absolute rubric drives the OE-vs-frontier verdict negative on **all five axes**, sign-consistent across
+**every** judge, surviving simultaneous inference across the five axes, robust to resampling the four
+judges as a random factor (crossed CIs still exclude zero, e.g. accuracy [−29.7, −4.3]) and to removing
+OE's citation-bearing answers (citation-free accuracy −17.8 pp; §4.5d). The effect is **largest on the
+evidence-presentation axes** (source quality −40.6, verifiability −45.8) and **smallest on accuracy** — the
+reverse of the earlier draft's "marquee accuracy" framing. On the native 1–4 scale the OE−frontier rubric
+gap is only −0.125 on accuracy (CI [−0.2, −0.1]) and near zero on the content axes; the format nonetheless
+reverses the ranking because a forced pairwise choice amplifies the small, consistent evidence-presentation
+advantages (citations, clinician-tuned framing) that a ceiling-bound absolute rubric compresses (mechanism:
+§6, Supplementary).
 
 **Cell B is a replication-and-extension, not a wholly new experiment.** Real-POCQi already ran an
 LLM-judge *pairwise* experiment (their §2.4 / Methods §5.7): they took the same questions, answers, and
@@ -379,10 +438,10 @@ Real-POCQi **specialty-matched** each physician grader to the question topic and
 optimizes evaluation on the *accuracy* axis specifically.[^poc] Our LLM judges are generalists with no
 such matching. So B−A on accuracy conflates the pairwise→pairwise rater-*modality* change with a loss of
 **specialty expertise** — a substantive confound that pushes in the direction of making the human cell A
-*more* accurate-sensitive. If specialty-matching inflates cell A's accuracy edge, the true rater term
-could be larger (more negative) than our −6.8 pp, which would *reduce* the instrument's share — another
-reason we no longer quote a precise "83%." We name specialty-matching explicitly as part of B−A rather
-than burying it in "protocol differences."
+*more* accurate-sensitive. This reinforces the matched-support finding (§4.5b) that the rater term is
+non-negligible: the matched accuracy rater term is already −24.0 pp, and specialty-matching means even that
+may understate the human→LLM change. We name specialty-matching explicitly as part of B−A rather than
+burying it in "protocol differences," and we make no attempt to quote a single instrument "share."
 
 **Rank-resolution caveat: cell B's agreement lives in the winner-friendly OvR regime.** The concordance we
 credit — LLM judges reproducing the human pairwise winner — must be read against what Real-POCQi actually
@@ -400,14 +459,15 @@ general validation of LLM-judge pairwise scoring.
 
 ![Figure 2](judge/out/decomposition.png)
 
-**Figure 2.** The 2×2 rater-vs-instrument decomposition (n = 150). *Left:* three cells of the
+**Figure 2.** The three-cell path decomposition (n = 150), panel-level. *Left:* three cells of the
 {pairwise, rubric} × {human, LLM} design per axis — both pairwise cells (A: human; B: LLM) favor
 OpenEvidence; only the rubric cell (C) reverses it. *Right:* the human-pairwise→LLM-rubric swing split
-into a rater-modality component (B−A) and an instrument-format component (C−B); under the crossed
-question × judge bootstrap the instrument component is negative with a CI excluding zero on **every**
-axis, while the rater component is not distinguishable from zero on accuracy.
+into a rater component (B−A) and a format component (C−B); the format component is negative with a crossed
+CI excluding zero on **every** axis. Note: the panel-level rater term shown here understates the true rater
+change — on **exact common support** the accuracy rater term is −24.0 pp (CI −35.7 to −12.5), not the ≈0
+the unmatched panel suggests (§4.5b); the robust, rater-fixed format estimate is Table 2a.
 
-**Table 2.** OE-vs-rest win-difference (pp) across three cells of the 2×2, and the decomposition of the
+**Table 2.** Panel-level OE-vs-rest win-difference (pp) across three cells of the 2×2, and the decomposition of the
 human-pairwise→LLM-rubric swing **with propagated crossed question × judge 95% CIs** on the two
 components (§3.3; `judge/bootstrap_panel.py`). **Cell A is computed on the same 150-query sample as B and
 C** (human text-only ratings restricted to those questions), *not* on the full text-only bank — otherwise
@@ -422,32 +482,53 @@ B−A would absorb a sample-composition difference into the "rater" term. Cell B
 | Completeness | +13.6 | +37.0 | −3.6 | +23.4 [+2.2, +45.4] | **−40.5 [−53.6, −22.0]** |
 | Verifiability | +14.4 | +45.1 | +0.7 | +30.7 [+7.9, +53.6] | **−44.4 [−62.0, −29.1]** |
 
-Two results stand out, and both are now stated at the level the crossed CIs actually support. **First, LLM
-judges administering the *pairwise* instrument largely reproduce the human pairwise verdict**: OE wins on
-four of five axes (source quality +48.8, verifiability +45.1, completeness +37.0, clinical utility +18.2),
-with only accuracy attenuating to a null +3.6. The much-feared "LLMs simply disagree with physicians"
-story is therefore false for four of five axes — given the *same* forced-choice instrument, LLMs and
-physicians agree that OE's answers are preferred. **Second, and this is the robust core of the paper, the
-instrument-format component (C−B) is negative and its crossed CI excludes zero on *every* axis (−30.5 to
-−44.4 pp), whereas the rater-modality component (B−A) is indistinguishable from zero on the marquee
-accuracy axis** (−6.8 pp, CI −27.5 to +14.3) and on clinical utility and source quality. The swing from
-"OE wins" to "OE loses" is thus attributable to the **pairwise→rubric instrument change**; the human→LLM
-rater change is not a significant contributor where it matters most.
+#### 4.5b Panel-level decomposition, and why the rater is *not* negligible
 
-**We deliberately downgrade the earlier "~83%" claim.** The point estimate for accuracy is indeed
-instrument −32.7 pp vs rater −6.8 pp (an 83% instrument share), but this is a ratio of two noisy
-differences: bootstrapping it jointly gives a 95% CI of **[35%, 206%]** (the upper tail exceeds 100%
-whenever the rater term resamples to the *opposite* sign). We therefore do not put a precise fraction on
-the accuracy split. The defensible, judge-robust statement is the one above: **the instrument component is
-significantly negative on all five axes; the rater component is not distinguishable from zero on
-accuracy.** (With cell A taken on the full text-only bank instead, the accuracy rater term would appear as
-−20.8 pp; that larger value is an artifact of comparing the LLM cells against a different, larger question
-sample, and we do not use it.)
+Table 2 gives the panel-level A→B→C decomposition with crossed CIs. It supports one robust claim and
+forces one **retraction** relative to the earlier draft.
 
-**Multiplicity of the decomposition.** The decomposition adds implicit comparisons (three cells × five
-axes × two components); we do not apply a family-wise correction to the component CIs, but note that the
-one claim we rely on — a negative instrument component on every axis — is significant on all five
-independently, so it is robust to any standard correction, while we make no per-axis rater claims.
+**Robust claim (concordant with §4.5a):** the format component (C−B) is negative with a crossed CI
+excluding zero on **every** axis (−30.5 to −44.4 pp at panel level; −16.9 to −45.8 pp aggregation-matched).
+This is the finding we stand behind.
+
+**Retraction — the rater change is not null.** The earlier draft read the panel-level accuracy rater term
+(−6.8 pp, CI −27.5 to +14.3) as evidence that "it is the instrument, not the rater." That was an artifact
+of **support mismatch**: cell B used ~150 questions while cell A used only the smaller human-rated subset,
+so B−A absorbed a sample-composition difference. Recomputed on the **exact common support** (matching every
+question × opponent × axis for which a human rating exists; `judge/robust_analysis.py`), the human→LLM
+change under the *pairwise* format is **−24.0 pp on accuracy (CI −35.7 to −12.5)** — because on the very
+questions humans rated, LLM pairwise judges reproduce only +0.5 pp of the physicians' +24.4 pp OE accuracy
+edge. So the human→LLM rater change is **large and significant on accuracy**, not null. We therefore
+**retract "the instrument, not the rater"** and the associated "~83% instrument share" (whose CI was in any
+case a useless [35%, 206%]): on matched support **both** the rater change and the format change contribute
+materially to the accuracy swing. What survives is the narrower, rater-fixed claim of §4.5a.
+
+**A caveat that cuts the same way.** Real-POCQi **specialty-matched** each physician grader to the question
+topic and argues this optimizes accuracy grading;[^poc] our generalist LLM judges have no such matching. So
+the −24.0 pp accuracy rater term itself mixes a modality change with a loss of specialty expertise — a
+further reason the rater component is non-negligible, and a reason we describe B−A as a rater *change*
+rather than a clean "modality" effect.
+
+#### 4.5c Aggregation and tie-margin sensitivity
+
+The panel-mean-then-threshold rule used for cell C is hypersensitive at the decision boundary. On accuracy,
+a symmetric tie-band of ±0.25 on the panel-mean gap cuts the cell-C win-difference from −29.1 to −13.8 pp
+(±0.5 → −6.7 pp; panel-**median** → −14.7 pp; individual-then-aggregate → −13.0 pp) — all converging on the
+aggregation-matched −16.9 pp of §4.5a and confirming the −29.1 figure was an aggregation artifact. The
+evidence-presentation axes are insensitive to the same perturbation (verifiability stays ≈ 0 at cell-C
+level; its *format* effect lives in C−B, not in C alone), so the demotion of accuracy is specific to that
+axis, not a general softening (`judge/robust_analysis.py`, `tie_margin_sensitivity`).
+
+#### 4.5d Rendering, opponent-specificity, and multiplicity
+
+The format effect of §4.5a is **not** an artifact of OE's citations: OE's `answer_markdown` carries
+citations in 29% of answers (frontier models 0.2%), but recomputing the same-judge format component on
+OE's **citation-free** questions barely moves it (accuracy −17.8 vs −16.9; all axes within 5 pp). It is
+also **not driven by a single opponent**: the accuracy format effect is −7.9 (vs GPT), −21.5 (vs Claude),
+−21.3 (vs Gemini) — in fact *smallest* against GPT, because GPT's answers are down-rated by LLM pairwise
+and rubric alike. On **multiplicity**, we now report Holm-adjusted bootstrap *p*-values and simultaneous
+max-|T| intervals for the primary format component (Table 2a): every axis survives both, so the "negative
+on all five axes" claim is robust to family-wise correction rather than merely asserted to be.
 
 This also sharpens the house-effect discussion (§4.2). Under the pairwise instrument, the **family-neutral
 judge (Grok) prefers OE on all five axes** (+11 to +65 win-diff) and the contestant **GPT-5.5 is the
@@ -549,11 +630,14 @@ but it bounds how much weight the Nature rubric ordering can carry.
 **(d) The pairwise instrument has symmetric, opposite biases — it is not the "true" instrument either.**
 Nothing here should be read as vindicating forced-choice preference as ground truth. Pairwise preference
 is known to reward surface features — answer length, formatting, citation presence, confident tone —
-independently of correctness, and Real-POCQi's own data show the mechanism: OE's between-groups accuracy
-"halo" of +11.4 pp **collapses to +1.5 pp (NS)** once we condition on questions rated both with and
-without citations (§4.4), i.e. much of the measured preference edge tracks the *presence of citations*
-rather than answer accuracy. A preference instrument that can be moved 10 pp by attaching references is
-as construct-contaminated, in the opposite direction, as a compressed rubric. The honest position is that
+independently of correctness, and Real-POCQi's own data show the mechanism: on the 80 questions rated in
+**both** render modes, a **proper within-question paired** test finds that showing citations raises OE's
+preference by **+0.14 on the −1…+1 scale** (44 of 76 decisive questions positive; §4.4) — a modest but
+genuine citation halo *within the same question*, i.e. part of the measured preference edge tracks the
+*presence of citations* rather than answer accuracy. (This corrects the earlier draft, which used an
+independent-groups test on a common question set and wrongly reported the halo as vanishing.) A preference
+instrument that can be moved by attaching references is construct-contaminated, in the opposite direction,
+as a compressed rubric. The honest position is that
 **neither instrument is a clean measure of clinical quality**: the rubric over-rewards frontier-style
 breadth and compresses near-ties; pairwise over-rewards citations and verbosity. Our claim is the
 *relative* one — that switching between these two biased instruments is sufficient to flip the winner —
@@ -607,27 +691,36 @@ instrument effect than a model-version effect.
 
 ## 6. Discussion
 
-Holding queries and answers fixed, the instrument alone is sufficient to reverse the central claim of a
-published clinical-AI benchmark. The 2×2 decomposition (§4.5) makes this attribution explicit rather than
-inferential: because the *same* LLM panel that reverses OE under the rubric **reproduces the human
-pairwise verdict when it uses the pairwise instrument** (OE winning on four of five axes), the swing
-localizes to the pairwise→rubric change (C−B, −30.5 to −44.4 pp) and not to the human→LLM change (B−A).
+Holding queries, answers, **and the rater** fixed, the evaluation format alone is sufficient to reverse
+the central claim of a published clinical-AI benchmark. The rater-fixed analysis (§4.5a) makes this
+attribution clean: the *same* LLM judge, scoring the *same* answers, moves the OE-vs-frontier verdict
+negative on all five axes when switched from pairwise preference to absolute rubric (−16.9 to −45.8 pp,
+sign-consistent across all four judges, robust to simultaneous inference, judge-resampling, and
+citation-stripping). This is the claim we defend.
 
-**Two scoping caveats bound this claim.** *First*, the decomposition is established **within LLM raters**:
-we have cells A = {pairwise, human}, B = {pairwise, LLM}, and C = {rubric, LLM}, but **not** the fourth
-cell D = {rubric, human}. The two-study reconciliation is ultimately a claim about a *human-rated* rubric
-study (Nature), so generalizing our within-LLM instrument effect (C−B) to explain Nature requires
-assuming **no rater×instrument interaction** — that physicians administering a rubric would show the same
-pairwise→rubric shift LLMs do. That assumption is plausible but untested, and this is precisely the
-direction where interaction is likely: humans may not share the frontier-prose prior that an LLM-scored
-rubric appears to reward, so the human-rubric cell could differ materially from our LLM-rubric cell. We
-therefore state the proven claim narrowly ("the instrument dominates the rater *modality* among LLM
-raters") and treat the bridge to Nature as conditional on additivity; filling cell D — even with a small
-human-rubric sample — is the single highest-value follow-up. *Second*, the axis where our headline lives,
-accuracy, is also the axis where the rater term is not negligible in the same direction: instrument −32.7
-pp and rater −6.8 pp (≈83% instrument), cleaner than before once cell A is put on the same sample, but not
-a pure instrument effect. The clean "instrument, not rater" statement is strongest for source
-quality/verifiability/completeness and merely dominant — not exclusive — for accuracy.
+**What we no longer claim, and why.** The earlier draft asserted "the instrument, not the rater." That was
+wrong on two counts, both now corrected. *First*, on **exact common support** the human→LLM rater change
+under the pairwise format is large and significant on accuracy (−24.0 pp, CI −35.7 to −12.5): LLM pairwise
+judges reproduce only +0.5 pp of physicians' +24.4 pp OE accuracy edge on the same questions. So **both**
+the rater change and the format change contribute; the panel-level "rater ≈ 0" was a support-matching
+artifact (§4.5b). *Second*, the decomposition is a **three-cell path decomposition, not a factorial**: with
+cells A = {pairwise, human}, B = {pairwise, LLM}, C = {rubric, LLM} but not D = {rubric, human}, we
+identify the human→LLM change under pairwise and the pairwise→rubric change within LLMs, but neither the
+format effect among humans nor the rater×format interaction. Bridging our within-LLM format effect to the
+human-rated Nature rubric therefore assumes that interaction is small — plausible but untested, and exactly
+where interaction is most likely (humans may not share whatever prior an LLM-scored rubric rewards). Filling
+cell D, even with a small human-rubric sample, is the single highest-value follow-up.
+
+**A mechanism is visible in the data.** The absolute rubric is **ceiling-bound on the content axes** —
+72% of accuracy grades, 82% of clinical-utility grades, and 77% of completeness grades are the top score of
+4 (entropy ≈ 0.8–1.0 bits of a possible 2) — so it can barely separate systems on content, and the native
+OE−frontier accuracy gap is a mere −0.125 on the 1–4 scale. On the **evidence-presentation axes** (source
+quality, verifiability) the rubric is far more dispersed (only ~21% at ceiling, entropy ≈ 1.5) yet still
+scores the field similarly, whereas a forced pairwise choice sharply rewards OE's citations and
+clinician-tuned framing. That is why the format effect is largest and most robust exactly on the evidence
+axes and smallest on accuracy: the two formats encode different value functions, and the rubric's
+compression is what a pairwise contest undoes. Accuracy, the earlier draft's marquee axis, is in fact the
+**weakest** and most aggregation-sensitive instance of the effect (§4.5c).
 
 **We are not the first to suspect the instrument — Real-POCQi says so itself.** Real-POCQi explicitly
 hypothesizes that its divergence from rubric-style benchmarks is *instrument-driven*, and cites
@@ -676,30 +769,40 @@ than reporting a single provenance estimate as if the corpus were the real thing
 
 ## 8. Limitations
 
-(i) **No ground truth** — we show instruments disagree, not which is correct. (ii) **Length not
-normalized** (OE 3.8k vs GPT 2.6k chars) — we show *observationally* (§4.6) that the reversal is not a
-length artifact (OE is the longest provider yet loses; length-adjusted gaps match raw gaps within CI),
-but a fully length-matched *generation* study is still pre-registered to settle it causally. (iii)
-**House effects** — contestant-family judges self-prefer (quantified; controlled via leave-one-judge-out),
-and the panel may share a rubric-specific pro-frontier stylistic prior that leave-one-judge-out cannot
-remove; the pairwise cell (§4.5) shows this prior is instrument-specific (the same judges favor OE under
-pairwise), and the remaining control — human-administered rubric scoring — is pre-registered. (iv)
-**Noisy instrument** — modest inter-judge agreement. (v) **Missing fourth cell and the additivity
-assumption** — we have three of the four 2×2 cells; the decomposition is therefore identified *within LLM
-raters*, and bridging the instrument effect to the human-rated Nature rubric assumes **no rater×instrument
-interaction** (that physicians doing a rubric would show the same pairwise→rubric shift LLMs do). This is
-untested and is the likely direction of interaction (humans may not share the frontier-prose prior);
-filling cell D = {rubric, human}, even at small n, is the top follow-up. Relatedly, cell A is Real-POCQi's
-human pairwise protocol while cell B is our LLM pairwise reimplementation, so the rater term B−A absorbs
-minor **protocol** differences (tie handling, pair structure) as well as rater modality — it is "rater
-modality + protocol," not pure rater. Both cell A and cell B are computed on the identical 150-query
-sample, so B−A is at least free of sample-composition confounding. The n=150 existence-proof scale is
-decisive for the LLM-rubric verdict (cell C significantly negative on accuracy and clinical utility) but
-underpowers the same-sample human baseline (three axes' human CIs cross zero in the subsample, though the
-full-data values are significant and same-signed); the null-collapsing axes await the full run. (vi)
-**No rater-level modeling** — the
-public ratings table has no rater identifier, so human-side rater random effects cannot be fit from public
-data. (vii) **LLM judges are not bit-deterministic**; we quantify rather than assume stability.
+(i) **No ground truth** — we show formats disagree, not which is correct. (ii) **Aggregation sensitivity**
+— the panel-mean-then-threshold win-difference amplifies small native gaps at the decision boundary, most
+acutely on accuracy (panel −29.1 pp vs aggregation-matched −16.9 pp vs a ±0.25 tie-band −13.8 pp; native
+OE−frontier gap only −0.125 on the 1–4 scale). We therefore make the **aggregation-matched, same-judge**
+component (§4.5a) primary and treat accuracy as the weakest, most aggregation-sensitive axis; the
+evidence-presentation axes are robust to the same perturbation. (iii) **Three-cell path decomposition, not
+a factorial** — we have cells A = {pairwise, human}, B = {pairwise, LLM}, C = {rubric, LLM} but **not** D =
+{rubric, human}, so we do not identify the format effect among humans or the rater×format interaction.
+Bridging our within-LLM format effect to the human-rated Nature rubric assumes that interaction is small —
+untested, and the likely direction of interaction. **Both** components are material: on **exact common
+support** the accuracy rater term (B−A) is −24.0 pp (CI −35.7 to −12.5), not the ≈0 an unmatched panel
+suggests, so we retract the earlier "instrument, not the rater." Filling cell D, even at small n, is the
+top follow-up. B−A also absorbs Real-POCQi's specialty-matching and minor protocol differences, so it is a
+rater *change*, not a clean modality effect. (iv) **Rendering not matched across the rater contrast** —
+human cell A used the `qa_text_only` render, but LLM cells B/C scored `answer_markdown`, which carries
+citations for **29%** of OE answers (frontier 0.2%); so A vs B/C is not presentation-matched and B−A partly
+reflects rendering. The **rater-fixed format effect (§4.5a) is unaffected** — B and C saw identical text —
+and is robust to citation-stripping (§4.5d); a canonical text-only re-render of B/C is pre-registered. (v)
+**Four purposive judges** — three from contestant families — support a *fixed-panel* claim, not broad
+random-judge generalization. We report fixed-judge inference as primary, with per-judge sign-consistency,
+leave-one-judge-out, and self-preference difference-in-differences; the crossed judge-resampling bootstrap
+is reported only as **panel-composition sensitivity**. Adding genuinely neutral judges is future work.
+(vi) **Not Nature's exact rubric** — we score the five Real-POCQi axes with an LLM panel on a 1–4 scale;
+this is a general absolute-vs-comparative contrast, **not** a transport of Nature's RCQ instrument (clinical
+correctness/completeness/safety/clarity plus harm and hallucination flags, human-administered with ordinal
+mixed models). (vii) **Length not normalized** (OE 3.8k vs GPT 2.6k chars) — observationally (§4.6,
+Supplementary) OE is the longest provider yet loses accuracy and the within-opponent length↔score-gap
+correlation is ≈ 0, but a length-matched *generation* study is pre-registered to settle it causally.
+(viii) **House effects** — contestant-family judges self-prefer, but this survives as a difference-in-
+differences (GPT +0.42 beyond panel consensus) and the pairwise cell shows the pro-frontier tilt is
+**format-specific** (the same judges favor OE under pairwise, including the family-neutral judge). (ix)
+**Noisy instrument** — modest rubric inter-judge agreement (Spearman ≈ 0.23–0.39). (x) **No rater-level
+modeling** — the public ratings table has no rater identifier, so human-side rater random effects cannot be
+fit. (xi) **LLM judges are not bit-deterministic**; we quantify rather than assume stability.
 
 ## 9. Ethics, conflicts, funding
 
@@ -730,7 +833,13 @@ documented in `README.md`. A machine-readable **per-item instrument-disagreement
 contributing judges, judge dispersion, and an `instrument_flip` flag, so readers can inspect
 *where* reversals concentrate; re-aggregating it reproduces the sign of every reported
 win-difference (a deterministic unit test pins the flip definition). This is a descriptive audit
-layer, not adjudicated clinical truth. Nature Medicine numbers are cited from the published article
+layer, not adjudicated clinical truth. The **primary robust analyses** (aggregation-matched same-judge
+format component, native-scale gaps, exact common-support A–B–C, tie-margin and multiplicity, opponent-
+specific effects, rendering verification) are in `judge/robust_analysis.py` → `judge/out/robust_analysis.json`,
+with `judge/test_robust_analysis.py` pinning the estimand definitions; **exploratory supplementary**
+analyses (rubric reliability/resolution, self-preference difference-in-differences, axis factor structure,
+length with opponent fixed effects, paired citation-halo) are in `judge/robust_supplementary.py` →
+`judge/out/robust_supplementary.json`. Nature Medicine numbers are cited from the published article
 (s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
 
 ## References

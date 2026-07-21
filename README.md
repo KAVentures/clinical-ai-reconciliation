@@ -67,25 +67,27 @@ OE-vs-rest win-difference (percentage points; positive = OE preferred) under eac
 | Completeness | +13.6 [−2.5, +28.7] | −3.6 [−14.4, +12.7] | collapses to null |
 | Verifiability | +14.4 [+2.2, +27.6] | +0.7 [−13.6, +13.8] | collapses to null |
 
-On the full Real-POCQi text-only bank the human accuracy edge is +24.4 pp (reproduces the published +24.7 to <1 pp); on this 150-query subsample it is +10.4 pp (same sign, underpowered). On the **same answers**, the LLM rubric scores OE **−29.1 pp**, and this stays significantly negative once judges are treated as a random factor (crossed CI [−37.8, −4.3]). Once judge composition is bootstrapped, **accuracy is the one axis with a significant per-axis reversal**; the other four move toward null but their crossed CIs include zero (we retract the earlier clinical-utility and source-quality per-axis claims). The judge-robust result lives at the decomposition level (below).
+On the full Real-POCQi text-only bank the human accuracy edge is +24.4 pp (reproduces the published +24.7 to <1 pp); on this 150-query subsample it is +10.4 pp (same sign, underpowered). On the **same answers**, the panel-level LLM rubric scores OE **−29.1 pp** — but this cell-C number is inflated by averaging four judges and *then* thresholding; the aggregation-matched value is −16.9 pp and a ±0.25 tie-band gives −13.8 pp (native gap only −0.125 on the 1–4 scale). **The robust, rater-fixed result is the format effect in §2 below**, which is significant on all five axes; accuracy is its weakest instance.
 
-### 2. It is the instrument, not the rater (2×2 decomposition)
+### 2. Primary: the format effect with the rater held **fixed** (aggregation-matched, same judge)
 
-Splitting the human-pairwise→LLM-rubric swing into rater (B−A) and instrument (C−B) components, with **propagated crossed question × judge 95% CIs**:
+For each judge we threshold **that judge's own** rubric scores into win/tie/loss and pool them exactly as **that same judge's** pairwise votes, then average the per-judge format change (C_j − B_j). This holds the rater fixed, isolating evaluation **format**. Fixed-judge question-cluster bootstrap CIs; Holm-adjusted *p*; simultaneous max-|T| CIs (`judge/robust_analysis.py`):
 
-| Axis | A: pw/human | B: pw/LLM | C: rubric/LLM | Rater (B−A) [crossed CI] | **Instrument (C−B) [crossed CI]** |
-|---|---:|---:|---:|---:|---:|
-| Accuracy | +10.4 | +3.6 | −29.1 | −6.8 [−27.5, +14.3] | **−32.7 [−42.8, −8.8]** |
-| Clinical utility | +14.4 | +18.2 | −12.2 | +3.8 [−22.3, +31.9] | **−30.5 [−42.6, −9.0]** |
-| Source quality | +23.2 | +48.8 | +12.0 | +25.6 [−3.4, +54.8] | **−36.8 [−56.9, −22.4]** |
-| Completeness | +13.6 | +37.0 | −3.6 | +23.4 [+2.2, +45.4] | **−40.5 [−53.6, −22.0]** |
-| Verifiability | +14.4 | +45.1 | +0.7 | +30.7 [+7.9, +53.6] | **−44.4 [−62.0, −29.1]** |
+| Axis | Format effect (pp) | 95% CI (fixed-judge) | Simultaneous CI | Holm *p* | 4/4 judges same sign |
+|---|---:|---:|---:|---:|:--:|
+| Accuracy | −16.9 | [−22.3, −11.4] | [−23.9, −9.9] | 0.003 | ✓ |
+| Clinical utility | −21.3 | [−28.1, −14.3] | [−30.2, −12.4] | 0.003 | ✓ |
+| Source quality | −40.6 | [−45.8, −34.9] | [−47.6, −33.6] | 0.003 | ✓ |
+| Completeness | −37.4 | [−43.9, −30.1] | [−46.2, −28.6] | 0.003 | ✓ |
+| Verifiability | −45.8 | [−51.5, −40.3] | [−53.1, −38.5] | 0.003 | ✓ |
 
-**LLM judges administering the *pairwise* instrument reproduce the human pairwise verdict** — OE wins on four of five axes. The **instrument component (C−B) is negative with a crossed CI excluding zero on all five axes** (−30.5 to −44.4 pp); the **rater component (B−A) is indistinguishable from zero on accuracy** (−6.8, CI [−27.5, +14.3]). The accuracy instrument-share point estimate is ~83%, but that ratio's joint crossed-bootstrap CI is a wide **[35%, 206%]**, so we do not quote a precise fraction — the judge-robust claim is that the instrument component dominates and the rater term is null on accuracy.
+**With the same LLM judge, switching pairwise→rubric moves the OE-vs-frontier verdict negative on all five axes** — sign-consistent across every judge, surviving simultaneous inference, judge-resampling (crossed CIs still exclude zero), and citation-stripping. Largest on the evidence axes (source quality, verifiability); **smallest and most aggregation-sensitive on accuracy** (native 1–4 gap only −0.125; a ±0.25 tie-band cuts the panel accuracy figure from −29.1 to −13.8).
+
+**Both rater and format matter — we retract "instrument, not the rater."** On the panel-level three-cell decomposition the accuracy rater term (B−A) looked null (−6.8), but that was a support-mismatch artifact. On **exact common support** (matching every question×opponent×axis with a human rating), the human→LLM rater change under pairwise is **−24.0 pp on accuracy [−35.7, −12.5]** — large and significant. Both the rater change and the format change contribute; the earlier "~83% instrument share" is withdrawn. This is a **three-cell path decomposition, not a completed factorial** (the {rubric, human} cell is missing).
 
 ### 3. Not merely a self-scoring artifact
 
-Contestant-family judges self-preferred (GPT-5.5 **+0.481**, Opus **+0.121**, Gemini **+0.004** points, own family minus others), but the accuracy reversal **survives dropping any single judge**, including GPT-5.5 (−12.3 pp without it). Under the *pairwise* instrument the family-neutral judge (Grok) prefers OE on **all five axes** and GPT-5.5 is the *least* OE-favorable judge — the opposite of a blanket pro-frontier prejudice. The pro-frontier tilt is **specific to the rubric instrument**.
+Contestant-family judges self-preferred, and this survives a **difference-in-differences** that removes the "the family's answers are simply better" confound (how much more a judge favors its own family than the *other* judges do: GPT-5.5 **+0.42**, Gemini **+0.25**, Opus **+0.14** beyond panel consensus). Nonetheless the format effect **survives dropping any single judge** and is sign-consistent across all four. Under the *pairwise* instrument the family-neutral judge (Grok) prefers OE on **all five axes** and GPT-5.5 is the *least* OE-favorable judge — the opposite of a blanket pro-frontier prejudice. The pro-frontier tilt is **specific to the rubric format**.
 
 ### 4. Not a length artifact
 
@@ -93,8 +95,10 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 
 ## Key Conclusions
 
-- **The measuring instrument, not the model, is the first-order driver of the contradiction.** Pairwise and rubric instruments order the same fixed answers differently; the instrument component of the swing is significantly negative on all five axes while the rater component is null on accuracy (the accuracy instrument share is ~83% as a point estimate but with a wide CI [35%, 206%], so we report the component significances rather than a single fraction).
-- **LLMs are not the problem — the rubric is.** Given the *same* forced-choice instrument, LLM judges agree with physicians (OE preferred on 4/5 axes). The reversal appears only under absolute rubric scoring.
+- **The evaluation *format* alone can flip the ranking, with the rater held fixed.** With the same LLM judge, switching pairwise→rubric moves the OE-vs-frontier verdict negative on all five axes (aggregation-matched −16.9 to −45.8 pp; Holm-significant; sign-consistent across all four judges). This is the robust, assumption-light core.
+- **But both the rater and the format matter — we do *not* claim "instrument, not the rater."** On exact common support the human→LLM rater change on accuracy is −24.0 pp (CI −35.7 to −12.5), not null. It is a three-cell path decomposition (missing the human-rubric cell), not a factorial.
+- **Accuracy is the weakest, most aggregation-sensitive axis**, not the headline: the earlier −29.1/−32.7 pp figures were inflated by averaging judges then thresholding (native gap only −0.125 on the 1–4 scale). The large, robust format effects are on the evidence-presentation axes.
+- **Not Nature's exact rubric.** We score the five Real-POCQi axes with an LLM panel — a general absolute-vs-comparative contrast, not a transport of Nature's RCQ instrument.
 - **Self-preference exists but does not create the effect.** The accuracy reversal survives leave-one-judge-out, and the family-neutral judge favors OE under pairwise.
 - **This is an existence proof of instrument sensitivity, not an adjudication of clinical truth.** We show the instruments *disagree* on identical content — not which one is *correct*. The missing human-rubric cell (D) is pre-registered as the decisive control.
 
