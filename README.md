@@ -131,6 +131,7 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 | `judge/sample_human_study.py` | Stratified 90-item (question×opponent) sampling frame for the human study → `dataset/human_study_sample.csv` |
 | `HUMAN_STUDY_PROTOCOL.md` | Pre-registration draft: fill the missing {rubric, human} cell D + clinician adjudication (completes the 2×2 factorial; needs IRB + clinicians) |
 | `dataset/` | Reusable dual-instrument dataset: `build_dataset.py`, tidy `tables/`, `DATASET_CARD.md`, `quickstart.py` (benchmark task: predict instrument disagreement) |
+| `dataset/adjudication/` | Ready-to-send **clinician rating packet**: `ADJUDICATION_PACKET.xlsx` (blinded, 3 sheets: instructions / scales / fillable ratings), built by `build_adjudication_packet.py` + `make_adjudication_xlsx.py`; `blinding_key.csv` **kept private** (maps blinded A/B → system, not for raters) |
 | `judge/make_figure*.py`, `judge/verify_thinking.py` | Figure generation and per-judge reasoning-token verification |
 | `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
 
