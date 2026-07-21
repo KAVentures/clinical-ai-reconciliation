@@ -172,16 +172,21 @@ transparency but is **superseded** on two points by the aggregation-matched and 
    sign-consistent across four judges, simultaneous CIs exclude zero. The panel-level −29.1/−32.7 accuracy
    figures were inflated by averaging judges **then** thresholding (a ±0.25 tie-band gives −13.8; native
    1–4 gap only −0.125). Accuracy is the **weakest** axis, not the headline.
-2. **The rater term is NOT null — we retract "instrument, not the rater."** On **exact common support**
-   (matching every question×opponent×axis with a human rating), the accuracy rater term B−A is **−24.0 pp
-   [−35.7, −12.5]**: LLM pairwise judges reproduce only +0.5 pp of physicians' +24.4 pp OE accuracy edge on
-   the same questions. The panel-level "−6.8, null" was a support-mismatch artifact. **Both** the rater
-   change and the format change contribute; the "~83% instrument share" is withdrawn.
+2. **Exact common-support decomposition (identical keys A/B/C; 108 q×opp/axis).** The format component
+   (C−B) is negative on all five axes (accuracy −17.8, CU −20.4, SQ −40.0, comp −32.6, verif −43.1; CIs
+   exclude zero). The human→LLM rater term (B−A) is **null on accuracy (−7.9 pp [−23.5, +7.1], p=0.30)** and
+   clinical utility, but significantly **positive** on source_quality (+25.1), completeness (+17.6),
+   verifiability (+30.0). So we do **not** claim "instrument, not the rater" (rater is a real contributor on
+   3 axes) nor that the rater is large/negative on accuracy. **NOTE — corrects a prior-revision error:** an
+   earlier pass reported the accuracy rater term as −24.0 pp by comparing the *full-bank* human edge (+24.4)
+   against the *matched* LLM value (a vacuous support filter). Properly matched, it is −7.9 pp (NS). The
+   "~83% instrument share" is withdrawn as ill-posed.
 
 **Result (corrected).** The robust, assumption-light claim is **format-with-rater-fixed**: the same LLM
-judge, switched pairwise→rubric, moves OE-vs-frontier negative on all five axes. It is a **three-cell path
-decomposition, not a factorial** — both components matter, and the bridge to the human-rated Nature rubric
-assumes a small (untested) rater×format interaction.
+judge, switched pairwise→rubric, moves OE-vs-frontier negative on all five axes. Both format and rater
+matter, but the **format carries the reversal** (the rater is null on accuracy and *positive* on the
+evidence axes). It is a **three-cell path decomposition, not a factorial**; the bridge to the human-rated
+Nature rubric assumes a small (untested) rater×format interaction.
 
 **Scope caveat (the missing fourth cell).** This decomposition is identified *within LLM raters*: we have
 A = {pairwise, human}, B = {pairwise, LLM}, C = {rubric, LLM}, but **not** D = {rubric, human}.
