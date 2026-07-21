@@ -1,0 +1,56 @@
+{
+  "n_rows": 3865,
+  "by_axis": {
+    "accuracy": {
+      "n_rows": 773,
+      "n_rubric_decisive": 327,
+      "n_comparable_vs_llm_pairwise": 281,
+      "n_flip_vs_llm_pairwise": 61,
+      "flip_rate_vs_llm_pairwise": 0.2171,
+      "n_comparable_vs_human_pairwise": 41,
+      "n_flip_vs_human_pairwise": 25,
+      "flip_rate_vs_human_pairwise": 0.6098
+    },
+    "clinical_utility": {
+      "n_rows": 773,
+      "n_rubric_decisive": 259,
+      "n_comparable_vs_llm_pairwise": 214,
+      "n_flip_vs_llm_pairwise": 52,
+      "flip_rate_vs_llm_pairwise": 0.243,
+      "n_comparable_vs_human_pairwise": 53,
+      "n_flip_vs_human_pairwise": 23,
+      "flip_rate_vs_human_pairwise": 0.434
+    },
+    "source_quality": {
+      "n_rows": 773,
+      "n_rubric_decisive": 332,
+      "n_comparable_vs_llm_pairwise": 294,
+      "n_flip_vs_llm_pairwise": 69,
+      "flip_rate_vs_llm_pairwise": 0.2347,
+      "n_comparable_vs_human_pairwise": 55,
+      "n_flip_vs_human_pairwise": 30,
+      "flip_rate_vs_human_pairwise": 0.5455
+    },
+    "completeness": {
+      "n_rows": 773,
+      "n_rubric_decisive": 278,
+      "n_comparable_vs_llm_pairwise": 241,
+      "n_flip_vs_llm_pairwise": 77,
+      "flip_rate_vs_llm_pairwise": 0.3195,
+      "n_comparable_vs_human_pairwise": 47,
+      "n_flip_vs_human_pairwise": 23,
+      "flip_rate_vs_human_pairwise": 0.4894
+    },
+    "verifiability": {
+      "n_rows": 773,
+      "n_rubric_decisive": 329,
+      "n_comparable_vs_llm_pairwise": 299,
+      "n_flip_vs_llm_pairwise": 85,
+      "flip_rate_vs_llm_pairwise": 0.2843,
+      "n_comparable_vs_human_pairwise": 40,
+      "n_flip_vs_human_pairwise": 24,
+      "flip_rate_vs_human_pairwise": 0.6
+    }
+  },
+  "overall_flip_rate_vs_llm_pairwise": 0.2588
+}

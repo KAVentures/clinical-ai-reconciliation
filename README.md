@@ -120,6 +120,8 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 | `judge/providers.py` | Unified 4-provider judge interface (stdlib only; keys loaded at runtime, never persisted) |
 | `judge/grade.py`, `judge/pairwise.py` | Blinded rubric grader (cell C) and blinded pairwise grader (cell B); both resumable |
 | `judge/analyze_*.py`, `judge/bootstrap_grades.py`, `judge/length_analysis.py` | Win-diffs, 2×2 decomposition, self-preference, bootstrap CIs, length sub-study |
+| `judge/bootstrap_panel.py` | Crossed question × judge bootstrap (primary inference); writes `judge/out/panel_bootstrap.json` |
+| `judge/export_disagreement.py` (+ `test_export_disagreement.py`) | Per-item instrument-disagreement audit export → `judge/out/instrument_disagreement.csv` + `_by_axis.json`; deterministic test pins the flip definition (issue #1) |
 | `judge/make_figure*.py`, `judge/verify_thinking.py` | Figure generation and per-judge reasoning-token verification |
 | `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
 

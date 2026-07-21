@@ -724,7 +724,13 @@ All code and outputs are in this repository; `run_all.sh` reproduces every resul
 (`SKIP_JUDGES=1` for the no-API-key public-data subset). Real-POCQi data: Hugging Face
 `jjfenglab/Real-POCQi` (CC BY 4.0), fetched by `fetch_data.py` and vendored in `data/`. Judge
 configuration, reasoning-token verification, grades, bootstrap CIs, and figures are regenerable as
-documented in `README.md`. Nature Medicine numbers are cited from the published article
+documented in `README.md`. A machine-readable **per-item instrument-disagreement export**
+(`judge/export_disagreement.py` → `judge/out/instrument_disagreement.csv`) gives, for every
+(question, axis, comparator) triple, the rubric and pairwise winners/margins, the number of
+contributing judges, judge dispersion, and an `instrument_flip` flag, so readers can inspect
+*where* reversals concentrate; re-aggregating it reproduces the sign of every reported
+win-difference (a deterministic unit test pins the flip definition). This is a descriptive audit
+layer, not adjudicated clinical truth. Nature Medicine numbers are cited from the published article
 (s41591-026-04431-5); its RCQ corpus is not public (IRB i23-00510).
 
 ## References
