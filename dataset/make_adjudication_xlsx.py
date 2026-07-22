@@ -77,12 +77,25 @@ def main():
     s1.title = 'Start here'
     s1['A1'] = 'Clinician rating & adjudication — instructions'
     s1['A1'].font = Font(name=ARIAL, size=14, bold=True)
-    s1['A3'] = ('Please complete the YELLOW columns on the "Ratings" sheet. Allowed values for each column are '
-                'on the "Scales" sheet (and appear as drop-downs). Do not edit the question or answer text. '
-                'You are blinded to which AI system wrote each answer.')
-    s1['A3'].alignment = Alignment(wrap_text=True, vertical='top')
-    s1.merge_cells('A3:H6')
-    r = 8
+
+    # rater identification (so multiple returned files can be told apart) — yellow input cells
+    s1['A3'] = 'Your initials:'; s1['A4'] = 'Date started:'; s1['A5'] = 'Specialty:'
+    for rr in (3, 4, 5):
+        s1.cell(row=rr, column=1).font = Font(name=ARIAL, size=10, bold=True)
+        inp = s1.cell(row=rr, column=2)
+        inp.fill = FILL_YELLOW
+        inp.border = BORDER
+        inp.font = Font(name=ARIAL, size=10)
+    s1.cell(row=3, column=3, value='← please fill these three before you start').font = \
+        Font(name=ARIAL, size=9, italic=True, color='808080')
+
+    s1['A7'] = ('This is the only file you need. Please complete the YELLOW columns on the "Ratings" sheet. '
+                'Allowed values for each column are on the "Scales" sheet and appear as drop-downs. Do not edit '
+                'the question or answer text. You are blinded to which AI system wrote each answer. Save and '
+                'return this single file when done (you may do it over several sittings).')
+    s1['A7'].alignment = Alignment(wrap_text=True, vertical='top')
+    s1.merge_cells('A7:H10')
+    r = 12
     for _, row in instr.iterrows():
         c = s1.cell(row=r, column=1, value=f"{row['step']}. {row['instruction']}"
                     if str(row['step']).isdigit() else row['instruction'])
