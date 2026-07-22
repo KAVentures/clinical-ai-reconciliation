@@ -6,8 +6,8 @@ Completes the local factorial:
     LLM judges         existing B      existing C
 
 ABSOLUTE-RUBRIC arm (cell D): Nature FORMAT - ONE blinded answer per row, absolute 1-4, the competing
-answer is NEVER shown. Real-POCQi CONTENT + the SAME five axes as the LLM cells. The 79 (question,opponent)
-pairs each create TWO response-items (OE answer + opponent answer), i.e. 158 response-items before
+answer is NEVER shown. Real-POCQi CONTENT + the SAME five axes as the LLM cells. The ~80 (question,opponent)
+pairs each create TWO response-items (OE answer + opponent answer), i.e. ~160 response-items before
 replication (answers are NOT deduplicated - each pair contributes its own two items).
 
 PAIRWISE arm (cell A'): both blinded answers, A/B randomised independently per item AND per reviewer, five
@@ -44,6 +44,7 @@ AUTHOR = os.path.join(HERE, 'author_only')
 PKT = os.path.join(HERE, 'packets')
 sys.path.insert(0, os.path.join(ROOT, 'judge'))
 from rubric_anchors import AXES, AXIS_DEF, ANCHORS   # single canonical rubric (also used by grade_expanded.py)
+from blinding import render_blinded_answer           # single canonical answer rendering (also used by grade_expanded.py)
 OE = 'openevidence'
 FRONTIER = ['gpt-5.5', 'claude-opus-4-8', 'gemini-3.1-pro']
 SEED = 62
@@ -61,13 +62,6 @@ BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 COMPETENCE, CONFIDENCE, PREF = ['yes', 'partly', 'no'], ['high', 'moderate', 'low'], ['A', 'B', 'tie']
 EXTERNAL_NOTE = ("Ratings must represent your own final clinical judgment. External clinical resources may be "
                  "consulted when needed, but do not delegate completion of the rating form to another person or system.")
-
-
-def scrub_answer(t):
-    t = str(t)
-    t = re.sub(r'(https?://)?(www\.)?openevidence\.com', 'https://redacted-source.example', t, flags=re.I)
-    t = re.sub(r'open\s*evidence', '[redacted source]', t, flags=re.I)
-    return t
 
 
 # ---------------------------------------------------------------- sheet helpers
@@ -259,7 +253,8 @@ def build_pairwise_workbook(items, path, rng):
     instructions_sheet(wb, 'Physician pairwise-preference evaluation - instructions', [
         'TASK: You will see ONE clinical question and TWO AI-generated answers, Answer A and Answer B '
         '(order is randomised). For each of the five axes say which is better: A, B, or tie.',
-        'Axes: accuracy, clinical utility, source quality, completeness, verifiability (same definitions as the rubric).',
+        'Axis definitions (apply the same meaning as the rubric arm):',
+        *[f'   - {ax.replace("_", " ")}: {AXIS_DEF[ax]}' for ax in AXES],
         'overall_preference: all things considered, which answer would you rather give a colleague - A / B / tie.',
         'within_reviewer_competence (yes / partly / no); reviewer_confidence (high / moderate / low); optional_comment.'])
     worked_example_sheet(wb, headers, {
@@ -311,7 +306,7 @@ def select_pairs():
     are represented (the study is disagreement-ENRICHED but not disagreement-only)."""
     df = pd.read_csv(os.path.join(OUTJ, 'instrument_disagreement.csv'))
     spec = pd.read_parquet(os.path.join(DATA, 'questions.parquet')).set_index('question_id')['specialty']
-    df['abs_margin'] = pd.to_numeric(df.rubric_margin, errors='coerce')
+    df['abs_margin'] = pd.to_numeric(df.rubric_margin, errors='coerce').abs()   # ABSOLUTE margin
     df['flip'] = df.instrument_flip_llm.astype(str).str.lower().eq('true')
     df['is_tie'] = df.rubric_winner.astype(str).eq('tie')
     pairs = (df.groupby(['question_id', 'opponent'])
@@ -321,6 +316,8 @@ def select_pairs():
     sig = dfm.loc[dfm.groupby(['question_id', 'opponent']).abs_margin.idxmax(), ['question_id', 'opponent', 'axis']]
     pairs = pairs.merge(sig, on=['question_id', 'opponent'], how='left').rename(columns={'axis': 'signal_axis'})
     pairs['specialty'] = pairs.question_id.map(spec)
+    # require a defined margin (i.e. LLM rubric data exists for the pair -> cell C is estimable)
+    pairs = pairs.dropna(subset=['mean_abs_margin']).reset_index(drop=True)
 
     def outcome(r):
         if r.n_flip >= 1:
@@ -352,7 +349,7 @@ def main():
         os.makedirs(d)
     q = pd.read_parquet(os.path.join(DATA, 'questions.parquet')).set_index('question_id')
     a = pd.read_parquet(os.path.join(DATA, 'answers.parquet'))
-    ANS = {(r.question_id, r.provider_key): scrub_answer(r.answer_markdown) for _, r in a.iterrows()}
+    ANS = {(r.question_id, r.provider_key): render_blinded_answer(r.answer_markdown) for _, r in a.iterrows()}
 
     # (question, opponent) pairs, sampled directly at the pair level (incl. tie/near-tie)
     pairs = select_pairs()

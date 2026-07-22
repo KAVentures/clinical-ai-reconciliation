@@ -43,8 +43,15 @@ stratified by **opponent × outcome-class**:
 opponent answer, **not deduplicated**) → **160 response-items**, each scored on its own.
 **Pairwise arm:** **80 items**, one per pair (OpenEvidence vs opponent).
 
-Blinding: provider names removed; OpenEvidence brand/domain scrubbed from answer text (citation structure
-kept, so verifiability/source-quality remain rateable); stable blinded IDs (`RESP-####`, `PW-###`, `QID-###`).
+Blinding: a **single canonical rendering** (`judge/blinding.render_blinded_answer`) is applied to every cell
+that must match — the physician workbooks (A′, D) **and** the LLM regrade (C via `grade_expanded.py`) — so
+human and LLM cells see **identical** answer text. It removes the OpenEvidence brand/domain (the only
+provider self-identifier) while keeping the citation structure. Stable blinded IDs (`RESP-####`, `PW-###`,
+`QID-###`). **Caveat to disclose:** replacing the real citation host with a neutral placeholder modifies
+*absolute* citation accessibility (a component of verifiability). Because the *same* rendering is applied to
+every compared cell, it does not bias the C-vs-D or format contrasts; but the *original* cells B and C were
+graded on raw text, so regrade them (or at minimum expanded-C) with `render_blinded_answer` before comparing
+to the human cells.
 
 ---
 
@@ -66,6 +73,13 @@ Because specialty matching is unavailable, each reviewer records **specialty / c
 item **within_reviewer_competence** (yes/partly/no) and **reviewer_confidence** (high/moderate/low). All
 ratings are retained in the primary analysis; a **sensitivity analysis** excludes out-of-competence /
 low-confidence ratings.
+
+**Random allocation of real physicians.** The `REV-R##`/`REV-P##` IDs guarantee single-arm packets but do
+not by themselves guarantee that one recruited physician is mapped to only one ID. Before distribution, run
+`allocate_reviewers.py --roster <roster.csv>` (columns: `physician_id, background, years_experience`): it
+**randomly allocates each real physician to exactly one arm and one reviewer ID**, balanced across broad
+clinical background and experience band (seed 62). One person → one arm → one ID; surplus physicians are
+recorded as spares.
 
 ---
 
@@ -97,14 +111,33 @@ consulted when needed, but do not delegate completion of the rating form to anot
 
 ---
 
-## 5. Analysis
+## 5. Analysis — a common OE-superiority estimand (not a single signed-difference mixed model)
 
-On the returned ratings, un-blinded via the author-only manifests (pairwise via
-`pairwise_packet_blinding.csv`), fit a mixed-effects model of the OE-vs-opponent signed outcome with fixed
-effects **rater type** (human/LLM), **format** (pairwise/rubric), their **interaction**, and **axis**, with
-**question** (and rater) random intercepts. Report the human format effect (D − A′), the rater-under-rubric
-effect (C − D), and the **rater × format interaction**. Pre-specify the competence/confidence sensitivity
-analysis and report inter-rater reliability (Krippendorff's α / Fleiss' κ) per axis.
+Rubric physicians rate **one** answer, and no rubric physician sees both answers to a question, so no
+individual rubric rater produces an OE-minus-opponent contrast. The two arms therefore **cannot** be put
+into one rater-level signed-difference mixed model. Instead every cell is mapped to the **same OE-superiority
+scale in [0,1]**, per (pair, axis) (`dataset/physician/analyze_returns.py`):
+
+- **Pairwise cells** (A′ human, B LLM): **OE win-score** = mean over raters of {OE preferred = 1, tie = 0.5,
+  opponent = 0}.
+- **Rubric cells** (D human, C LLM): **probability of superiority**
+  `PoS = P(S_OE > S_opp) + 0.5·P(S_OE = S_opp)`, computed from the **independent** OE-answer and
+  opponent-answer score sets for that (pair, axis) — the common-language effect size / normalised
+  Mann-Whitney U. For humans these sets come from different reviewers (independent by design); for the LLM
+  the OE and opponent score sets across judges are used the same way.
+
+From the four cell values per (pair, axis) we report:
+
+- **format effect (human) = D − A′**, **format effect (LLM) = C − B**;
+- **rater effect (pairwise) = A′ − B**, **rater effect (rubric) = D − C**;
+- **rater × format interaction (difference-in-differences) = (D − A′) − (C − B)**.
+
+**Uncertainty:** resample **clinical questions** with replacement (cluster bootstrap) and recompute
+everything; report 95% CIs per axis. The 1–4 ordinal rubric scores may additionally be analysed with a
+**rubric-only** ordinal (cumulative-link) mixed model as a **secondary** analysis — but that is not the
+common factorial outcome. Cell C must be the **expanded-anchor regrade** (`grade_expanded.py`) so C and D
+share rubric wording; use `grades_expanded.jsonl` in `analyze_returns.llm_rubric_cell()`. Pre-specify the
+competence/confidence sensitivity analysis and report inter-rater reliability (Krippendorff's α) per axis.
 
 ---
 

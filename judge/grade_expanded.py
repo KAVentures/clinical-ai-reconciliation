@@ -17,6 +17,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 import providers as P
 from rubric_anchors import AXES, system_prompt
+from blinding import render_blinded_answer   # SAME rendering the physician cells (A'/D) see
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, '..', 'data')
@@ -90,6 +91,7 @@ def main():
 
     def work(t):
         qid, prov, j, qt, at = t
+        at = render_blinded_answer(at)   # identical rendering to physician cells (A'/D)
         txt, meta = P.call(j, SYSTEM, make_user(qt, at), keys, high=True, max_tokens=500)
         sc = parse_scores(txt)
         append_row(dict(question_id=qid, provider_key=prov, judge=j, scores=sc,

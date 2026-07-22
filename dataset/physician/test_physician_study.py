@@ -17,6 +17,11 @@ def test_sample_pair_level_and_enriched():
     assert (pairs.outcome_class == 'tie_near').sum() >= 5, "tie/near-tie cases not included"
     # every pair is a distinct (question, opponent)
     assert not pairs.duplicated(subset=['question_id', 'opponent']).any()
+    # ABS-MARGIN guard: a tie/near-tie must have a genuinely small |margin| OR >=2 tie axes - a strong
+    # (possibly negative) margin must NOT be mislabelled near-tie. Catches the missing .abs() bug.
+    tn = pairs[pairs.outcome_class == 'tie_near']
+    assert ((tn.mean_abs_margin < 0.25) | (tn.n_tie >= 2)).all(), "tie_near mislabelled (abs-margin bug?)"
+    assert (pairs.mean_abs_margin >= 0).all(), "mean_abs_margin has negatives -> .abs() missing"
     return pairs
 
 
@@ -78,6 +83,22 @@ def test_workbooks_present_scrubbed_no_example_row():
     rub = load_workbook('PHYSICIAN_ABSOLUTE_RUBRIC.xlsx')['Ratings']
     hh = [rub.cell(2, c).value for c in range(1, rub.max_column + 1)]
     assert 'blinded_answer' in hh and 'answer_B' not in hh, "rubric must show ONE answer, no competing answer"
+
+
+def test_common_estimands():
+    import numpy as np
+    import analyze_returns as A
+    # pairwise OE win-score
+    assert A.win_score(['oe', 'oe', 'opp', 'tie']) == 0.625
+    # rubric probability-of-superiority from INDEPENDENT score sets
+    assert A.prob_superiority([4, 4, 3], [2, 2, 2]) == 1.0     # OE always higher
+    assert A.prob_superiority([2, 2], [2, 2]) == 0.5           # all ties -> 0.5
+    assert A.prob_superiority([3, 4], [2, 4]) == 0.625         # (2 gt + 0.5*1 eq)/4
+    assert np.isnan(A.prob_superiority([], [1, 2]))            # empty side -> undefined
+    # every cell value lies on the [0,1] OE-superiority scale
+    pairs = list(A._sample_pairs())[:20]
+    for v in A.llm_pairwise_cell(set(pairs)).values():
+        assert (0.0 <= v <= 1.0) or np.isnan(v)
 
 
 if __name__ == '__main__':
