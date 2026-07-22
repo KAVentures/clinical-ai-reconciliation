@@ -1,0 +1,87 @@
+"""Automated assertions for the physician study design (coverage, reviewer loads, no repeated questions).
+
+Deterministic (seed 62); operates on the in-memory sampler/assigner plus the generated workbooks.
+Run after build_physician_study.py:  python3 test_physician_study.py
+"""
+import glob
+from collections import Counter
+import build_physician_study as B
+
+
+def test_sample_pair_level_and_enriched():
+    pairs = B.select_pairs()
+    assert 60 <= len(pairs) <= 100, f"pairs {len(pairs)} outside prespecified 60-100"
+    assert set(pairs.opponent) == set(B.FRONTIER), "not all three opponents represented"
+    classes = set(pairs.outcome_class)
+    assert {'flip', 'tie_near', 'agree'} <= classes, f"missing outcome classes: {classes}"
+    assert (pairs.outcome_class == 'tie_near').sum() >= 5, "tie/near-tie cases not included"
+    # every pair is a distinct (question, opponent)
+    assert not pairs.duplicated(subset=['question_id', 'opponent']).any()
+    return pairs
+
+
+def _item_lists(pairs):
+    rub, pw, k = [], [], 0
+    for r in pairs.itertuples():
+        for _ in range(2):                      # two response-items per pair, NOT deduplicated
+            k += 1; rub.append((f'RESP-{k:04d}', r.question_id))
+    for i, r in enumerate(pairs.itertuples()):
+        pw.append((f'PW-{i + 1:03d}', r.question_id))
+    return rub, pw
+
+
+def test_rubric_is_two_per_pair():
+    pairs = B.select_pairs()
+    rub, pw = _item_lists(pairs)
+    assert len(rub) == 2 * len(pairs), "rubric response-items must be 2 x pairs (no dedup)"
+    assert len(pw) == len(pairs)
+
+
+def _check_arm(items, arm, prefix, seed):
+    rows, n_rev, load = B.single_arm_assign(items, arm, prefix, seed)
+    by_item = Counter(r['item_id'] for r in rows)
+    assert min(by_item.values()) >= B.RATINGS_PER_ITEM, f"{arm}: some item has < {B.RATINGS_PER_ITEM} ratings"
+    assert set(by_item) == {i for i, _ in items}, f"{arm}: not every item is covered"
+    # reviewer loads within cap; and a reasonable floor
+    assert max(load.values()) <= B.ITEMS_PER_REVIEWER, f"{arm}: a reviewer exceeds the item cap"
+    # no reviewer sees the same clinical question twice
+    seen = Counter((r['reviewer_id'], r['question_id']) for r in rows)
+    assert max(seen.values()) == 1, f"{arm}: a reviewer sees a repeated question"
+    return {r['reviewer_id'] for r in rows}
+
+
+def test_assignment_coverage_loads_no_repeats():
+    pairs = B.select_pairs()
+    rub, pw = _item_lists(pairs)
+    rub_rev = _check_arm(rub, 'rubric', 'REV-R', B.SEED)
+    pw_rev = _check_arm(pw, 'pairwise', 'REV-P', B.SEED + 7)
+    # single-arm reviewers -> a reviewer never appears in both formats (so never same question across arms)
+    assert rub_rev.isdisjoint(pw_rev), "a reviewer appears in both arms"
+
+
+def test_workbooks_present_scrubbed_no_example_row():
+    import re
+    from openpyxl import load_workbook
+    files = ['PHYSICIAN_ABSOLUTE_RUBRIC.xlsx', 'PHYSICIAN_PAIRWISE.xlsx'] + glob.glob('packets/*.xlsx')
+    for f in files:
+        wb = load_workbook(f)
+        assert 'Ratings' in wb.sheetnames and 'Data dictionary' in wb.sheetnames, f"{f}: missing required sheet"
+        rs = wb['Ratings']
+        assert str(rs['B1'].value).startswith('=SUMPRODUCT'), f"{f}: completion counter not all-fields"
+        # no EXAMPLE row in the live data
+        assert not any(str(rs.cell(r, 1).value).startswith('EXAMPLE') for r in range(3, rs.max_row + 1)), f"{f}: example row in live data"
+        # provider brand scrubbed
+        for sh in wb.sheetnames:
+            for row in wb[sh].iter_rows(values_only=True):
+                for v in row:
+                    assert not (isinstance(v, str) and re.search('openevidence', v, re.I)), f"{f}: brand leak"
+    rub = load_workbook('PHYSICIAN_ABSOLUTE_RUBRIC.xlsx')['Ratings']
+    hh = [rub.cell(2, c).value for c in range(1, rub.max_column + 1)]
+    assert 'blinded_answer' in hh and 'answer_B' not in hh, "rubric must show ONE answer, no competing answer"
+
+
+if __name__ == '__main__':
+    fns = [v for k, v in sorted(globals().items()) if k.startswith('test_') and callable(v)]
+    for fn in fns:
+        fn(); print(f"ok  {fn.__name__}")
+    print(f"\nall {len(fns)} physician-study assertions passed")

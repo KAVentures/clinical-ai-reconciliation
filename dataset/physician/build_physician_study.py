@@ -27,6 +27,7 @@ Deterministic (seed 62). No API calls. Reads dataset/human_study_sample.csv + da
 """
 import os
 import re
+import sys
 import shutil
 import numpy as np
 import pandas as pd
@@ -38,13 +39,15 @@ from openpyxl.worksheet.datavalidation import DataValidation
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, '..', '..')
 DATA = os.path.join(ROOT, 'data')
-SAMPLE_CSV = os.path.join(HERE, '..', 'human_study_sample.csv')
+OUTJ = os.path.join(ROOT, 'judge', 'out')
 AUTHOR = os.path.join(HERE, 'author_only')
 PKT = os.path.join(HERE, 'packets')
+sys.path.insert(0, os.path.join(ROOT, 'judge'))
+from rubric_anchors import AXES, AXIS_DEF, ANCHORS   # single canonical rubric (also used by grade_expanded.py)
 OE = 'openevidence'
 FRONTIER = ['gpt-5.5', 'claude-opus-4-8', 'gemini-3.1-pro']
-AXES = ['accuracy', 'clinical_utility', 'source_quality', 'completeness', 'verifiability']
 SEED = 62
+TARGET_PAIRS = 80             # question x opponent pairs (prespecified 60-100)
 RATINGS_PER_ITEM = 2          # >=2 physician ratings per item per arm (3 preferable)
 ITEMS_PER_REVIEWER = 20       # ~15-25 items per physician
 
@@ -55,36 +58,6 @@ LOCKFILL = PatternFill('solid', fgColor='F2F2F2')
 THIN = Side(style='thin', color='BFBFBF')
 BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 
-# axis definitions verbatim from judge/grade.py (the LLM rubric prompt) + faithful 1-4 elaborations
-AXIS_DEF = {
-    'accuracy': "factual and clinical correctness of the claims",
-    'clinical_utility': "usefulness for delivering high-quality clinical care",
-    'source_quality': "quality/authority of the evidence and reasoning offered",
-    'completeness': "comprehensiveness given what the question asks",
-    'verifiability': "how easily a clinician could verify the answer's claims",
-}
-ANCHORS = {
-    'accuracy': {1: "Clinically significant factual error or an unsafe recommendation; acting on it could harm a patient.",
-                 2: "Broadly on track but with a material inaccuracy, outdated guidance, or an unsupported claim needing correction.",
-                 3: "Clinically correct on all major points; any inaccuracies are minor and non-consequential.",
-                 4: "Fully correct and precise, including relevant thresholds, nuances and caveats; nothing a specialist would correct."},
-    'clinical_utility': {1: "Not usable at the point of care - vague, evasive, or fails to address the actual clinical decision.",
-                         2: "Limited use - partly addresses the question but omits actionable specifics (dose, timing, threshold, next step).",
-                         3: "Useful and actionable for the presenting question; a clinician could act on it with minor independent judgment.",
-                         4: "Directly and efficiently resolves the clinical decision with clear, actionable guidance tailored to the scenario."},
-    'source_quality': {1: "No supporting evidence or reasoning, or reasoning that is fallacious or misleading.",
-                       2: "Weak or generic justification; assertions largely unsupported or backed only by low-quality reasoning.",
-                       3: "Sound clinical reasoning and/or appropriate reference to relevant evidence or guidelines.",
-                       4: "Well grounded in high-quality, authoritative evidence (guidelines, primary literature) with rigorous reasoning."},
-    'completeness': {1: "Misses the central element of the question, or is so incomplete as to be misleading.",
-                     2: "Addresses part of the question but omits important components (e.g. contraindications, alternatives, follow-up).",
-                     3: "Covers the main components the question requires; only minor omissions.",
-                     4: "Thorough and appropriately scoped - decision, caveats, contraindications and relevant follow-up, without padding."},
-    'verifiability': {1: "Claims cannot be checked - no citations, named sources, or checkable specifics.",
-                      2: "Hard to verify - few or vague references; a clinician would struggle to confirm key claims.",
-                      3: "Most key claims are checkable from the citations, named sources, or specific statements provided.",
-                      4: "Every material claim is readily verifiable via clear, specific, authoritative citations or references."},
-}
 COMPETENCE, CONFIDENCE, PREF = ['yes', 'partly', 'no'], ['high', 'moderate', 'low'], ['A', 'B', 'tie']
 EXTERNAL_NOTE = ("Ratings must represent your own final clinical judgment. External clinical resources may be "
                  "consulted when needed, but do not delegate completion of the rating form to another person or system.")
@@ -184,9 +157,13 @@ def data_dictionary_sheet(wb, entries):
 def ratings_sheet(wb, headers, rows, fill_cols, validations, read_cols):
     ws = wb.create_sheet('Ratings')
     n = len(rows); first, last = 3, n + 2
-    score_col = get_column_letter(headers.index(fill_cols[0]) + 1)
-    ws['A1'] = 'Rows scored:'; ws['B1'] = f'=COUNTA({score_col}{first}:{score_col}{last})'
-    ws['C1'] = 'Remaining:'; ws['D1'] = f'={n}-COUNTA({score_col}{first}:{score_col}{last})'
+    # a row counts COMPLETE only when EVERY required field (all fill cols except the optional comment) is
+    # filled: SUMPRODUCT of per-column non-blank indicators = count of fully-completed rows.
+    required = [c for c in fill_cols if c != 'optional_comment']
+    reqL = [get_column_letter(headers.index(c) + 1) for c in required]
+    completed = '=SUMPRODUCT(' + ','.join(f'--({L}{first}:{L}{last}<>"")' for L in reqL) + ')'
+    ws['A1'] = 'Rows complete:'; ws['B1'] = completed
+    ws['C1'] = 'Remaining:'; ws['D1'] = f'={n}-B1'
     ws['E1'] = f'Total items: {n}'
     for cell in ('A1', 'B1', 'C1', 'D1', 'E1'):
         ws[cell].font = Font(name=ARIAL, size=10, bold=True, color='1F4E78')
@@ -327,6 +304,46 @@ def single_arm_assign(items, arm, prefix, seed):
     return rows, n_rev, load
 
 
+# ---------------------------------------------------------------- sample (direct question x opponent)
+def select_pairs():
+    """Stratified sample built DIRECTLY at the (question, opponent) level (not axis-level rows deduplicated).
+    Strata = opponent x outcome-class, where outcome-class in {flip, tie_near, agree}, so tie/near-tie pairs
+    are represented (the study is disagreement-ENRICHED but not disagreement-only)."""
+    df = pd.read_csv(os.path.join(OUTJ, 'instrument_disagreement.csv'))
+    spec = pd.read_parquet(os.path.join(DATA, 'questions.parquet')).set_index('question_id')['specialty']
+    df['abs_margin'] = pd.to_numeric(df.rubric_margin, errors='coerce')
+    df['flip'] = df.instrument_flip_llm.astype(str).str.lower().eq('true')
+    df['is_tie'] = df.rubric_winner.astype(str).eq('tie')
+    pairs = (df.groupby(['question_id', 'opponent'])
+             .agg(n_axes=('axis', 'count'), n_flip=('flip', 'sum'), n_tie=('is_tie', 'sum'),
+                  mean_abs_margin=('abs_margin', 'mean')).reset_index())
+    dfm = df.dropna(subset=['abs_margin'])
+    sig = dfm.loc[dfm.groupby(['question_id', 'opponent']).abs_margin.idxmax(), ['question_id', 'opponent', 'axis']]
+    pairs = pairs.merge(sig, on=['question_id', 'opponent'], how='left').rename(columns={'axis': 'signal_axis'})
+    pairs['specialty'] = pairs.question_id.map(spec)
+
+    def outcome(r):
+        if r.n_flip >= 1:
+            return 'flip'
+        if r.n_tie >= 2 or (pd.notna(r.mean_abs_margin) and r.mean_abs_margin < 0.25):
+            return 'tie_near'
+        return 'agree'
+    pairs['outcome_class'] = pairs.apply(outcome, axis=1)
+
+    rng = np.random.default_rng(SEED)
+    strata = [(o, c) for o in FRONTIER for c in ['flip', 'tie_near', 'agree']]
+    per = max(1, TARGET_PAIRS // len(strata) + 1)
+    picks = []
+    for (o, c) in strata:
+        sub = pairs[(pairs.opponent == o) & (pairs.outcome_class == c)]
+        if len(sub):
+            picks.append(sub.iloc[rng.choice(len(sub), min(per, len(sub)), replace=False)])
+    sel = pd.concat(picks).drop_duplicates(subset=['question_id', 'opponent'])
+    if len(sel) > TARGET_PAIRS:
+        sel = sel.iloc[rng.choice(len(sel), TARGET_PAIRS, replace=False)]
+    return sel.sort_values(['question_id', 'opponent'], kind='stable').reset_index(drop=True)
+
+
 # ---------------------------------------------------------------- main
 def main():
     for d in (AUTHOR, PKT):
@@ -337,10 +354,8 @@ def main():
     a = pd.read_parquet(os.path.join(DATA, 'answers.parquet'))
     ANS = {(r.question_id, r.provider_key): scrub_answer(r.answer_markdown) for _, r in a.iterrows()}
 
-    # existing 79 (question, opponent) pairs
-    samp = pd.read_csv(SAMPLE_CSV)
-    pairs = (samp[['question_id', 'opponent', 'specialty']].drop_duplicates(subset=['question_id', 'opponent'])
-             .sort_values(['question_id', 'opponent'], kind='stable').reset_index(drop=True))
+    # (question, opponent) pairs, sampled directly at the pair level (incl. tie/near-tie)
+    pairs = select_pairs()
     pairs.insert(0, 'pair_id', [f'PAIR-{i + 1:03d}' for i in range(len(pairs))])
     pairs.to_csv(os.path.join(AUTHOR, 'physician_sample.csv'), index=False)
 
@@ -385,14 +400,18 @@ def main():
     n_files = 0
     for i, rv in enumerate(sorted(asg_df.reviewer_id.unique())):
         sub = asg_df[asg_df.reviewer_id == rv]
+        prng = np.random.default_rng(SEED + 1000 + i)      # per-reviewer: item ORDER and (pairwise) A/B
         rub_ids = sub[sub.format_arm == 'rubric'].item_id.tolist()
         pw_ids = sub[sub.format_arm == 'pairwise'].item_id.tolist()
         if rub_ids:
-            build_rubric_workbook([rub_by_id[i2] for i2 in rub_ids], os.path.join(PKT, f'PHYSICIAN_ABSOLUTE_RUBRIC__{rv}.xlsx'))
+            rows = [rub_by_id[i2] for i2 in rub_ids]
+            rows = [rows[k] for k in prng.permutation(len(rows))]   # randomize item order per packet
+            build_rubric_workbook(rows, os.path.join(PKT, f'PHYSICIAN_ABSOLUTE_RUBRIC__{rv}.xlsx'))
             n_files += 1
         if pw_ids:
-            rng = np.random.default_rng(SEED + 1000 + i)   # independent A/B per reviewer
-            bl = build_pairwise_workbook([pw_by_id[i2] for i2 in pw_ids], os.path.join(PKT, f'PHYSICIAN_PAIRWISE__{rv}.xlsx'), rng)
+            items = [pw_by_id[i2] for i2 in pw_ids]
+            items = [items[k] for k in prng.permutation(len(items))]  # randomize item order per packet
+            bl = build_pairwise_workbook(items, os.path.join(PKT, f'PHYSICIAN_PAIRWISE__{rv}.xlsx'), prng)
             for b in bl:
                 b['reviewer_id'] = rv; packet_blinding.append(b)
             n_files += 1
