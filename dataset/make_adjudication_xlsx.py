@@ -8,7 +8,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ADJ = os.path.join(HERE, 'adjudication')
-OUT_XLSX = os.path.join(ADJ, 'ADJUDICATION_PACKET.xlsx')
+OUT_XLSX = os.path.join(ADJ, 'CLINICIAN_DISAGREEMENT_ADJUDICATION_PACKET.xlsx')
 
 ARIAL = 'Arial'
 HEADER_FILL = PatternFill('solid', fgColor='1F4E78')

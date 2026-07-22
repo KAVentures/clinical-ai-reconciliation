@@ -14,7 +14,7 @@ Writes (all in dataset/adjudication/):
 
 Deterministic (seed 62). No API calls. Reads dataset/human_study_sample.csv + data/{questions,answers}.parquet.
 """
-import os, csv
+import os, csv, re
 import numpy as np
 import pandas as pd
 
@@ -23,6 +23,14 @@ DATA = os.path.join(HERE, '..', 'data')
 ADJ = os.path.join(HERE, 'adjudication')
 OE = 'openevidence'
 SEED = 62
+
+
+def scrub_answer(t):
+    """Remove OpenEvidence-identifying brand/domain (de-blinding leak) while keeping citation structure."""
+    t = str(t)
+    t = re.sub(r'(https?://)?(www\.)?openevidence\.com', 'https://redacted-source.example', t, flags=re.I)
+    t = re.sub(r'open\s*evidence', '[redacted source]', t, flags=re.I)
+    return t
 
 RUBRIC_AXES = ['accuracy', 'clinical_utility', 'source_quality', 'completeness', 'verifiability']
 
@@ -65,7 +73,7 @@ def main():
     sample = pd.read_csv(os.path.join(HERE, 'human_study_sample.csv'))
     q = pd.read_parquet(os.path.join(DATA, 'questions.parquet')).set_index('question_id')
     a = pd.read_parquet(os.path.join(DATA, 'answers.parquet'))
-    ans = {(r.question_id, r.provider_key): r.answer_markdown for _, r in a.iterrows()}
+    ans = {(r.question_id, r.provider_key): scrub_answer(r.answer_markdown) for _, r in a.iterrows()}
 
     # collapse to unique (question, opponent) comparisons
     comps = (sample[['question_id', 'opponent', 'specialty']]

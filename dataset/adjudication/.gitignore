@@ -2,3 +2,6 @@
 ratings_template.csv
 scales.csv
 instructions.csv
+
+# author-only un-blinding key (regenerable via build scripts, seed 62)
+blinding_key.csv
