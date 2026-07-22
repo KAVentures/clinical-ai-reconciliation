@@ -42,26 +42,34 @@ def test_rubric_is_two_per_pair():
     assert len(pw) == len(pairs)
 
 
-def _check_arm(items, arm, prefix, seed):
-    rows, n_rev, load = B.single_arm_assign(items, arm, prefix, seed)
-    by_item = Counter(r['item_id'] for r in rows)
-    assert min(by_item.values()) >= B.RATINGS_PER_ITEM, f"{arm}: some item has < {B.RATINGS_PER_ITEM} ratings"
-    assert set(by_item) == {i for i, _ in items}, f"{arm}: not every item is covered"
-    # reviewer loads within cap; and a reasonable floor
-    assert max(load.values()) <= B.ITEMS_PER_REVIEWER, f"{arm}: a reviewer exceeds the item cap"
-    # no reviewer sees the same clinical question twice
-    seen = Counter((r['reviewer_id'], r['question_id']) for r in rows)
-    assert max(seen.values()) == 1, f"{arm}: a reviewer sees a repeated question"
-    return {r['reviewer_id'] for r in rows}
+def _rubric_bib_items(pairs):
+    return [{'id': f'{r.question_id}|{p}', 'question_id': r.question_id,
+             'balance': (p, r.opponent, str(r.specialty))}
+            for r in pairs.itertuples() for p in ('OE', 'competitor')]
 
 
-def test_assignment_coverage_loads_no_repeats():
+def test_bib_scales_with_doctor_count():
+    """One scalable balanced-incomplete-block design: coverage, no repeated question, provider balance, and
+    loads within cap - across different doctor counts. Doctor count only changes replication."""
     pairs = B.select_pairs()
-    rub, pw = _item_lists(pairs)
-    rub_rev = _check_arm(rub, 'rubric', 'REV-R', B.SEED)
-    pw_rev = _check_arm(pw, 'pairwise', 'REV-P', B.SEED + 7)
-    # single-arm reviewers -> a reviewer never appears in both formats (so never same question across arms)
-    assert rub_rev.isdisjoint(pw_rev), "a reviewer appears in both arms"
+    items = _rubric_bib_items(pairs)
+    assert len(items) == 2 * len(pairs)
+    idprov = {it['id']: it['balance'][0] for it in items}
+    for n_doc, maxpd, target in [(2, 80, 1), (3, 60, 2), (4, 60, 3)]:
+        rows, docs, load, raters = B.assign_bib(items, n_doc, maxpd, target, B.SEED)
+        # capacity covers every response at least once
+        assert min(len(v) for v in raters.values()) >= 1, f"{n_doc} doctors: an item is uncovered"
+        assert max(len(v) for v in raters.values()) <= target, f"{n_doc} doctors: over target ratings"
+        # a doctor never sees the same clinical question twice
+        assert max(Counter((r['doctor_id'], r['question_id']) for r in rows).values()) == 1
+        # loads within the per-doctor cap
+        assert max(load.values()) <= maxpd
+        # each doctor sees roughly equal OE and competitor answers
+        pc = {d: {'OE': 0, 'competitor': 0} for d in docs}
+        for r in rows:
+            pc[r['doctor_id']][idprov[r['item_id']]] += 1
+        for d in docs:
+            assert abs(pc[d]['OE'] - pc[d]['competitor']) <= 6, f"{n_doc} doctors: provider imbalance for {d}"
 
 
 def test_workbooks_present_scrubbed_no_example_row():

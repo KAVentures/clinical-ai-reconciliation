@@ -16,12 +16,12 @@ The executed work gives three of four cells of a {pairwise, rubric} × {human, L
 | **Human**    | A (Real-POCQi) / **A′ (this study)** | **D (this study)** |
 | **LLM**      | B (this work) | C (this work) |
 
-This study collects **new physician ratings** in **two separate arms** — an absolute-rubric arm (cell **D**)
-and a pairwise arm (cell **A′**) — to complete the factorial and estimate:
-
-1. the **format effect among humans** (D vs A′);
-2. the **human-vs-LLM rater effect under rubric scoring** (C vs D);
-3. the **rater × format interaction** — the term the main paper flags as unidentified.
+The **essential** extension is the missing human absolute-rubric cell **D**. It fills the cell, and — with
+cell C regraded on identical anchors and rendering — supports a clean **C vs D** rater comparison under the
+rubric. The physician **pairwise** cell A′ is an **optional** strengthening: the original Real-POCQi human
+pairwise cell A already exists but differs somewhat in presentation and rater protocol, so A′ isolates the
+format effect among humans more cleanly. With only 2–3 doctors the rational priority is to **collect D
+properly**; A comparisons are then described as *protocol contrasts*, not perfectly isolated format effects.
 
 The absolute arm emulates the **Nature Medicine FORMAT** (one blinded answer at a time, absolute 1–4, no
 competing answer) on **Real-POCQi CONTENT** and the **same five Real-POCQi axes** as cells B/C. It is a
@@ -32,16 +32,19 @@ Nature-format evaluation, **not** an exact Nature replication.
 ## 2. Sample (disagreement-enriched, with tie and agreement controls)
 
 `select_pairs()` samples **directly at the (question, opponent) level** (not axis-level rows deduplicated),
-stratified by **opponent × outcome-class**:
+stratified by **opponent × outcome-class**, with **one pair per distinct clinical question**:
 
-- **80 (question, opponent) pairs** (prespecified 60–100), balanced across the three opponents (~27 each);
+- **80 (question, opponent) pairs on 80 distinct questions** (prespecified 60–100), balanced across the three
+  opponents (~27 each). One pair per question keeps the balanced-incomplete-block clean — each question has
+  exactly two response-items, coverable even by two doctors without repeating a question.
 - outcome-class balanced across **flip** (rubric and LLM-pairwise disagree on ≥1 axis), **tie/near-tie**
-  (rubric tie or mean |margin| < 0.25), and **agree** — so the study is **disagreement-enriched but not
-  disagreement-only**; tie/near-tie and agreement pairs are explicitly included as controls.
+  (rubric tie or mean **|margin|** < 0.25 — absolute value), and **agree** — the study is
+  **disagreement-enriched but not disagreement-only**; tie/near-tie and agreement pairs are included as controls.
 
-**Absolute-rubric arm:** each pair contributes **two response-items** (the OpenEvidence answer and the
-opponent answer, **not deduplicated**) → **160 response-items**, each scored on its own.
-**Pairwise arm:** **80 items**, one per pair (OpenEvidence vs opponent).
+**Essential absolute-rubric arm (D):** each pair contributes **two single-answer response-items** (the
+OpenEvidence answer and the opponent answer, **not deduplicated**) → **160 response-items**.
+**Optional pairwise arm (A′):** **80 items**, one per pair (built as a master template; per-doctor packets
+only with `--pairwise`).
 
 Blinding: a **single canonical rendering** (`judge/blinding.render_blinded_answer`) is applied to every cell
 that must match — the physician workbooks (A′, D) **and** the LLM regrade (C via `grade_expanded.py`) — so
@@ -55,31 +58,37 @@ to the human cells.
 
 ---
 
-## 3. Reviewers and assignment (single-arm)
+## 3. One scalable assignment — the doctor count only sets replication
 
-Specialty matching is **not available**. Instead:
+There is **no fixed number of doctors**. The 160 rubric response-items are distributed by a **balanced
+incomplete-block** assignment (`assign_bib`, parameters `--doctors`, `--max-per-doctor`, `--target-ratings`)
+with these invariants at any doctor count:
 
-- **Single-arm reviewers** — each physician rates in **one** arm only. This automatically guarantees a
-  physician never sees the same clinical question in both formats.
-- **~24 reviewers** (16 rubric `REV-R##`, 8 pairwise `REV-P##`), **15–25 items each** (~20).
-- **≥ 2 independent ratings per item** (three preferable); a reviewer **never** sees two answers to the same
-  clinical question within the absolute arm.
-- **Per-packet randomization:** item order is randomized per packet, and pairwise A/B position is randomized
-  independently **per item and per reviewer** (recorded in `author_only/pairwise_packet_blinding.csv`).
-- Reviewer packets are ready-made files in `dataset/physician/packets/` (`PHYSICIAN_*__REV-NN.xlsx`); send
-  each physician only their one packet.
+- **every response is rated ≥ 1** (coverage first), then 2nd/3rd ratings are added up to the target while
+  capacity remains;
+- **a doctor sees a given clinical question only once** (so, in the rubric arm, at most one of a pair's two
+  answers);
+- **each doctor sees ≈ equal OpenEvidence and competitor answers**, and **opponent models and specialties are
+  balanced** across doctors;
+- **item order is randomized per packet**.
 
-Because specialty matching is unavailable, each reviewer records **specialty / clinical background**, and per
-item **within_reviewer_competence** (yes/partly/no) and **reviewer_confidence** (high/moderate/low). All
-ratings are retained in the primary analysis; a **sensitivity analysis** excludes out-of-competence /
-low-confidence ratings.
+Adding doctors changes only replication — the instrument and analysis are unchanged. Examples (builder output):
 
-**Random allocation of real physicians.** The `REV-R##`/`REV-P##` IDs guarantee single-arm packets but do
-not by themselves guarantee that one recruited physician is mapped to only one ID. Before distribution, run
-`allocate_reviewers.py --roster <roster.csv>` (columns: `physician_id, background, years_experience`): it
-**randomly allocates each real physician to exactly one arm and one reviewer ID**, balanced across broad
-clinical background and experience band (seed 62). One person → one arm → one ID; surplus physicians are
-recorded as spares.
+- **2 doctors** (`--doctors 2 --max-per-doctor 80 --target-ratings 1`): 160/160 covered, ~80 items each, one
+  physician rating per response — a fixed-panel exploratory study that fills cell D (no reliability estimate).
+- **3 doctors** (default `--doctors 3 --max-per-doctor 60 --target-ratings 2`): 160/160 covered, ~60 each, with
+  ~20 responses double-rated — a limited reliability check.
+- **more doctors**: second, then third ratings are added until the target is met; nothing is redesigned.
+
+Per-doctor packets are ready files in `dataset/physician/packets/` (`PHYSICIAN_ABSOLUTE_RUBRIC__DR-NN.xlsx`);
+the top-level workbooks are master templates. Each doctor records **specialty / clinical background**, and per
+item **within_reviewer_competence** (yes/partly/no) and **reviewer_confidence** (high/moderate/low); all
+ratings are retained, with a **sensitivity analysis** excluding out-of-competence / low-confidence rows.
+
+**Random allocation of real physicians.** Run `allocate_reviewers.py --roster <roster.csv>` (columns:
+`physician_id, background, years_experience`): it **randomly allocates each real physician to exactly one
+doctor ID**, balanced across broad clinical background and experience band (seed 62) — one person → one ID.
+The pairwise arm A′ (optional, `--pairwise`) uses a separate `DP-##` doctor pool.
 
 ---
 
@@ -111,12 +120,30 @@ consulted when needed, but do not delegate completion of the rating form to anot
 
 ---
 
-## 5. Analysis — a common OE-superiority estimand (not a single signed-difference mixed model)
+## 5. Analysis
+
+### 5a. Essential: human cell D on the individual 1–4 scores (`rubric_D_scores_model`)
+
+The primary human analysis uses the **raw 1–4 scores** directly. Per axis, fit
+`score ~ is_OE + C(doctor)` with:
+
+- **answer provider (OE vs competitor) as the main predictor**;
+- **doctor as a FIXED effect** — 2–3 physicians are **not** a representative random sample of physicians, so
+  a random-doctor term is inappropriate;
+- **clinical-question cluster-robust** standard errors; **axis-specific** results;
+- the pre-specified **competence/confidence sensitivity** analysis.
+
+For each pair you can also derive the **human rubric winner** from the paired OE and competitor scores
+(`rubric_D_pair_winner`): OE higher = 1, equal = 0.5, competitor higher = 0. With one rating per response the
+uncertainty is wider, but the data remain usable. Report inter-rater reliability (Krippendorff's α) only where
+overlap ratings exist.
+
+### 5b. Optional 2×2 (needs matched cell C, and A′ for the format contrast) — a common OE-superiority estimand
 
 Rubric physicians rate **one** answer, and no rubric physician sees both answers to a question, so no
-individual rubric rater produces an OE-minus-opponent contrast. The two arms therefore **cannot** be put
-into one rater-level signed-difference mixed model. Instead every cell is mapped to the **same OE-superiority
-scale in [0,1]**, per (pair, axis) (`dataset/physician/analyze_returns.py`):
+individual rubric rater produces an OE-minus-opponent contrast. The arms therefore **cannot** be put into one
+rater-level signed-difference mixed model. Instead every cell is mapped to the **same OE-superiority scale in
+[0,1]**, per (pair, axis) (`dataset/physician/analyze_returns.py`):
 
 - **Pairwise cells** (A′ human, B LLM): **OE win-score** = mean over raters of {OE preferred = 1, tie = 0.5,
   opponent = 0}.
@@ -143,13 +170,13 @@ competence/confidence sensitivity analysis and report inter-rater reliability (K
 
 ## 6. Power and honest scope
 
-The measured question-level score SD is 0.598. The confirmatory design (`reconciliation_protocol.md`)
-requires ≈250 items/cell for a 15 pp interaction. This 80-pair build with ≥2 ratings is a
-**direction/feasibility** scale and is **underpowered for a small interaction**; results from it will be
-reported as directional, not definitive, unless enlarged. The instruments and assignment are parameterized
-(`TARGET_PAIRS`, `RATINGS_PER_ITEM`, `ITEMS_PER_REVIEWER`, seed 62), so the design scales without redesign.
-**~24 physicians** are needed at 2 ratings and ~20 items each; with a smaller roster, reduce pairs, raise
-items-per-reviewer, or lower ratings-per-item and regenerate.
+The measured question-level score SD is 0.598. This 80-pair build fills cell D and supports the essential
+D-scores analysis (§5a) and the D-vs-C comparison at any doctor count; with 2–3 doctors it is a
+**direction/feasibility** study and is **underpowered for a small rater×format interaction** — results are
+reported as directional, not definitive, unless enlarged (the confirmatory design in
+`reconciliation_protocol.md` needs ≈250 items/cell for a 15 pp interaction). There is **no fixed physician
+requirement**: `--doctors`/`--max-per-doctor`/`--target-ratings` (seed 62) scale the study without redesign —
+more doctors simply add replication.
 
 ---
 

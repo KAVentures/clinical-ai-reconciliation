@@ -107,7 +107,36 @@ def load_human_returns(rubric_long, pairwise_long):
     return A, D
 
 
-# ---------------------------------------------------------------- decomposition + question-cluster bootstrap
+# ---------------------------------------------------------------- ESSENTIAL cell-D analysis (individual scores)
+def rubric_D_scores_model(rubric_long):
+    """PRIMARY human-D analysis on the raw 1-4 scores. Per axis: OLS `score ~ is_OE + C(doctor)` with the
+    DOCTOR as a FIXED effect (2-3 physicians are not a representative random sample) and clinical-question
+    cluster-robust SEs. Returns the OE-minus-competitor score effect + p per axis.
+    rubric_long columns: question_id, axis, provider ('oe' | 'competitor'), score_1to4, doctor_id."""
+    import statsmodels.formula.api as smf
+    out = {}
+    for ax in AXES:
+        d = rubric_long[rubric_long.axis == ax].copy()
+        if d.empty or d.provider.nunique() < 2:
+            out[ax] = {'n': int(len(d)), 'note': 'insufficient data'}; continue
+        d['is_oe'] = (d.provider == 'oe').astype(int)
+        rhs = 'is_oe + C(doctor_id)' if d.doctor_id.nunique() > 1 else 'is_oe'
+        m = smf.ols(f'score_1to4 ~ {rhs}', data=d).fit(cov_type='cluster', cov_kwds={'groups': d.question_id})
+        out[ax] = {'n': int(len(d)), 'oe_minus_competitor': round(float(m.params['is_oe']), 3),
+                   'p': round(float(m.pvalues['is_oe']), 4)}
+    return out
+
+
+def rubric_D_pair_winner(rubric_long):
+    """Per (question, axis) human rubric winner from the paired OE / competitor scores on the SAME pair:
+    OE higher = 1, equal = 0.5, competitor higher = 0 (with one rating each this is a single comparison)."""
+    oe = {}; opp = {}
+    for r in rubric_long.itertuples():
+        (oe if r.provider == 'oe' else opp).setdefault((r.question_id, r.axis), []).append(r.score_1to4)
+    return {k: prob_superiority(oe.get(k, []), opp.get(k, [])) for k in set(oe) | set(opp)}
+
+
+# ---------------------------------------------------------------- decomposition + question-cluster bootstrap (optional 2x2 with A')
 def decompose(cells, nboot=2000, seed=62):
     """cells: dict arm-> {(qid,opp,axis): value in [0,1]}. Returns per-axis format/rater/DiD effects with
     clinical-question cluster-bootstrap CIs. Arms present drive which effects are computable."""

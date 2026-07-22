@@ -37,8 +37,9 @@ def main():
     a = ap.parse_args()
 
     asg = pd.read_csv(os.path.join(AUTHOR, 'assignment_manifest.csv'))
-    rub_ids = sorted(asg[asg.format_arm == 'rubric'].reviewer_id.unique())
-    pw_ids = sorted(asg[asg.format_arm == 'pairwise'].reviewer_id.unique())
+    rub_ids = sorted(asg.doctor_id.unique())                       # DR-## rubric doctors (essential arm D)
+    pw_path = os.path.join(AUTHOR, 'pairwise_assignment_manifest.csv')
+    pw_ids = sorted(pd.read_csv(pw_path).doctor_id.unique()) if os.path.exists(pw_path) else []  # DP-## (optional)
     need = len(rub_ids) + len(pw_ids)
 
     roster = pd.read_csv(a.roster)
