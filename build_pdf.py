@@ -1,14 +1,30 @@
 """Render MANUSCRIPT.md -> MANUSCRIPT.html -> MANUSCRIPT.pdf.
 Markdown with tables + numbered footnote citations; figures inlined as base64 so the
 PDF is self-contained. PDF is produced by headless Chrome (no LaTeX/pandoc needed)."""
-import os, re, base64, subprocess, mimetypes
+import os, re, base64, subprocess, mimetypes, shutil
 import markdown
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MD = os.path.join(HERE, 'MANUSCRIPT.md')
 HTML = os.path.join(HERE, 'MANUSCRIPT.html')
 PDF = os.path.join(HERE, 'MANUSCRIPT.pdf')
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+def locate_chrome():
+    """Locate Chrome/Chromium on Linux or macOS, or use the CHROME_PATH override."""
+    custom = os.environ.get("CHROME_PATH")
+    if custom:
+        if os.path.isfile(custom) or shutil.which(custom):
+            return custom
+        raise FileNotFoundError("CHROME_PATH is not executable: " + custom)
+    for candidate in ("google-chrome", "google-chrome-stable", "chromium", "chromium-browser", "chrome"):
+        found = shutil.which(candidate)
+        if found:
+            return found
+    for candidate in ("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                      "/Applications/Chromium.app/Contents/MacOS/Chromium"):
+        if os.path.isfile(candidate):
+            return candidate
+    raise FileNotFoundError("Install Chrome/Chromium or set CHROME_PATH.")
+
 
 def inline_images(html):
     def repl(m):
@@ -63,7 +79,7 @@ def main():
     open(HTML, 'w').write(doc)
     print("wrote", HTML, "(%d bytes)" % len(doc))
 
-    subprocess.run([CHROME, "--headless", "--disable-gpu", "--no-pdf-header-footer",
+    subprocess.run([locate_chrome(), "--headless", "--disable-gpu", "--disable-dev-shm-usage", "--no-sandbox", "--no-pdf-header-footer",
                     "--print-to-pdf=%s" % PDF, "file://%s" % HTML],
                    check=True, capture_output=True)
     print("wrote", PDF, "(%d bytes)" % os.path.getsize(PDF))

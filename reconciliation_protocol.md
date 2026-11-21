@@ -1,8 +1,8 @@
 # Why Do Two Head-to-Head Clinical-AI Studies Disagree? A Factorial Reconciliation of Query Provenance, Evaluation Instrument, and Presentation
 
-**Study protocol / pre-registration draft — v0.1**
+**Historical proposal draft — v0.1 (not prospectively registered)**
 Sole author: Koyar Afrasyab, M.D. (Kinvectum AB)
-Status: design only. No data collected yet. All cited figures verified against source PDFs/HTML (see §11).
+Status: historical planning text for a proposed full factorial extension; the completed narrower secondary analyses are reported in `MANUSCRIPT.md`. This draft was not deposited as a public preregistration and does not establish prospective registration of the completed analyses. Source-study descriptions and figures reflect the original draft.
 
 ---
 
