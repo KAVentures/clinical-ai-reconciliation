@@ -1,0 +1,37 @@
+name: Preprint source and document checks
+on:
+  push:
+    branches: [main, preprint-readiness-20261121]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  offline-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements.txt
+      - run: python scripts/check_preprint_consistency.py
+      - run: (cd judge && python test_robust_analysis.py && python test_export_disagreement.py)
+      - run: (cd dataset/physician && python test_physician_study.py)
+  build-pdf:
+    needs: offline-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'Markdown>=3.5'
+      - uses: browser-actions/setup-chrome@v1
+      - name: Render and validate PDF
+        run: |
+          python build_pdf.py
+          test -s MANUSCRIPT.pdf
+          pdftotext MANUSCRIPT.pdf - | grep -qi 'evaluation instrument'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reconciliation-manuscript-review
+          path: MANUSCRIPT.pdf
