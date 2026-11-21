@@ -4,8 +4,10 @@
 **Affiliation:** Independent researcher; Founder, Kinvectum AB.
 **Funding:** Kinvectum AB.
 **Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [0009-0009-3530-4606](https://orcid.org/0009-0009-3530-4606).
-**Article type:** Methodological reconciliation and secondary analysis (with critical appraisal and a pre-registered extension).
+**Article type:** Methodological reconciliation and secondary analysis (with critical appraisal and a proposed, unexecuted extension).
 **Preprint + code:** see *Data and code availability*.
+
+**Protocol provenance:** The earlier `reconciliation_protocol.md` and `HUMAN_STUDY_PROTOCOL.md` are research-planning drafts, not registrations at a prospective study registry. The completed secondary analyses and proposed future human-rubric extension are distinguished below.
 
 ---
 
@@ -354,7 +356,7 @@ therefore best read as *"frontier answers score higher on an LLM-administered ru
 family-free verdict of clinical superiority — a caution we carry into the Discussion and Limitation (iii).
 The LLM-pairwise cell (§4.5) directly tests this house effect and finds it is **specific to the rubric
 instrument**: the same judges — including the family-neutral one — prefer OE under pairwise. Human-
-administered rubric scoring would be the remaining control (pre-registered, §7).
+administered rubric scoring would be the remaining control (proposed, §7).
 
 ### 4.3 The instrument is noisy — and one axis is barely measurable in either study
 Inter-judge Spearman agreement was modest (0.19–0.47), closely mirroring the low item-level agreement
@@ -416,11 +418,11 @@ four** judges individually.
 
 | Axis | Format effect (pp) | 95% CI (fixed-judge) | Simultaneous CI | Holm *p* | Sign-consistent (4/4 judges) |
 |---|---:|---:|---:|---:|:--:|
-| Accuracy | −16.9 | [−22.3, −11.4] | [−23.9, −9.9] | 0.003 | ✓ |
-| Clinical utility | −21.3 | [−28.1, −14.3] | [−30.2, −12.4] | 0.003 | ✓ |
-| Source quality | −40.6 | [−45.8, −34.9] | [−47.6, −33.6] | 0.003 | ✓ |
-| Completeness | −37.4 | [−43.9, −30.1] | [−46.2, −28.6] | 0.003 | ✓ |
-| Verifiability | −45.8 | [−51.5, −40.3] | [−53.1, −38.5] | 0.003 | ✓ |
+| Accuracy | −16.9 | [−22.3, −11.6] | [−23.6, −10.2] | 0.0025 | ✓ |
+| Clinical utility | −21.3 | [−28.4, −14.3] | [−30.2, −12.4] | 0.0025 | ✓ |
+| Source quality | −40.6 | [−45.9, −35.4] | [−47.2, −34.0] | 0.0025 | ✓ |
+| Completeness | −37.4 | [−44.1, −30.3] | [−46.2, −28.6] | 0.0025 | ✓ |
+| Verifiability | −45.8 | [−51.5, −40.1] | [−53.0, −38.6] | 0.0025 | ✓ |
 
 **This is the paper's robust core.** With the rater held fixed, switching from pairwise preference to
 absolute rubric drives the OE-vs-frontier verdict negative on **all five axes**, sign-consistent across
@@ -648,7 +650,7 @@ Length has a small positive association with source-quality/completeness/verifia
 +0.03 to +0.04 per 1,000 chars) but essentially none with accuracy, and adjusting for it leaves every
 axis's OE-vs-frontier gap unchanged within CI. The accuracy reversal is therefore **not** explained by
 length. (This does not make length irrelevant in general — a fully length-matched *generation* study is
-still pre-registered, §7 — but it removes length as an alternative explanation for the observed reversal.)
+still proposed, §7 — but it removes length as an alternative explanation for the observed reversal.)
 
 ## 5. Critiques of both source studies
 
@@ -830,7 +832,7 @@ pairwise — including the family-neutral judge. Benchmarks that do not
 report the instrument as an experimental factor — and that do not control reasoning effort, comparator
 product-vs-endpoint status, and length — are under-specified for procurement decisions.
 
-## 7. Pre-registered extension (proposed design, not an executed result)
+## 7. Proposed extension (proposed design, not an executed result)
 
 The executed existence proof identifies the instrument; a full **2×2×2 provenance × instrument ×
 citations** factorial (protocol in `reconciliation_protocol.md`) estimates each factor's causal
@@ -878,7 +880,7 @@ this is a general absolute-vs-comparative contrast, **not** a transport of Natur
 correctness/completeness/safety/clarity plus harm and hallucination flags, human-administered with ordinal
 mixed models). (vii) **Length not normalized** (OE 3.8k vs GPT 2.6k chars) — observationally (§4.6,
 Supplementary) OE is the longest provider yet loses accuracy and the within-opponent length↔score-gap
-correlation is ≈ 0, but a length-matched *generation* study is pre-registered to settle it causally.
+correlation is ≈ 0, but a length-matched *generation* study is proposed to settle it causally.
 (viii) **House effects** — contestant-family judges self-prefer, but this survives as a difference-in-
 differences (GPT +0.42 beyond panel consensus) and the pairwise cell shows the pro-frontier tilt is
 **format-specific** (the same judges favor OE under pairwise, including the family-neutral judge). (ix)
