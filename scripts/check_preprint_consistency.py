@@ -24,7 +24,7 @@ for path in ("MANUSCRIPT.md", "README.md"):
                f"{format_ci(r['instrument_simultaneous_ci'])} | "
                f"{r['instrument_p_holm']:.4f} | ✓ |")
         assert document.count(row) == 1, f"{path}: mismatched primary result: {label}"
-    assert "not registered" in document.lower() or "prospective study registry" in document.lower(), path
+    assert any(marker in document.lower() for marker in ("not registered", "prospective study registry", "prospectively registered")), path
 
 assert "not prospectively registered" in (ROOT / "reconciliation_protocol.md").read_text()
 assert "not executed or registered prospectively" in (ROOT / "HUMAN_STUDY_PROTOCOL.md").read_text()

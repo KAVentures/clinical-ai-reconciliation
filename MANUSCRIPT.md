@@ -92,7 +92,7 @@ should report the evaluation format as a first-class experimental factor. We do 
 exact RCQ rubric (we score the five Real-POCQi axes with an LLM panel), so this is a general
 absolute-vs-comparative contrast, not a transport of the Nature instrument. We additionally document two
 under-reported flaws common to both source studies — omission of the actual ChatGPT product clinicians
-use, and unreported/uncontrolled reasoning effort — and pre-register a full provenance × instrument ×
+use, and unreported/uncontrolled reasoning effort — and propose a full provenance × instrument ×
 citation factorial (including the missing human-rubric cell).
 
 ---
@@ -118,7 +118,7 @@ platform that ultimately won (Real-POCQi from OpenEvidence traffic; the Nature s
 query benchmark from an NYU Langone GPT deployment) — and each used a **different evaluation
 instrument** (blinded human pairwise preference vs absolute rubric scoring). Provenance and instrument
 are therefore fully confounded in the published record. This paper isolates the instrument by holding
-everything else constant, and then situates that result within a fuller critique and a pre-registered
+everything else constant, and then situates that result within a fuller critique and a proposed
 factorial design.
 
 Our contributions:
@@ -132,7 +132,7 @@ Our contributions:
    the rater — both contribute — but the reversal is carried by the format; the rater does not explain it.
 2. **Two methodological critiques** of both source studies: the comparator set omits the ChatGPT
    product clinicians actually use, and reasoning effort is unreported or uncontrolled (§5).
-3. **A pre-registered 2×2×2** provenance × instrument × citation design (§7) that would estimate each
+3. **A proposed 2×2×2** provenance × instrument × citation design (§7) that would estimate each
    factor's causal contribution, with power grounded in measured variance components. This is a
    *proposed design, not an executed result* — we flag it as such to keep the executed contribution
    (#1) cleanly separated from future work.
@@ -844,7 +844,7 @@ uses a constructed surrogate LLM-platform query corpus; Real-POCQi is directly r
 is itself a threat to validity:** a corpus we assemble to *stand in* for NYU's HIPAA-restricted RCQ
 distribution may not reproduce its topic mix, difficulty, or phrasing, so the provenance-arm estimate is
 only as trustworthy as the surrogate's fidelity to the true LLM-platform query stream. We therefore treat
-the provenance factor as the **weakest-identified** arm of the proposed factorial and would pre-register
+the provenance factor as the **weakest-identified** arm of the proposed factorial and would specify in advance
 the surrogate-construction procedure and a sensitivity analysis over plausible corpus definitions rather
 than reporting a single provenance estimate as if the corpus were the real thing.
 
@@ -870,7 +870,7 @@ rater contrast** — human cell A used the `qa_text_only` render, but LLM cells 
 which carries citations for **29%** of OE answers (frontier 0.2%); so A vs B/C is not presentation-matched
 and B−A partly reflects rendering. The **rater-fixed format effect (§4.5a) is unaffected** — B and C saw
 identical text — and is robust to restricting to citation-free OE answers (§4.5d; a subset restriction, not
-citation removal); a canonical text-only re-render of B/C is pre-registered. (v)
+citation removal); a canonical text-only re-render of B/C is proposed. (v)
 **Four purposive judges** — three from contestant families — support a *fixed-panel* claim, not broad
 random-judge generalization. We report fixed-judge inference as primary, with per-judge sign-consistency,
 leave-one-judge-out, and self-preference difference-in-differences; the crossed judge-resampling bootstrap
