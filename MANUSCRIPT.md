@@ -940,7 +940,7 @@ follows order of first appearance (Vancouver style); author lists of six or more
 
 [^poc]: Feng, J. J., Patel, V., Heagerty, P., Mai, Y., Sivaraman, V., Vossler, P., Ouyang, J. & Jena, A. B. *Expert evaluation of clinical AI tools on real point-of-care clinical queries (Real-POCQi).* arXiv:2606.28960 (2026). Dataset: huggingface.co/datasets/jjfenglab/Real-POCQi (CC BY 4.0).
 
-[^nat]: Vishwanath, K., Alyakin, A., Stryker, J., Alber, D. A., … Oermann, E. K. *Head-to-head evaluation of frontier general-purpose LLMs and specialized clinical AI tools.* Nature Medicine s41591-026-04431-5 (2026). CC BY-NC-ND 4.0.
+[^nat]: Vishwanath, K., Alyakin, A., Ghosh, M., et al. *General-purpose large language models outperform specialized clinical AI tools on medical benchmarks.* Nature Medicine **32**, 2405–2409 (2026). doi:10.1038/s41591-026-04431-5. CC BY-NC-ND 4.0.
 
 [^healthbench]: Arora, R. K. et al. *HealthBench: evaluating large language models towards improved human health.* Preprint at https://doi.org/10.48550/arXiv.2505.08775 (2025).
 

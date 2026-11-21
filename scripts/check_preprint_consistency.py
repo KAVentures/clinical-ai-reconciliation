@@ -30,4 +30,5 @@ assert "not prospectively registered" in (ROOT / "reconciliation_protocol.md").r
 assert "not executed or registered prospectively" in (ROOT / "HUMAN_STUDY_PROTOCOL.md").read_text()
 manuscript = (ROOT / "MANUSCRIPT.md").read_text()
 assert "## Abstract" in manuscript and "## References" in manuscript
+assert "General-purpose large language models outperform specialized clinical AI tools on medical benchmarks" in manuscript
 print("PASS: primary estimates, proposal provenance and manuscript sections verified")
