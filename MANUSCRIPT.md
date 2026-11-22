@@ -4,8 +4,10 @@
 **Affiliation:** Independent researcher; Founder, Kinvectum AB.
 **Funding:** Kinvectum AB.
 **Correspondence:** Koyar Afrasyab (Kinvectum AB). ORCID: [0009-0009-3530-4606](https://orcid.org/0009-0009-3530-4606).
-**Article type:** Methodological reconciliation and secondary analysis (with critical appraisal and a pre-registered extension).
+**Article type:** Methodological reconciliation and secondary analysis (with critical appraisal and a proposed, unexecuted extension).
 **Preprint + code:** see *Data and code availability*.
+
+**Protocol provenance:** The earlier `reconciliation_protocol.md` and `HUMAN_STUDY_PROTOCOL.md` are research-planning drafts, not registrations at a prospective study registry. The completed secondary analyses and proposed future human-rubric extension are distinguished below.
 
 ---
 
@@ -90,7 +92,7 @@ should report the evaluation format as a first-class experimental factor. We do 
 exact RCQ rubric (we score the five Real-POCQi axes with an LLM panel), so this is a general
 absolute-vs-comparative contrast, not a transport of the Nature instrument. We additionally document two
 under-reported flaws common to both source studies — omission of the actual ChatGPT product clinicians
-use, and unreported/uncontrolled reasoning effort — and pre-register a full provenance × instrument ×
+use, and unreported/uncontrolled reasoning effort — and propose a full provenance × instrument ×
 citation factorial (including the missing human-rubric cell).
 
 ---
@@ -116,7 +118,7 @@ platform that ultimately won (Real-POCQi from OpenEvidence traffic; the Nature s
 query benchmark from an NYU Langone GPT deployment) — and each used a **different evaluation
 instrument** (blinded human pairwise preference vs absolute rubric scoring). Provenance and instrument
 are therefore fully confounded in the published record. This paper isolates the instrument by holding
-everything else constant, and then situates that result within a fuller critique and a pre-registered
+everything else constant, and then situates that result within a fuller critique and a proposed
 factorial design.
 
 Our contributions:
@@ -130,7 +132,7 @@ Our contributions:
    the rater — both contribute — but the reversal is carried by the format; the rater does not explain it.
 2. **Two methodological critiques** of both source studies: the comparator set omits the ChatGPT
    product clinicians actually use, and reasoning effort is unreported or uncontrolled (§5).
-3. **A pre-registered 2×2×2** provenance × instrument × citation design (§7) that would estimate each
+3. **A proposed 2×2×2** provenance × instrument × citation design (§7) that would estimate each
    factor's causal contribution, with power grounded in measured variance components. This is a
    *proposed design, not an executed result* — we flag it as such to keep the executed contribution
    (#1) cleanly separated from future work.
@@ -354,7 +356,7 @@ therefore best read as *"frontier answers score higher on an LLM-administered ru
 family-free verdict of clinical superiority — a caution we carry into the Discussion and Limitation (iii).
 The LLM-pairwise cell (§4.5) directly tests this house effect and finds it is **specific to the rubric
 instrument**: the same judges — including the family-neutral one — prefer OE under pairwise. Human-
-administered rubric scoring would be the remaining control (pre-registered, §7).
+administered rubric scoring would be the remaining control (proposed, §7).
 
 ### 4.3 The instrument is noisy — and one axis is barely measurable in either study
 Inter-judge Spearman agreement was modest (0.19–0.47), closely mirroring the low item-level agreement
@@ -416,11 +418,11 @@ four** judges individually.
 
 | Axis | Format effect (pp) | 95% CI (fixed-judge) | Simultaneous CI | Holm *p* | Sign-consistent (4/4 judges) |
 |---|---:|---:|---:|---:|:--:|
-| Accuracy | −16.9 | [−22.3, −11.4] | [−23.9, −9.9] | 0.003 | ✓ |
-| Clinical utility | −21.3 | [−28.1, −14.3] | [−30.2, −12.4] | 0.003 | ✓ |
-| Source quality | −40.6 | [−45.8, −34.9] | [−47.6, −33.6] | 0.003 | ✓ |
-| Completeness | −37.4 | [−43.9, −30.1] | [−46.2, −28.6] | 0.003 | ✓ |
-| Verifiability | −45.8 | [−51.5, −40.3] | [−53.1, −38.5] | 0.003 | ✓ |
+| Accuracy | −16.9 | [−22.3, −11.6] | [−23.6, −10.2] | 0.0025 | ✓ |
+| Clinical utility | −21.3 | [−28.4, −14.3] | [−30.2, −12.4] | 0.0025 | ✓ |
+| Source quality | −40.6 | [−45.9, −35.4] | [−47.2, −34.0] | 0.0025 | ✓ |
+| Completeness | −37.4 | [−44.1, −30.3] | [−46.2, −28.6] | 0.0025 | ✓ |
+| Verifiability | −45.8 | [−51.5, −40.1] | [−53.0, −38.6] | 0.0025 | ✓ |
 
 **This is the paper's robust core.** With the rater held fixed, switching from pairwise preference to
 absolute rubric drives the OE-vs-frontier verdict negative on **all five axes**, sign-consistent across
@@ -648,7 +650,7 @@ Length has a small positive association with source-quality/completeness/verifia
 +0.03 to +0.04 per 1,000 chars) but essentially none with accuracy, and adjusting for it leaves every
 axis's OE-vs-frontier gap unchanged within CI. The accuracy reversal is therefore **not** explained by
 length. (This does not make length irrelevant in general — a fully length-matched *generation* study is
-still pre-registered, §7 — but it removes length as an alternative explanation for the observed reversal.)
+still proposed, §7 — but it removes length as an alternative explanation for the observed reversal.)
 
 ## 5. Critiques of both source studies
 
@@ -830,7 +832,7 @@ pairwise — including the family-neutral judge. Benchmarks that do not
 report the instrument as an experimental factor — and that do not control reasoning effort, comparator
 product-vs-endpoint status, and length — are under-specified for procurement decisions.
 
-## 7. Pre-registered extension (proposed design, not an executed result)
+## 7. Proposed extension (proposed design, not an executed result)
 
 The executed existence proof identifies the instrument; a full **2×2×2 provenance × instrument ×
 citations** factorial (protocol in `reconciliation_protocol.md`) estimates each factor's causal
@@ -842,7 +844,7 @@ uses a constructed surrogate LLM-platform query corpus; Real-POCQi is directly r
 is itself a threat to validity:** a corpus we assemble to *stand in* for NYU's HIPAA-restricted RCQ
 distribution may not reproduce its topic mix, difficulty, or phrasing, so the provenance-arm estimate is
 only as trustworthy as the surrogate's fidelity to the true LLM-platform query stream. We therefore treat
-the provenance factor as the **weakest-identified** arm of the proposed factorial and would pre-register
+the provenance factor as the **weakest-identified** arm of the proposed factorial and would specify in advance
 the surrogate-construction procedure and a sensitivity analysis over plausible corpus definitions rather
 than reporting a single provenance estimate as if the corpus were the real thing.
 
@@ -868,7 +870,7 @@ rater contrast** — human cell A used the `qa_text_only` render, but LLM cells 
 which carries citations for **29%** of OE answers (frontier 0.2%); so A vs B/C is not presentation-matched
 and B−A partly reflects rendering. The **rater-fixed format effect (§4.5a) is unaffected** — B and C saw
 identical text — and is robust to restricting to citation-free OE answers (§4.5d; a subset restriction, not
-citation removal); a canonical text-only re-render of B/C is pre-registered. (v)
+citation removal); a canonical text-only re-render of B/C is proposed. (v)
 **Four purposive judges** — three from contestant families — support a *fixed-panel* claim, not broad
 random-judge generalization. We report fixed-judge inference as primary, with per-judge sign-consistency,
 leave-one-judge-out, and self-preference difference-in-differences; the crossed judge-resampling bootstrap
@@ -878,7 +880,7 @@ this is a general absolute-vs-comparative contrast, **not** a transport of Natur
 correctness/completeness/safety/clarity plus harm and hallucination flags, human-administered with ordinal
 mixed models). (vii) **Length not normalized** (OE 3.8k vs GPT 2.6k chars) — observationally (§4.6,
 Supplementary) OE is the longest provider yet loses accuracy and the within-opponent length↔score-gap
-correlation is ≈ 0, but a length-matched *generation* study is pre-registered to settle it causally.
+correlation is ≈ 0, but a length-matched *generation* study is proposed to settle it causally.
 (viii) **House effects** — contestant-family judges self-prefer, but this survives as a difference-in-
 differences (GPT +0.42 beyond panel consensus) and the pairwise cell shows the pro-frontier tilt is
 **format-specific** (the same judges favor OE under pairwise, including the family-neutral judge). (ix)
@@ -938,7 +940,7 @@ follows order of first appearance (Vancouver style); author lists of six or more
 
 [^poc]: Feng, J. J., Patel, V., Heagerty, P., Mai, Y., Sivaraman, V., Vossler, P., Ouyang, J. & Jena, A. B. *Expert evaluation of clinical AI tools on real point-of-care clinical queries (Real-POCQi).* arXiv:2606.28960 (2026). Dataset: huggingface.co/datasets/jjfenglab/Real-POCQi (CC BY 4.0).
 
-[^nat]: Vishwanath, K., Alyakin, A., Stryker, J., Alber, D. A., … Oermann, E. K. *Head-to-head evaluation of frontier general-purpose LLMs and specialized clinical AI tools.* Nature Medicine s41591-026-04431-5 (2026). CC BY-NC-ND 4.0.
+[^nat]: Vishwanath, K., Alyakin, A., Ghosh, M., et al. *General-purpose large language models outperform specialized clinical AI tools on medical benchmarks.* Nature Medicine **32**, 2405–2409 (2026). doi:10.1038/s41591-026-04431-5. CC BY-NC-ND 4.0.
 
 [^healthbench]: Arora, R. K. et al. *HealthBench: evaluating large language models towards improved human health.* Preprint at https://doi.org/10.48550/arXiv.2505.08775 (2025).
 

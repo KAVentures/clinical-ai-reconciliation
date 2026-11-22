@@ -7,3 +7,8 @@ statsmodels>=0.14
 matplotlib>=3.7
 huggingface_hub>=0.23
 # No provider SDKs required: judge/providers.py calls each API via the stdlib (urllib).
+
+# Manuscript rendering and offline test execution
+Markdown>=3.5
+pytest>=8.0
+openpyxl>=3.1

@@ -1,6 +1,6 @@
 # The Instrument Makes the Winner: Reconciling Two Contradictory 2026 Head-to-Head Evaluations of Clinical AI
 
-**Two 2026 studies compared the same class of systems and reached opposite conclusions. This repository shows the disagreement is not about the models — it is about the *measuring instrument*.** Holding the queries *and* the systems' answers fixed and changing **only** the evaluation instrument (blinded human pairwise preference → LLM-judge absolute rubric) erases or reverses the specialist system's advantage on every quality axis. A formal 2×2 {instrument} × {rater} decomposition — with a **crossed question × judge bootstrap** that treats the four judges as a random factor — localizes the swing to the **instrument** component (significantly negative on all five axes), while the **rater** component is indistinguishable from zero on accuracy.
+**Two 2026 studies compared similar clinical AI systems and reached opposite conclusions. On identical Real-POCQi questions and verbatim answers, this study demonstrates that changing the evaluation format can move or reverse the apparent ranking.** This establishes a substantial within-LLM-judge instrument-format effect, not a complete causal explanation for the disagreement between studies that used different datasets, model versions, and reviewer protocols. Holding the queries *and* the systems' answers fixed and changing **only** the evaluation instrument (blinded human pairwise preference → LLM-judge absolute rubric) erases or reverses the specialist system's advantage on every quality axis. A formal 2×2 {instrument} × {rater} decomposition — with a **crossed question × judge bootstrap** that treats the four judges as a random factor — localizes the swing to the **instrument** component (significantly negative on all five axes), while the **rater** component is indistinguishable from zero on accuracy.
 
 Author: **Koyar Afrasyab, M.D.** — *corresponding author*
 Affiliation: **Independent researcher; Founder, Kinvectum AB**
@@ -12,6 +12,8 @@ This repository contains the manuscript (Markdown + self-contained PDF), the jud
 - **Nature Medicine** (s41591-026-04431-5) — frontier LLMs **beat** OE and UpToDate Expert AI under an **absolute 1–4 rubric**.
 
 Both studies additionally sourced their "real-world" queries from the platform that went on to win (home-field provenance) and used different model versions — but the decomposition here isolates the **instrument** (pairwise vs rubric) as the dominant driver of the contradiction.
+
+**Study status:** Completed computational three-cell secondary analysis. The missing human-rubric cell and proposed factorial are not completed results or prospectively registered studies.
 
 ## Quick Links
 
@@ -35,7 +37,7 @@ The two source studies differ on two things at once, confounding any direct comp
 
 | | Pairwise instrument | Rubric instrument |
 |---|---|---|
-| **Human rater** | **A** — Real-POCQi (OE wins) | *D* — not run (pre-registered, §7) |
+| **Human rater** | **A** — Real-POCQi (OE wins) | *D* — not run (proposed, §7) |
 | **LLM rater** | **B** — new here (OE mostly wins) | **C** — new here (OE reverses) |
 
 The A→C swing (the published contradiction) is then split into a **rater component (B−A)** and an **instrument component (C−B)**.
@@ -75,11 +77,11 @@ For each judge we threshold **that judge's own** rubric scores into win/tie/loss
 
 | Axis | Format effect (pp) | 95% CI (fixed-judge) | Simultaneous CI | Holm *p* | 4/4 judges same sign |
 |---|---:|---:|---:|---:|:--:|
-| Accuracy | −16.9 | [−22.3, −11.4] | [−23.9, −9.9] | 0.003 | ✓ |
-| Clinical utility | −21.3 | [−28.1, −14.3] | [−30.2, −12.4] | 0.003 | ✓ |
-| Source quality | −40.6 | [−45.8, −34.9] | [−47.6, −33.6] | 0.003 | ✓ |
-| Completeness | −37.4 | [−43.9, −30.1] | [−46.2, −28.6] | 0.003 | ✓ |
-| Verifiability | −45.8 | [−51.5, −40.3] | [−53.1, −38.5] | 0.003 | ✓ |
+| Accuracy | −16.9 | [−22.3, −11.6] | [−23.6, −10.2] | 0.0025 | ✓ |
+| Clinical utility | −21.3 | [−28.4, −14.3] | [−30.2, −12.4] | 0.0025 | ✓ |
+| Source quality | −40.6 | [−45.9, −35.4] | [−47.2, −34.0] | 0.0025 | ✓ |
+| Completeness | −37.4 | [−44.1, −30.3] | [−46.2, −28.6] | 0.0025 | ✓ |
+| Verifiability | −45.8 | [−51.5, −40.1] | [−53.0, −38.6] | 0.0025 | ✓ |
 
 **With the same LLM judge, switching pairwise→rubric moves the OE-vs-frontier verdict negative on all five axes** — sign-consistent across every judge, surviving simultaneous inference, judge-resampling (crossed CIs still exclude zero), and restriction to citation-free OE answers. Largest on the evidence axes (source quality, verifiability); **smallest and most aggregation-sensitive on accuracy** (native 1–4 gap only −0.125; a ±0.25 tie-band cuts the panel accuracy figure from −29.1 to −13.8).
 
@@ -100,7 +102,7 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 - **Accuracy is the weakest, most aggregation-sensitive axis**, not the headline: the earlier −29.1/−32.7 pp figures were inflated by averaging judges then thresholding (native gap only −0.125 on the 1–4 scale). The large, robust format effects are on the evidence-presentation axes.
 - **Not Nature's exact rubric.** We score the five Real-POCQi axes with an LLM panel — a general absolute-vs-comparative contrast, not a transport of Nature's RCQ instrument.
 - **Self-preference exists but does not create the effect.** The accuracy reversal survives leave-one-judge-out, and the family-neutral judge favors OE under pairwise.
-- **This is an existence proof of instrument sensitivity, not an adjudication of clinical truth.** We show the instruments *disagree* on identical content — not which one is *correct*. The missing human-rubric cell (D) is pre-registered as the decisive control.
+- **This is an existence proof of instrument sensitivity, not an adjudication of clinical truth.** We show the instruments *disagree* on identical content — not which one is *correct*. The missing human-rubric cell (D) is proposed as the decisive control.
 
 ## Limitations
 
@@ -140,6 +142,8 @@ OpenEvidence is among the **longest** providers (median 3,600 chars — essentia
 | `judge/out/`, `out/` | Grades, pairwise verdicts, result JSON, bootstrap CIs, figures |
 
 ## Reproducing the Study
+
+For offline consistency tests and manuscript regeneration, see [Reproducibility and paper checks](REPRODUCIBILITY.md).
 
 ```bash
 python3 -m pip install -r requirements.txt
