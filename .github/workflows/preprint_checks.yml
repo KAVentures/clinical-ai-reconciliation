@@ -38,6 +38,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install 'Markdown>=3.5'
+      - name: Install PDF text inspection utilities
+        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
       - uses: browser-actions/setup-chrome@v1
       - name: Render and validate PDF
         run: |
